@@ -1,69 +1,49 @@
-# Blood on the Clocktower Script PDF Backend
+# Backend
 
-Serverless API for generating professional PDFs of Blood on the Clocktower character sheets.
+Helper code and local development server for the PDF generation API.
 
-## Tech Stack
+## Structure
 
-- **Runtime**: Vercel Serverless Functions
-- **Rendering**: Preact SSR + Puppeteer
-- **Component**: `botc-character-sheet` npm package
-- **Validation**: `botc-script-checker`
+```
+backend/
+├── src/
+│   └── renderer.ts    # Server-side HTML rendering
+└── dev-server.ts      # Local Bun dev server
+```
 
-## API Endpoint
+The actual serverless function lives in `/api/generate-pdf.ts` at the monorepo root.
+
+## Development
+
+```bash
+# From monorepo root
+bun run dev:backend
+
+# Or directly
+bun run serve
+```
+
+Runs at `http://localhost:3001`
+
+## API
 
 ### POST /api/generate-pdf
 
-Generate a PDF from a BotC script JSON.
+Generates a PDF from a BotC script.
 
-**Request Body:**
+**Request:**
 ```json
 {
-  "script": [...],  // BotC script JSON array
-  "options": {
-    "color": "#137415",
-    "showAuthor": true,
-    "showJinxes": true,
-    "showSwirls": true,
-    "solidTitle": false,
-    "iconScale": 1.6,
-    "compactAppearance": false,
-    "showBackingSheet": true
-  },
+  "script": [...],
+  "options": { "color": "#137415", ... },
   "filename": "script.pdf"
 }
 ```
 
 **Response:** PDF binary
 
-## Local Development
-
-```bash
-# Install dependencies
-npm install
-
-# Start local dev server
-npm run dev
-
-# Test endpoint
-curl -X POST http://localhost:3000/api/generate-pdf \
-  -H "Content-Type: application/json" \
-  -d '{"script":[...],"options":{}}'
-```
-
-## Deployment
-
-```bash
-# Deploy to Vercel
-vercel --prod
-```
-
-## Environment Variables
-
-- `PDF_API_KEY` (optional): API key for additional security
-
 ## Security
 
-- Maximum payload size: 500KB
-- Maximum characters: 100
-- CORS restricted to configured origins
-- Optional API key authentication
+- Max payload: 500KB
+- Max characters: 100
+- CORS restricted to allowed origins
