@@ -3,11 +3,5 @@
   "installCommand": "bun install",
   "buildCommand": "bun run build",
   "outputDirectory": "frontend/dist",
-  "bunVersion": "1.x",
-  "functions": {
-    "api/*.js": {
-      "memory": 2048,
-      "maxDuration": 60
-    }
-  }
+  "bunVersion": "1.x"
 }
