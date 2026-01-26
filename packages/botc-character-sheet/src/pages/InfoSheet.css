@@ -1,0 +1,98 @@
+.info-sheet-heading {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.info-sheet-heading .script-title {
+  font-family: "Unlovable", serif;
+  font-weight: lighter;
+
+  background: var(--header-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  font-size: 11mm;
+  line-height: 9mm;
+
+  margin: -7mm;
+  padding: 7mm;
+
+  max-width: 50%;
+  text-align: center;
+  word-spacing: -4mm;
+  filter: drop-shadow(0.2mm 0.1mm 0 #222d) drop-shadow(0mm 0mm 0.1mm #2228);
+}
+
+.info-sheet-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-sheet-content h4 {
+  font-family: "Dumbledor";
+  font-size: 5mm;
+  margin: 2mm 0;
+  font-weight: lighter;
+}
+
+.info-sheet-content h5 {
+  font-family: "Dumbledor";
+  font-size: 4mm;
+}
+
+.info-sheet-section {
+  margin-left: 5mm;
+  margin-bottom: 3mm;
+}
+
+.info-fabled-loric-entry {
+  display: flex;
+  align-items: center;
+}
+.info-fabled-loric-entry img {
+  margin-right: 2mm;
+}
+
+.info-fabled-loric-text {
+  margin-left: 1mm;
+}
+
+.info-fabled-loric-name {
+  font-family: "Goudy Old Style";
+  margin: 0;
+  font-size: 3.5mm;
+}
+
+.info-fabled-loric-note {
+  font-family:
+    "Trade Gothic", "Trade Gothic Next", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  font-size: 3mm;
+}
+
+.info-jinx-text {
+  margin-left: 1mm;
+}
+
+.info-jinx-name {
+  font-family: "Goudy Old Style";
+  margin: 0;
+  font-size: 3.5mm;
+}
+
+.info-jinx-note {
+  font-family:
+    "Trade Gothic", "Trade Gothic Next", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  font-size: 3mm;
+}
+
+.info-jinx-entry {
+  display: flex;
+  align-items: center;
+}
+.info-jinx-entry img {
+  margin-right: 2mm;
+}

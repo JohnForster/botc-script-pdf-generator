@@ -1,0 +1,78 @@
+.night-sheet-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.night-sheet-heading .night-title {
+  font-family: Dumbledor;
+  font-size: 7mm;
+  margin: 0;
+}
+
+.night-sheet-heading .script-title {
+  font-family: "Unlovable", serif;
+  font-weight: lighter;
+
+  background: var(--header-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  font-size: 11mm;
+  line-height: 9mm;
+  margin: -20mm -7mm;
+  padding: 7mm;
+
+  max-width: 50%;
+  text-align: center;
+  word-spacing: -4mm;
+  filter: drop-shadow(0.2mm 0.1mm 0 #222d) drop-shadow(0mm 0mm 0.1mm #2228);
+}
+
+.night-sheet-order {
+  display: flex;
+  flex-direction: column;
+  gap: 1mm;
+}
+
+.night-sheet-entry {
+  display: flex;
+  align-items: center;
+  min-height: 10mm;
+}
+
+.reminder-name {
+  font-family: Goudy Old Style, Goudy Oldstyle, Goudy, Georgia, serif;
+  font-weight: 700;
+  font-size: 3.3mm;
+}
+
+.reminder-text {
+  font-family: "Trade Gothic";
+  font-size: 3mm;
+}
+
+.night-sheet-entry p {
+  margin: 0;
+}
+
+.night-sheet-entry p strong {
+  font-family: Trade Gothic Bold;
+}
+
+.night-sheet-entry > img {
+  width: 7mm;
+  height: 7mm;
+  flex-shrink: 0;
+  scale: 2;
+  margin-right: 3mm;
+}
+
+.reminder-icon {
+  width: 10px;
+  scale: 1;
+  opacity: 0.8;
+  margin-right: 4px;
+  margin-bottom: -1px;
+}

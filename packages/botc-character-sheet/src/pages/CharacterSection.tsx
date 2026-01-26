@@ -1,0 +1,174 @@
+import { ResolvedCharacter, Jinx } from "../types";
+import { getJinxedCharacters, getImageUrl } from "../utils/scriptUtils";
+
+interface CharacterSectionProps {
+  title: string;
+  characters: ResolvedCharacter[];
+  charNameColor: string;
+  iconScale: number;
+  jinxes: Jinx[];
+  allCharacters: ResolvedCharacter[];
+  inlineJinxIcons: boolean;
+}
+// Threshold to switch from evenly spaced to space-between layout
+const BALANCE_POINT = 8;
+export function CharacterSection({
+  title,
+  characters,
+  charNameColor,
+  iconScale,
+  jinxes,
+  allCharacters: allChars,
+  inlineJinxIcons,
+}: CharacterSectionProps) {
+  const justifyContent =
+    characters.length > BALANCE_POINT
+      ? "space-between"
+      : characters.length % 2 === 0
+      ? "space-around"
+      : "flex-start";
+
+  const midpoint = calculateMidpoint(characters);
+
+  return (
+    <div className="character-section">
+      <h2 className="section-title">{title}</h2>
+      <div className="character-list">
+        <div className="character-column" style={{ justifyContent }}>
+          {characters.slice(0, midpoint).map((char) => (
+            <CharacterCard
+              key={char.id}
+              character={char}
+              color={charNameColor}
+              iconScale={iconScale}
+              jinxedCharacters={getJinxedCharacters(char, jinxes, allChars)}
+              inlineJinxIcons={inlineJinxIcons}
+            />
+          ))}
+        </div>
+        <div className="character-column" style={{ justifyContent }}>
+          {characters.slice(midpoint, characters.length).map((char) => (
+            <CharacterCard
+              key={char.id}
+              character={char}
+              color={charNameColor}
+              iconScale={iconScale}
+              jinxedCharacters={getJinxedCharacters(char, jinxes, allChars)}
+              inlineJinxIcons={inlineJinxIcons}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+interface CharacterCardProps {
+  character: ResolvedCharacter;
+  color: string;
+  iconScale: number;
+  jinxedCharacters: ResolvedCharacter[];
+  inlineJinxIcons: boolean;
+}
+function CharacterCard({
+  character,
+  color,
+  iconScale,
+  jinxedCharacters,
+  inlineJinxIcons,
+}: CharacterCardProps) {
+  const renderAbility = (ability: string) => {
+    // Match square brackets at the end of the ability
+    const match = ability.match(/^(.*?)(\[.*?\])$/);
+
+    if (match) {
+      const [, beforeBrackets, brackets] = match;
+      return (
+        <>
+          {beforeBrackets}
+          <strong className="setup-ability">{brackets}</strong>
+        </>
+      );
+    }
+
+    return ability;
+  };
+
+  const imageUrl = getImageUrl(character);
+  return (
+    <div className="character-card">
+      <div className="character-icon-wrapper">
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={character.name}
+            className="character-icon"
+            style={{ scale: iconScale.toString() }}
+          />
+        ) : (
+          <div
+            className="character-icon-placeholder"
+            style={{ color, scale: iconScale.toString() }}
+          >
+            {character.name.charAt(0)}
+          </div>
+        )}
+      </div>
+      <div className="character-info">
+        <h3 className="character-name" style={{ color: color }}>
+          {character.name}
+          {inlineJinxIcons && jinxedCharacters.length > 0 && (
+            <span className="inline-jinx-icons">
+              {jinxedCharacters.map((jinxedChar) => {
+                const jinxImageUrl = getImageUrl(jinxedChar);
+                return jinxImageUrl ? (
+                  <img
+                    key={jinxedChar.id}
+                    src={jinxImageUrl}
+                    alt={jinxedChar.name}
+                    className="inline-jinx-icon"
+                    title={`Jinxed with ${jinxedChar.name}`}
+                  />
+                ) : (
+                  <span
+                    key={jinxedChar.id}
+                    className="inline-jinx-icon-placeholder"
+                    title={`Jinxed with ${jinxedChar.name}`}
+                  >
+                    {jinxedChar.name.charAt(0)}
+                  </span>
+                );
+              })}
+            </span>
+          )}
+        </h3>
+        <p className="character-ability">{renderAbility(character.ability)}</p>
+      </div>
+    </div>
+  );
+}
+function calculateMidpoint(characters: ResolvedCharacter[]): number {
+  const midpoint = Math.ceil(characters.length / 2);
+
+  if (characters.length % 2 === 0 || characters.length <= BALANCE_POINT) {
+    return midpoint;
+  }
+  const leftWeightedMidpoint = midpoint;
+  const rightWeightedMidpoint = midpoint - 1;
+
+  const largerFirstHalf = characters.slice(0, leftWeightedMidpoint);
+  const largerSecondHalf = characters.slice(rightWeightedMidpoint - 1);
+
+  const totalAbilityLengthFirstHalf = largerFirstHalf.reduce(
+    (sum, char) => sum + char.ability.length,
+    0
+  );
+  const totalAbilityLengthSecondHalf = largerSecondHalf.reduce(
+    (sum, char) => sum + char.ability.length,
+    0
+  );
+
+  // Return the midpoint that results in more balanced ability lengths
+  return totalAbilityLengthFirstHalf < totalAbilityLengthSecondHalf
+    ? leftWeightedMidpoint
+    : rightWeightedMidpoint;
+}

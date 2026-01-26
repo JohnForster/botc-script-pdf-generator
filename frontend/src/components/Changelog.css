@@ -1,0 +1,66 @@
+.changelog {
+  margin: 0 auto;
+  padding: 20px;
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--shadow-light);
+  max-width: 600px;
+}
+
+.changelog-title {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.changelog-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.changelog-entry {
+  padding: 12px;
+  background: var(--bg-gradient-start);
+  border-radius: 8px;
+  border-left: 4px solid var(--button-bg);
+}
+
+.changelog-entry-recent {
+  border-left-color: #48bb78;
+}
+
+.changelog-entry-recent .changelog-date {
+  color: #48bb78;
+}
+
+.changelog-date {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--button-bg);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.changelog-list {
+  margin: 0;
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+.changelog-item {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.changelog-item:last-child {
+  margin-bottom: 0;
+}
