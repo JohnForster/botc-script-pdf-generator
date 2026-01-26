@@ -5,7 +5,7 @@ import {
   ParsedScript,
   ScriptOptions,
 } from "botc-character-sheet";
-import chromium from "@sparticuz/chromium-min";
+import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
 import { PDFDocument } from "pdf-lib";
 
@@ -30,33 +30,12 @@ const API_KEY = process.env.PDF_API_KEY;
 
 async function getBrowser() {
   if (isServerless) {
-    let browser;
-    try {
-      browser = await puppeteer.launch({
-        args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
-        executablePath: await chromium.executablePath(
-          process.env.CHROMIUM_PATH,
-        ),
-        headless: "shell",
-        ignoreHTTPSErrors: true,
-      });
-    } catch (error) {
-      console.log(
-        "Unable to load local chromium. Falling back to download.",
-        error,
-      );
-
-      const fallbackURL =
-        "https://github.com/Sparticuz/chromium/releases/download/v141.0.0/chromium-v141.0.0-pack.x64.tar";
-      browser = await puppeteer.launch({
-        args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
-        executablePath: await chromium.executablePath(fallbackURL),
-        headless: "shell",
-        ignoreHTTPSErrors: true,
-      });
-      console.error("Error importing puppeteer-core:", error);
-    }
-    return browser;
+    return puppeteer.launch({
+      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+      executablePath: await chromium.executablePath(),
+      headless: "shell",
+      ignoreHTTPSErrors: true,
+    });
   } else {
     // Local: Full Puppeteer with bundled Chrome
     const puppeteerModule = await import("puppeteer");
@@ -129,7 +108,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Generate HTML with the character sheet
-    console.log("script:", script);
     const html = renderCharacterSheet(
       script,
       options || {},
@@ -137,38 +115,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       origin,
     );
 
-    // Load appropriate puppeteer version
-    const executablePath = "/var/task/node_modules/@sparticuz/chromium/bin";
-
-    // Debug: Check filesystem in production
-    if (isServerless) {
-      const fs = await import("fs");
-      console.log("=== Filesystem Debug ===");
-      console.log(
-        "/tmp contents:",
-        fs.existsSync("/tmp") ? fs.readdirSync("/tmp") : "does not exist",
-      );
-      console.log("Current directory:", process.cwd());
-      console.log("Current directory contents:", fs.readdirSync(process.cwd()));
-      console.log("node_modules exists:", fs.existsSync("node_modules"));
-      if (fs.existsSync("node_modules/@sparticuz")) {
-        console.log(
-          "@sparticuz contents:",
-          fs.readdirSync("node_modules/@sparticuz"),
-        );
-        if (fs.existsSync("node_modules/@sparticuz/chromium")) {
-          console.log(
-            "chromium package contents:",
-            fs.readdirSync("node_modules/@sparticuz/chromium"),
-          );
-        }
-      }
-      if (fs.existsSync(executablePath)) {
-        console.log("Executable Path Exists");
-      }
-    }
-
-    // Launch Puppeteer with appropriate settings for environment
+    // Launch Puppeteer
     const browser = await getBrowser();
 
     const page = await browser.newPage();

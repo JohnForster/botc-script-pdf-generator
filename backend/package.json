@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@sparticuz/chromium-min": "^141.0.0",
+    "@sparticuz/chromium": "^143.0.4",
     "botc-character-sheet": "workspace:*",
     "botc-script-checker": "^0.2.4",
     "pdf-lib": "^1.17.1",
