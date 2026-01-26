@@ -5,6 +5,10 @@ Clocktower custom scripts, styled to look like the official sheet aesthetic.
 
 **Live site**: [fancy.ravenswoodstudio.xyz](https://fancy.ravenswoodstudio.xyz)
 
+<p align="center">
+  <img src="docs/blending-in.png" alt="Example character sheet for Blending In script" width="400">
+</p>
+
 ## Features
 
 - Upload or paste custom script JSON files
