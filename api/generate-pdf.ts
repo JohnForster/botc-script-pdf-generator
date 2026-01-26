@@ -1,4 +1,4 @@
-import { renderCharacterSheet } from "../backend/src/renderer.ts";
+import { renderCharacterSheet } from "../backend/src/renderer";
 import {
   NetworkPayload,
   ParsedScript,
@@ -125,7 +125,7 @@ export default {
       // Generate HTML with the character sheet
       const html = renderCharacterSheet(
         script,
-        options || {},
+        options,
         nightOrders || { first: [], other: [] },
         origin || undefined,
       );
@@ -186,10 +186,11 @@ export default {
       // Set response headers
       const pdfFilename = filename || "script.pdf";
 
-      return new Response(finalPDF, {
+      const pdfBlob = new Blob([finalPDF], { type: "application/pdf" });
+
+      return new Response(pdfBlob, {
         status: 200,
         headers: {
-          "Content-Type": "application/pdf",
           "Content-Disposition": `attachment; filename="${pdfFilename}"`,
           "Content-Length": finalPDF.byteLength.toString(),
           ...corsHeaders(origin),
