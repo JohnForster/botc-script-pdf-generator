@@ -7,10 +7,9 @@
     "dev:packages": "bun run --cwd packages/botc-character-sheet dev",
     "dev:frontend": "bun run --cwd frontend dev",
     "dev:backend": "bun run --cwd backend serve",
-    "build": "bun run build:packages && bun run build:frontend && bun run build:backend",
+    "build": "bun run build:packages && bun run build:frontend",
     "build:packages": "bun run --cwd packages/botc-character-sheet build",
     "build:frontend": "bun run --cwd frontend build",
-    "build:backend": "bun build ./backend/functions/generate-pdf.ts --outdir ./api --target bun --external '*.css'",
     "typecheck": "bun run --cwd frontend typecheck && bun run --cwd backend typecheck"
   },
   "devDependencies": {
