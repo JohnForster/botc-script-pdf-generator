@@ -186,7 +186,10 @@ export default {
       // Set response headers
       const pdfFilename = filename || "script.pdf";
 
-      const pdfBlob = new Blob([finalPDF], { type: "application/pdf" });
+      // Create a new ArrayBuffer copy to satisfy TypeScript's BlobPart type
+      const pdfBuffer = new ArrayBuffer(finalPDF.byteLength);
+      new Uint8Array(pdfBuffer).set(finalPDF);
+      const pdfBlob = new Blob([pdfBuffer], { type: "application/pdf" });
 
       return new Response(pdfBlob, {
         status: 200,
