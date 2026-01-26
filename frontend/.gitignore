@@ -24,14 +24,11 @@ dist-ssr
 *.sw?
 scripts
 
-_examples
 public/images/ignore
 CLAUDE.md
 
 # Copyrighted character images - DO NOT COMMIT
 public/character_icons/
-Jinxes.csv
 
 .env
-unreleased_characters
-custom_scripts
+_ignored

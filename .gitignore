@@ -27,3 +27,5 @@ dist-ssr
 CLAUDE.md
 .claude
 .env
+
+api/*.js
