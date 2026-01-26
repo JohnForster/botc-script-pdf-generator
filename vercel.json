@@ -5,12 +5,9 @@
   "outputDirectory": "frontend/dist",
   "bunVersion": "1.x",
   "functions": {
-    "backend/api/*.js": {
+    "api/*.js": {
       "memory": 2048,
       "maxDuration": 60
     }
-  },
-  "rewrites": [
-    { "source": "/api/:path*", "destination": "/backend/api/:path*" }
-  ]
+  }
 }
