@@ -1,10 +1,101 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blood on the Clocktower - Script PDF Maker</title>
+    <style>
+      :root {
+        --bg-gradient-start: #f7fafc;
+        --bg-gradient-end: #edf2f7;
+        --card-bg: white;
+        --text-primary: #2d3748;
+        --text-secondary: #4a5568;
+        --text-tertiary: #718096;
+        --border-color: #e2e8f0;
+        --button-bg: #667eea;
+        --button-hover: #5568d3;
+        --button-text: #ffffff;
+        --error-bg: #fed7d7;
+        --error-text: #c53030;
+        --error-border: #fc8181;
+        --warning-bg: #fef5e7;
+        --warning-text: #d68910;
+        --warning-border: #f39c12;
+        --shadow: rgba(0, 0, 0, 0.2);
+        --shadow-light: rgba(0, 0, 0, 0.1);
+        --link-color: #4361ee;
+        --link-hover: #3a56d4;
+        --link-visited: #5a67d8;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-gradient-start: #1a202c;
+          --bg-gradient-end: #2d3748;
+          --card-bg: #2d3748;
+          --text-primary: #f7fafc;
+          --text-secondary: #e2e8f0;
+          --text-tertiary: #cbd5e0;
+          --border-color: #4a5568;
+          --button-bg: #5568d3;
+          --button-hover: #667eea;
+          --button-text: #ffffff;
+          --error-bg: #742a2a;
+          --error-text: #feb2b2;
+          --error-border: #fc8181;
+          --warning-bg: #744210;
+          --warning-text: #fbd38d;
+          --warning-border: #f39c12;
+          --shadow: rgba(0, 0, 0, 0.5);
+          --shadow-light: rgba(0, 0, 0, 0.3);
+          --link-color: #7c93f5;
+          --link-hover: #99aaf7;
+          --link-visited: #a0aef5;
+        }
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--bg-gradient-start) 0%,
+          var(--bg-gradient-end) 100%
+        );
+        color: var(--text-primary);
+      }
+
+      .site-header {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        padding: 0.75rem 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .site-header a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        opacity: 0.95;
+        transition: opacity 0.2s ease;
+      }
+
+      .site-header a:hover {
+        opacity: 1;
+      }
+    </style>
   </head>
   <body>
     <div class="site-header">
