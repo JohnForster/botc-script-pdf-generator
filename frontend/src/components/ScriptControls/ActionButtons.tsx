@@ -3,6 +3,7 @@ interface ActionButtonsProps {
   error: string | null;
   onSort: () => void;
   onGeneratePDF: () => void;
+  onGenerateImages: () => void;
   onPrint: () => void;
 }
 
@@ -11,6 +12,7 @@ export function ActionButtons({
   error,
   onSort,
   onGeneratePDF,
+  onGenerateImages,
   onPrint,
 }: ActionButtonsProps) {
   return (
@@ -21,6 +23,9 @@ export function ActionButtons({
         </button>
         <button onClick={onPrint} className="print-button">
           Browser Print
+        </button>
+        <button onClick={onGenerateImages} className="print-button">
+          Download as Image
         </button>
         <button
           onClick={onSort}

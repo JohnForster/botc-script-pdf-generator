@@ -6,10 +6,12 @@ import exampleScript from "./data/example-script.json";
 import exampleTeensyville from "./data/example-teensy.json";
 import { useScriptLoader } from "./hooks/useScriptLoader";
 import { usePdfGeneration } from "./hooks/usePdfGeneration";
+import { useImageGeneration } from "./hooks/useImageGeneration";
 import { useOverflowDetection } from "./hooks/useOverflowDetection";
 import { useMobileControls } from "./hooks/useMobileControls";
 import { ScriptControls } from "./components/ScriptControls";
 import { PdfModal } from "./components/PdfModal";
+import { ImageModal } from "./components/ImageModal";
 import { Changelog } from "./components/Changelog";
 import { MobileControlsToggle } from "./components/MobileControlsToggle";
 import { DEFAULT_OPTIONS, randomColor } from "./types/options";
@@ -41,6 +43,18 @@ export function App() {
     downloadPDF,
     closePdfModal,
   } = usePdfGeneration();
+
+  const {
+    showImageModal,
+    imageLoading,
+    characterSheetUrl,
+    infoSheetUrl,
+    imageError,
+    generateImages,
+    downloadCharacterSheet,
+    downloadInfoSheet,
+    closeImageModal,
+  } = useImageGeneration();
 
   const [options, setOptions] = useState<ScriptOptions>(DEFAULT_OPTIONS);
 
@@ -183,8 +197,24 @@ export function App() {
     generatePDF(script, options, nightOrders);
   };
 
+  const handleGenerateImages = () => {
+    if (!rawScript || !script) return;
+    if (script) {
+      logUsage(script, { method: "image", options });
+    }
+    generateImages(script, options, nightOrders);
+  };
+
   const handleDownloadPDF = () => {
     downloadPDF(script?.metadata?.name);
+  };
+
+  const handleDownloadCharacterSheet = () => {
+    downloadCharacterSheet(script?.metadata?.name);
+  };
+
+  const handleDownloadInfoSheet = () => {
+    downloadInfoSheet(script?.metadata?.name);
   };
 
   return (
@@ -216,6 +246,7 @@ export function App() {
             onOptionChange={updateOption}
             onSort={handleSort}
             onGeneratePDF={handleGeneratePDF}
+            onGenerateImages={handleGenerateImages}
             onPrint={handlePrint}
           />
         </div>
@@ -282,6 +313,17 @@ export function App() {
         error={pdfError}
         onClose={closePdfModal}
         onDownload={handleDownloadPDF}
+      />
+
+      <ImageModal
+        isOpen={showImageModal}
+        isLoading={imageLoading}
+        characterSheetUrl={characterSheetUrl}
+        infoSheetUrl={infoSheetUrl}
+        error={imageError}
+        onClose={closeImageModal}
+        onDownloadCharacterSheet={handleDownloadCharacterSheet}
+        onDownloadInfoSheet={handleDownloadInfoSheet}
       />
     </>
   );

@@ -669,7 +669,6 @@ select.form-control-input:focus {
   border-radius: 16px;
   padding: 40px;
   max-width: 900px;
-  width: 90%;
   max-height: 90vh;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   display: flex;
@@ -770,14 +769,67 @@ select.form-control-input:focus {
   }
 }
 
+.modal-content-wide {
+  max-width: 1200px;
+}
+
+.image-preview-container {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+  margin: 20px 0;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.image-preview-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 280px;
+  max-width: 500px;
+}
+
+.image-preview-item h3 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+.image-preview {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: contain;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px var(--shadow-light);
+}
+
+@media (max-width: 768px) {
+  .image-preview-container {
+    flex-direction: column;
+  }
+
+  .image-preview-item {
+    max-width: 100%;
+  }
+
+  .image-preview {
+    max-height: 350px;
+  }
+}
+
 .modal-buttons {
   display: flex;
   gap: 12px;
   width: 100%;
+  justify-content: center;
 }
 
 .modal-button {
-  flex: 1;
   padding: 14px 24px;
   border: none;
   border-radius: 8px;

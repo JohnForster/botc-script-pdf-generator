@@ -34,6 +34,7 @@ interface ScriptControlsProps {
   ) => void;
   onSort: () => void;
   onGeneratePDF: () => void;
+  onGenerateImages: () => void;
   onPrint: () => void;
   onScriptChange: (text: string) => void;
   onSave: () => void;
@@ -56,6 +57,7 @@ export function ScriptControls({
   onOptionChange,
   onSort,
   onGeneratePDF,
+  onGenerateImages,
   onPrint,
   onScriptChange,
   onSave,
@@ -103,6 +105,7 @@ export function ScriptControls({
               error={error}
               onSort={onSort}
               onGeneratePDF={onGeneratePDF}
+              onGenerateImages={onGenerateImages}
               onPrint={onPrint}
             />
 

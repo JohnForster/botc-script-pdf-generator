@@ -10,6 +10,7 @@ const CHANGELOG_ENTRIES: ChangelogEntry[] = [
     date: "2026-01-27",
     changes: [
       "Add script logo support",
+      "Add the ability to download a fancy script as an image, for easier sharing to Reddit etc.",
       "Fix some ability typos (Thank you Heather!)",
     ],
   },
