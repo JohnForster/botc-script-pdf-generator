@@ -118,7 +118,8 @@
 
 .script-logo {
   max-width: 35mm;
-  max-height: 25mm;
+  max-height: 23mm;
+  margin-right: 1mm;
 }
 
 .sheet-author {
