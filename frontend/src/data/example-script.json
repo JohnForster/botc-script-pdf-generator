@@ -3,7 +3,8 @@
     "id": "_meta",
     "author": "Dungeon Mister",
     "name": "Blending In",
-    "colour": "#0a6621"
+    "colour": "#0a6621",
+    "logo": "https://bloodontheclocktower.com/cdn/shop/files/2_-_Logo_-_Skull_GOS-edit_2.png?v=1761821562&width=1070"
   },
   "steward",
   "librarian",
@@ -16,7 +17,7 @@
   "nightwatchman",
   "seamstress",
   "juggler",
-  "banshee",
+  "farmer",
   "magician",
   "drunk",
   "plaguedoctor",
