@@ -7,6 +7,13 @@ interface ChangelogEntry {
 
 const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    date: "2026-01-27",
+    changes: [
+      "Add script logo support",
+      "Fix some ability typos (Thank you Heather!)",
+    ],
+  },
+  {
     date: "2026-01-21",
     changes: [
       "Add half-size Teensyville support",
