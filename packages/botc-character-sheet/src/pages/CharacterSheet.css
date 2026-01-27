@@ -120,6 +120,8 @@
   max-width: 35mm;
   max-height: 23mm;
   margin-right: 1mm;
+  margin-top: -2mm;
+  margin-bottom: -2mm;
 }
 
 .sheet-author {
