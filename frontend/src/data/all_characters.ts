@@ -122,7 +122,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   banshee: {
     name: "Banshee",
     ability:
-      "If the Demon kills you, all players learn this. From now on, you may nominate twice per day and vote twice per nomination.”",
+      "If the Demon kills you, all players learn this. From now on, you may nominate twice per day and vote twice per nomination.",
     team: "townsfolk",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/6/63/Icon_banshee.png",
@@ -1152,7 +1152,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   ogre: {
     name: "Ogre",
     ability:
-      "On your 1st night, choose a player (not yourself): you become their alignment (you don't know which) even if drunk or poisoned.”",
+      "On your 1st night, choose a player (not yourself): you become their alignment (you don't know which) even if drunk or poisoned.",
     team: "outsider",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/2/25/Icon_ogre.png",

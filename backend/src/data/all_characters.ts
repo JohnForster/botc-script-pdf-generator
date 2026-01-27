@@ -117,7 +117,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   banshee: {
     name: "Banshee",
     ability:
-      "If the Demon kills you, all players learn this. From now on, you may nominate twice per day and vote twice per nomination.”",
+      "If the Demon kills you, all players learn this. From now on, you may nominate twice per day and vote twice per nomination.",
     team: "townsfolk",
     image: "https://wiki.bloodontheclocktower.com/images/b/b5/Icon_acrobat.png",
     wiki_image:
