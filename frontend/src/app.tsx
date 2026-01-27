@@ -60,13 +60,18 @@ export function App() {
     script,
   });
 
-  // Load color from script metadata when script changes
+  // Load color and logo from script metadata when script changes
   useEffect(() => {
     if (script?.metadata?.colour) {
       const colour = script.metadata.colour;
       if (typeof colour === "string" || Array.isArray(colour)) {
         updateOption("color", colour);
       }
+    }
+    if (script?.metadata?.logo) {
+      updateOption("logo", script.metadata.logo);
+    } else {
+      updateOption("logo", "");
     }
   }, [script]);
 
@@ -142,6 +147,23 @@ export function App() {
     }
   };
 
+  const handleLogoChange = (newLogo: string) => {
+    updateOption("logo", newLogo);
+
+    if (!rawScript) return;
+
+    const updatedScript = rawScript.map((element) => {
+      if (typeof element === "object" && element !== null && "id" in element) {
+        if (element.id === "_meta") {
+          return { ...element, logo: newLogo || undefined };
+        }
+      }
+      return element;
+    });
+
+    updateScriptMetadata(updatedScript);
+  };
+
   const handleScriptChange = (newText: string) => {
     handleScriptTextChange(newText);
   };
@@ -190,6 +212,7 @@ export function App() {
             onColorArrayChange={handleColorArrayChange}
             onAddColor={handleAddColor}
             onRemoveColor={handleRemoveColor}
+            onLogoChange={handleLogoChange}
             onOptionChange={updateOption}
             onSort={handleSort}
             onGeneratePDF={handleGeneratePDF}

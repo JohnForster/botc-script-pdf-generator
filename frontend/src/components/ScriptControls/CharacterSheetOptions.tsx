@@ -5,6 +5,7 @@ interface CharacterSheetOptionsProps {
   overleaf: OverleafType;
   appearance: AppearanceLevel;
   showAuthor: boolean;
+  showLogo: boolean;
   showJinxes: boolean;
   inlineJinxIcons: boolean;
   useOldJinxes: boolean;
@@ -14,6 +15,7 @@ interface CharacterSheetOptionsProps {
   onOverleafChange: (value: OverleafType) => void;
   onAppearanceChange: (value: AppearanceLevel) => void;
   onShowAuthorChange: (value: boolean) => void;
+  onShowLogoChange: (value: boolean) => void;
   onShowJinxesChange: (value: boolean) => void;
   onInlineJinxIconsChange: (value: boolean) => void;
   onUseOldJinxesChange: (value: boolean) => void;
@@ -26,6 +28,7 @@ export function CharacterSheetOptions({
   overleaf,
   appearance,
   showAuthor,
+  showLogo,
   showJinxes,
   inlineJinxIcons,
   useOldJinxes,
@@ -35,6 +38,7 @@ export function CharacterSheetOptions({
   onOverleafChange,
   onAppearanceChange,
   onShowAuthorChange,
+  onShowLogoChange,
   onShowJinxesChange,
   onInlineJinxIconsChange,
   onUseOldJinxesChange,
@@ -71,6 +75,12 @@ export function CharacterSheetOptions({
         label="Show Author"
         checked={showAuthor}
         onChange={onShowAuthorChange}
+      />
+
+      <Toggle
+        label="Show Logo"
+        checked={showLogo}
+        onChange={onShowLogoChange}
       />
 
       <Toggle

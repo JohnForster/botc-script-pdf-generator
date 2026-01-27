@@ -85,6 +85,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: fit-content;
+  align-self: center;
 }
 
 .sheet-header span {
@@ -112,7 +114,11 @@
 
 .flip {
   transform: scaleX(-1);
-  /* transform: rotate(180deg); */
+}
+
+.script-logo {
+  max-width: 35mm;
+  max-height: 25mm;
 }
 
 .sheet-author {

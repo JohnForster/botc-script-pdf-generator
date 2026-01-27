@@ -41,6 +41,8 @@ export interface NightOrders {
 
 export interface ScriptOptions {
   color: string | string[];
+  logo: string;
+  showLogo: boolean;
   showAuthor: boolean;
   showJinxes: boolean;
   useOldJinxes: boolean;

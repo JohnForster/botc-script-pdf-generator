@@ -28,6 +28,8 @@ export const randomColor = () => {
 
 export const DEFAULT_OPTIONS: ScriptOptions = {
   color: randomColor(),
+  logo: "",
+  showLogo: true,
   showAuthor: true,
   showJinxes: true,
   useOldJinxes: false,

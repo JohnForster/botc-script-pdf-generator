@@ -33,6 +33,8 @@ export function CharacterSheet({
 }: CharacterSheetProps) {
   const {
     color,
+    logo,
+    showLogo,
     showSwirls,
     includeMargins,
     solidTitle,
@@ -100,6 +102,7 @@ export function CharacterSheet({
             showSwirls={showSwirls}
             title={title}
             author={author}
+            logo={showLogo ? logo : undefined}
             solidHeader={solidTitle}
           />
 
@@ -147,10 +150,10 @@ export function CharacterSheet({
           <div className="sheet-footer">
             <span className="asterisk">*</span>Not the first night
           </div>
-        </div>
-        <div className="author-credit">
-          <p>© Steven Medway bloodontheclocktower.com</p>
-          <p>Script template by John Forster ravenswoodstudio.xyz</p>
+          <div className="author-credit">
+            <p>© Steven Medway bloodontheclocktower.com</p>
+            <p>Script template by John Forster ravenswoodstudio.xyz</p>
+          </div>
         </div>
       </div>{" "}
     </PrintablePage>
@@ -161,11 +164,13 @@ function Header({
   showSwirls,
   title,
   author,
+  logo,
   solidHeader = false,
 }: {
   showSwirls: boolean;
   title: string;
   author?: string;
+  logo?: string;
   solidHeader?: boolean;
 }) {
   return (
@@ -177,6 +182,8 @@ function Header({
             className="swirl-divider"
           ></img>
         )}
+
+        {logo && <img className="script-logo" src={logo}></img>}
         <span
           style={{
             mixBlendMode: solidHeader ? "normal" : "multiply",

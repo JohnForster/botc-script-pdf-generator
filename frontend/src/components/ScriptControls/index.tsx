@@ -1,7 +1,6 @@
 import { ScriptOptions } from "botc-character-sheet";
 import { CollapsibleSection } from "../ui";
 import { UploadSection } from "./UploadSection";
-import { ColorPicker } from "./ColorPicker";
 import { AppearanceOptions } from "./AppearanceOptions";
 import { CharacterSheetOptions } from "./CharacterSheetOptions";
 import { CharacterSheetBackOptions } from "./CharacterSheetBackOptions";
@@ -28,6 +27,7 @@ interface ScriptControlsProps {
   onColorArrayChange: (index: number, color: string) => void;
   onAddColor: () => void;
   onRemoveColor: (index: number) => void;
+  onLogoChange: (logo: string) => void;
   onOptionChange: <K extends keyof ScriptOptions>(
     key: K,
     value: ScriptOptions[K],
@@ -52,6 +52,7 @@ export function ScriptControls({
   onColorArrayChange,
   onAddColor,
   onRemoveColor,
+  onLogoChange,
   onOptionChange,
   onSort,
   onGeneratePDF,
@@ -106,19 +107,19 @@ export function ScriptControls({
             />
 
             <CollapsibleSection title="General">
-              <ColorPicker
+              <AppearanceOptions
                 color={options.color}
+                logo={options.logo}
+                showNightSheet={options.showNightSheet}
+                teensyMode={options.teensy}
                 onColorChange={onColorChange}
                 onColorArrayChange={onColorArrayChange}
                 onAddColor={onAddColor}
                 onRemoveColor={onRemoveColor}
-              />
-              <AppearanceOptions
-                showNightSheet={options.showNightSheet}
+                onLogoChange={onLogoChange}
                 onShowNightSheetChange={(value) =>
                   onOptionChange("showNightSheet", value)
                 }
-                teensyMode={options.teensy}
                 onTeensyModeChange={(value) => onOptionChange("teensy", value)}
               />
             </CollapsibleSection>
@@ -128,6 +129,7 @@ export function ScriptControls({
                 overleaf={options.overleaf}
                 appearance={options.appearance}
                 showAuthor={options.showAuthor}
+                showLogo={options.showLogo}
                 showJinxes={options.showJinxes}
                 inlineJinxIcons={options.inlineJinxIcons}
                 useOldJinxes={options.useOldJinxes}
@@ -140,6 +142,9 @@ export function ScriptControls({
                 }
                 onShowAuthorChange={(value) =>
                   onOptionChange("showAuthor", value)
+                }
+                onShowLogoChange={(value) =>
+                  onOptionChange("showLogo", value)
                 }
                 onShowJinxesChange={(value) =>
                   onOptionChange("showJinxes", value)
