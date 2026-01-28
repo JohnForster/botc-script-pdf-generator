@@ -58,10 +58,10 @@ a:visited {
 }
 
 .app {
-  max-width: 1400px;
   margin: 0 auto;
   padding: 40px 20px;
   display: flex;
+  justify-content: center;
   gap: 20px;
 }
 
@@ -80,6 +80,7 @@ a:visited {
   box-shadow: 0 10px 30px var(--shadow);
   display: flex;
   flex-direction: column;
+  flex-basis: 540px;
   min-height: 0;
   align-items: center;
 
@@ -170,6 +171,7 @@ a:visited {
 .action-buttons {
   display: flex;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .action-buttons .print-button,
