@@ -4,7 +4,11 @@ import { logUsage } from "./utils/logger";
 import type { Script } from "botc-script-checker";
 import exampleScript from "./data/example-script.json";
 import exampleTeensyville from "./data/example-teensy.json";
-import { useScriptLoader } from "./hooks/useScriptLoader";
+import {
+  useScriptLoader,
+  getInitialOptionsFromUrl,
+  hasUrlParam,
+} from "./hooks/useScriptLoader";
 import { usePdfGeneration } from "./hooks/usePdfGeneration";
 import { useImageGeneration } from "./hooks/useImageGeneration";
 import { useOverflowDetection } from "./hooks/useOverflowDetection";
@@ -14,7 +18,7 @@ import { PdfModal } from "./components/PdfModal";
 import { ImageModal } from "./components/ImageModal";
 import { Changelog } from "./components/Changelog";
 import { MobileControlsToggle } from "./components/MobileControlsToggle";
-import { DEFAULT_OPTIONS, randomColor } from "./types/options";
+import { randomColor } from "./types/options";
 import "./app.css";
 import { FancyDoc, ScriptOptions, TeensyDoc } from "botc-character-sheet";
 
@@ -56,7 +60,9 @@ export function App() {
     closeImageModal,
   } = useImageGeneration();
 
-  const [options, setOptions] = useState<ScriptOptions>(DEFAULT_OPTIONS);
+  const [options, setOptions] = useState<ScriptOptions>(
+    getInitialOptionsFromUrl,
+  );
 
   const {
     isOpen: mobileControlsOpen,
@@ -74,15 +80,25 @@ export function App() {
     script,
   });
 
-  // Load color and logo from script metadata when script changes
+  // Sync color and logo between options and script metadata when script changes
   useEffect(() => {
-    if (script?.metadata?.colour) {
+    if (!script) return;
+
+    // If URL param specified color, update the script metadata with it
+    // Otherwise, load color from script metadata
+    if (hasUrlParam("color")) {
+      handleColorChange(options.color);
+    } else if (script.metadata?.colour) {
       const colour = script.metadata.colour;
       if (typeof colour === "string" || Array.isArray(colour)) {
         updateOption("color", colour);
       }
     }
-    if (script?.metadata?.logo) {
+
+    // Same for logo
+    if (hasUrlParam("logo")) {
+      handleLogoChange(options.logo);
+    } else if (script.metadata?.logo) {
       updateOption("logo", script.metadata.logo);
     } else {
       updateOption("logo", "");

@@ -11,7 +11,7 @@ export function parseRgb(hex: string): [number, number, number] {
       .join("");
   }
   if (hex.length !== 6) {
-    throw new Error("Invalid HEX color.");
+    throw new Error(`Invalid HEX color: ${hex}`);
   }
   const r = parseInt(hex.slice(0, 2), 16);
   const g = parseInt(hex.slice(2, 4), 16);
@@ -99,7 +99,7 @@ export function createGradient(colors: string[], angle: number = 20): string {
  */
 export function createOverlayBackground(
   color: string | string[],
-  angle: number = 90
+  angle: number = 90,
 ): string {
   const colors = normalizeColors(color);
 
