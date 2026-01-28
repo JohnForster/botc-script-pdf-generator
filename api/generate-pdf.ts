@@ -20,6 +20,7 @@ function isAllowedOrigin(origin: string | null): boolean {
   if (!origin) return false;
   if (origin.includes("localhost") || origin.includes("127.0.0.1")) return true;
   if (origin === "https://fancy.ravenswoodstudio.xyz") return true;
+  if (origin === "https://pdf.ravenswoodstudio.xyz") return true;
   if (origin.endsWith(".vercel.app")) return true;
   return false;
 }
@@ -60,7 +61,11 @@ function corsHeaders(origin: string | null): HeadersInit {
   };
 }
 
-function jsonResponse(data: object, status: number, origin: string | null): Response {
+function jsonResponse(
+  data: object,
+  status: number,
+  origin: string | null,
+): Response {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
@@ -96,18 +101,26 @@ export default {
 
     // Optional API key check
     if (API_KEY && request.headers.get("x-api-key") !== API_KEY) {
-      return jsonResponse({ error: "Unauthorized: Invalid API key" }, 401, origin);
+      return jsonResponse(
+        { error: "Unauthorized: Invalid API key" },
+        401,
+        origin,
+      );
     }
 
     try {
-      const body = await request.json() as NetworkPayload;
+      const body = (await request.json()) as NetworkPayload;
 
       // Validate payload size
       const payloadSize = JSON.stringify(body).length;
       if (payloadSize > MAX_PAYLOAD_SIZE) {
-        return jsonResponse({
-          error: `Payload too large. Maximum size is ${MAX_PAYLOAD_SIZE / 1024}KB`,
-        }, 413, origin);
+        return jsonResponse(
+          {
+            error: `Payload too large. Maximum size is ${MAX_PAYLOAD_SIZE / 1024}KB`,
+          },
+          413,
+          origin,
+        );
       }
 
       const { script, options, filename, nightOrders } = body;
@@ -201,10 +214,14 @@ export default {
       });
     } catch (error) {
       console.error("PDF generation error:", error);
-      return jsonResponse({
-        error: "Failed to generate PDF",
-        message: error instanceof Error ? error.message : "Unknown error",
-      }, 500, origin);
+      return jsonResponse(
+        {
+          error: "Failed to generate PDF",
+          message: error instanceof Error ? error.message : "Unknown error",
+        },
+        500,
+        origin,
+      );
     }
   },
 };
