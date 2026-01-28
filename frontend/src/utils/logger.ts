@@ -6,6 +6,7 @@ export const logUsage = async (
   script: ParsedScript,
   other: { [key: string]: any } = {},
 ) => {
+  // Only log usage in production environment
   if (import.meta.env.DEV) {
     return;
   }
@@ -14,8 +15,12 @@ export const logUsage = async (
     method: "POST",
     body: JSON.stringify({
       app: "script-pdf-maker",
+      title: script.metadata?.name || "Untitled",
+      author: script.metadata?.author || "Unknown",
+      characterCount: script.characters.length,
+      characters: script.characters.map((c) => c.id).join(", "),
+      characterDetails: script.characters,
       meta: script.metadata,
-      characters: script.characters,
       ...other,
     }),
     headers: {
