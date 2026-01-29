@@ -282,6 +282,11 @@
   font-size: 13mm;
 }
 
+.appearance-compact .script-logo {
+  max-width: 33mm;
+  max-height: 21mm;
+}
+
 /* Super-compact appearance */
 .appearance-super-compact .character-ability {
   font-size: 2.7mm;
@@ -303,6 +308,11 @@
 
 .appearance-super-compact .sheet-header span {
   font-size: 12mm;
+}
+
+.appearance-super-compact .script-logo {
+  max-width: 31mm;
+  max-height: 19.5mm;
 }
 
 /* Mega-compact appearance */
@@ -333,6 +343,11 @@
   width: 4mm;
   height: 4mm;
   font-size: 1.3mm;
+}
+
+.appearance-mega-compact .script-logo {
+  max-width: 29mm;
+  max-height: 18mm;
 }
 
 .sheet-footer {
