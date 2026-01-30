@@ -274,7 +274,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   cerenovus: {
     name: "Cerenovus",
     ability:
-      "Each night, choose a player & a good character: they are 'mad' they are this character tomorrow, or might be executed.",
+      "Each night, choose a player & a good character: they are “mad” they are this character tomorrow, or might be executed.",
     team: "minion",
     image: "/character_icons/cerenovus.png",
     wiki_image:
@@ -1030,7 +1030,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   },
   mutant: {
     name: "Mutant",
-    ability: "If you are 'mad' about being an Outsider, you might be executed.",
+    ability: "If you are “mad” about being an Outsider, you might be executed.",
     team: "outsider",
     image: "/character_icons/mutant.png",
     wiki_image:

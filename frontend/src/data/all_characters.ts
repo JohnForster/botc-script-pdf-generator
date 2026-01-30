@@ -292,7 +292,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   cerenovus: {
     name: "Cerenovus",
     ability:
-      "Each night, choose a player & a good character: they are 'mad' they are this character tomorrow, or might be executed.",
+      "Each night, choose a player & a good character: they are “mad” they are this character tomorrow, or might be executed.",
     team: "minion",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/4/45/Icon_cerenovus.png",
@@ -1111,7 +1111,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   },
   mutant: {
     name: "Mutant",
-    ability: "If you are 'mad' about being an Outsider, you might be executed.",
+    ability: "If you are “mad” about being an Outsider, you might be executed.",
     team: "outsider",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/2/2e/Icon_mutant.png",
