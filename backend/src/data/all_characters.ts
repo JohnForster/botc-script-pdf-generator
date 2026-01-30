@@ -1,6 +1,3 @@
-// Auto-generated from script-checker-lib/src/data/all_characters.ts
-// DO NOT EDIT MANUALLY - use scripts/convert-characters.ts to regenerate
-
 import { ResolvedCharacter } from "botc-character-sheet";
 
 export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
@@ -176,7 +173,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   boffin: {
     name: "Boffin",
     ability:
-      "The Demon (even if drunk or poisoned) has a not-in-play good character's ability. You both know which.",
+      "The Demon (even if drunk or poisoned) has a not-in-play good character’s ability. You both know which.",
     team: "minion",
     image: "/character_icons/boffin.png",
     wiki_image:
@@ -370,9 +367,9 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
     id: "deviant",
   },
   devilsadvocate: {
-    name: "Devil's Advocate",
+    name: "Devil’s Advocate",
     ability:
-      "Each night, choose a living player (different to last night): if executed tomorrow, they don't die.",
+      "Each night, choose a living player (different to last night): if executed tomorrow, they don’t die.",
     team: "minion",
     image: "/character_icons/devilsadvocate.png",
     wiki_image:
@@ -381,7 +378,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   },
   djinn: {
     name: "Djinn",
-    ability: "Use the Djinn's special rule. All players know what it is.",
+    ability: "Use the Djinn’s special rule. All players know what it is.",
     team: "fabled",
     image: "/character_icons/djinn.png",
     wiki_image:
@@ -451,7 +448,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   eviltwin: {
     name: "Evil Twin",
     ability:
-      "You & an opposing player know each other. If the good player is executed, evil wins. Good can't win if you both live.",
+      "You & an opposing player know each other. If the good player is executed, evil wins. Good can’t win if you both live.",
     team: "minion",
     image: "/character_icons/eviltwin.png",
     wiki_image:
@@ -461,7 +458,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   exorcist: {
     name: "Exorcist",
     ability:
-      "Each night*, choose a player (different to last night): the Demon, if chosen, learns who you are then doesn't wake tonight.",
+      "Each night*, choose a player (different to last night): the Demon, if chosen, learns who you are then doesn’t wake tonight.",
     team: "townsfolk",
     image: "/character_icons/exorcist.png",
     wiki_image:
@@ -546,7 +543,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   },
   fool: {
     name: "Fool",
-    ability: "The 1st time you die, you don't.",
+    ability: "The 1st time you die, you don’t.",
     team: "townsfolk",
     image: "/character_icons/fool.png",
     wiki_image:
@@ -713,7 +710,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
     id: "hatter",
   },
   hellslibrarian: {
-    name: "Hell's Librarian",
+    name: "Hell’s Librarian",
     ability:
       "Something bad might happen to whoever talks when the Storyteller has asked for silence.",
     team: "fabled",
@@ -773,7 +770,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   innkeeper: {
     name: "Innkeeper",
     ability:
-      "Each night*, choose 2 players: they can't die tonight, but 1 is drunk until dusk.",
+      "Each night*, choose 2 players: they can’t die tonight, but 1 is drunk until dusk.",
     team: "townsfolk",
     image: "/character_icons/innkeeper.png",
     wiki_image:
@@ -879,9 +876,9 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
     id: "librarian",
   },
   lilmonsta: {
-    name: "Lil' Monsta",
+    name: "Lil’ Monsta",
     ability:
-      "Each night, Minions choose who babysits Lil' Monsta & 'is the Demon'. Each night*, a player might die. [+1 Minion]",
+      "Each night, Minions choose who babysits Lil’ Monsta & “is the Demon”. Each night*, a player might die. [+1 Minion]",
     team: "demon",
     image: "/character_icons/lilmonsta.png",
     wiki_image:
@@ -921,7 +918,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   lycanthrope: {
     name: "Lycanthrope",
     ability:
-      "Each night*, choose an alive player. If good, they die & the Demon doesn't kill tonight. One good player registers as evil.",
+      "Each night*, choose an alive player. If good, they die & the Demon doesn’t kill tonight. One good player registers as evil.",
     team: "townsfolk",
     image: "/character_icons/lycanthrope.png",
     wiki_image:
@@ -961,7 +958,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   mathematician: {
     name: "Mathematician",
     ability:
-      "Each night, you learn how many players' abilities worked abnormally (since dawn) due to another character's ability.",
+      "Each night, you learn how many players' abilities worked abnormally (since dawn) due to another character’s ability.",
     team: "townsfolk",
     image: "/character_icons/mathematician.png",
     wiki_image:
@@ -1069,7 +1066,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   ogre: {
     name: "Ogre",
     ability:
-      "On your 1st night, choose a player (not yourself): you become their alignment (you don't know which) even if drunk or poisoned.”",
+      "On your 1st night, choose a player (not yourself): you become their alignment (you don’t know which) even if drunk or poisoned.”",
     team: "outsider",
     image: "/character_icons/ogre.png",
     wiki_image:
@@ -1205,7 +1202,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   princess: {
     name: "Princess",
     ability:
-      "On your 1st day, if you nominated & executed a player, the Demon doesn't kill tonight.",
+      "On your 1st day, if you nominated & executed a player, the Demon doesn’t kill tonight.",
     team: "townsfolk",
     image: "/character_icons/princess.png",
     wiki_image:
@@ -1303,7 +1300,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   sailor: {
     name: "Sailor",
     ability:
-      "Each night, choose an alive player: either you or they are drunk until dusk. You can't die.",
+      "Each night, choose an alive player: either you or they are drunk until dusk. You can’t die.",
     team: "townsfolk",
     image: "/character_icons/sailor.png",
     wiki_image:
@@ -1342,7 +1339,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   scarletwoman: {
     name: "Scarlet Woman",
     ability:
-      "If there are 5 or more players alive & the Demon dies, you become the Demon. (Travellers don't count.)",
+      "If there are 5 or more players alive & the Demon dies, you become the Demon. (Travellers don’t count.)",
     team: "minion",
     image: "/character_icons/scarletwoman.png",
     wiki_image:
@@ -1428,7 +1425,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   },
   spiritofivory: {
     name: "Spirit of Ivory",
-    ability: "There can't be more than 1 extra evil player.",
+    ability: "There can’t be more than 1 extra evil player.",
     team: "fabled",
     image: "/character_icons/spiritofivory.png",
     wiki_image:
@@ -1485,7 +1482,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   },
   tealady: {
     name: "Tea Lady",
-    ability: "If both your alive neighbors are good, they can't die.",
+    ability: "If both your alive neighbors are good, they can’t die.",
     team: "townsfolk",
     image: "/character_icons/tealady.png",
     wiki_image:
@@ -1592,7 +1589,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   voudon: {
     name: "Voudon",
     ability:
-      "Only you & the dead can vote. They don't need a vote token to do so. A 50% majority isn't required.",
+      "Only you & the dead can vote. They don’t need a vote token to do so. A 50% majority isn’t required.",
     team: "traveller",
     image: "/character_icons/voudon.png",
     wiki_image:

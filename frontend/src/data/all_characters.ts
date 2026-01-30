@@ -53,8 +53,8 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/2/26/Icon_amnesiac.png",
     id: "amnesiac",
-    firstNightReminder: "Run the Amnesiac's ability, if applicable.",
-    otherNightReminder: "Run the Amnesiac's ability, if applicable.",
+    firstNightReminder: "Run the Amnesiac’s ability, if applicable.",
+    otherNightReminder: "Run the Amnesiac’s ability, if applicable.",
   },
   angel: {
     name: "Angel",
@@ -76,7 +76,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
       "https://wiki.bloodontheclocktower.com/images/0/03/Icon_apprentice.png",
     id: "apprentice",
     firstNightReminder:
-      "Show the Apprentice the *YOU ARE* card, then a Townsfolk or Minion token. In the Grimoire, replace the Apprentice token with that character token, and put the Apprentice's *IS THE APPRENTICE* reminder by that character token.",
+      "Show the Apprentice the *YOU ARE* card, then a Townsfolk or Minion token. In the Grimoire, replace the Apprentice token with that character token, and put the Apprentice’s *IS THE APPRENTICE* reminder by that character token.",
   },
   artist: {
     name: "Artist",
@@ -192,7 +192,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   boffin: {
     name: "Boffin",
     ability:
-      "The Demon (even if drunk or poisoned) has a not-in-play good character's ability. You both know which.",
+      "The Demon (even if drunk or poisoned) has a not-in-play good character’s ability. You both know which.",
     team: "minion",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/e/e0/Icon_boffin.png",
@@ -209,7 +209,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
       "https://wiki.bloodontheclocktower.com/images/9/9e/Icon_bonecollector.png",
     id: "bonecollector",
     otherNightReminder:
-      "The Bone Collector either shakes their head no or points at any dead player. If they pointed at any dead player, put the Bone Collector's 'Has Ability' reminder by the chosen player's character token. (They may need to be woken tonight to use it.)",
+      "The Bone Collector either shakes their head no or points at any dead player. If they pointed at any dead player, put the Bone Collector’s 'Has Ability' reminder by the chosen player’s character token. (They may need to be woken tonight to use it.)",
   },
   boomdandy: {
     name: "Boomdandy",
@@ -402,21 +402,21 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
     id: "deviant",
   },
   devilsadvocate: {
-    name: "Devil's Advocate",
+    name: "Devil’s Advocate",
     ability:
-      "Each night, choose a living player (different to last night): if executed tomorrow, they don't die.",
+      "Each night, choose a living player (different to last night): if executed tomorrow, they don’t die.",
     team: "minion",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/0/09/Icon_devilsadvocate.png",
     id: "devilsadvocate",
     firstNightReminder:
-      "The Devil's Advocate chooses a living player. :reminder:",
+      "The Devil’s Advocate chooses a living player. :reminder:",
     otherNightReminder:
-      "The Devil's Advocate chooses a living player. :reminder:",
+      "The Devil’s Advocate chooses a living player. :reminder:",
   },
   djinn: {
     name: "Djinn",
-    ability: "Use the Djinn's special rule. All players know what it is.",
+    ability: "Use the Djinn’s special rule. All players know what it is.",
     team: "fabled",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/8/86/Icon_djinn.png",
@@ -491,18 +491,18 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   eviltwin: {
     name: "Evil Twin",
     ability:
-      "You & an opposing player know each other. If the good player is executed, evil wins. Good can't win if you both live.",
+      "You & an opposing player know each other. If the good player is executed, evil wins. Good can’t win if you both live.",
     team: "minion",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/f/f4/Icon_eviltwin.png",
     id: "eviltwin",
     firstNightReminder:
-      "Wake both twins. Allow eye contact. Show the good twin's character token to the Evil Twin & vice versa.",
+      "Wake both twins. Allow eye contact. Show the good twin’s character token to the Evil Twin & vice versa.",
   },
   exorcist: {
     name: "Exorcist",
     ability:
-      "Each night*, choose a player (different to last night): the Demon, if chosen, learns who you are then doesn't wake tonight.",
+      "Each night*, choose a player (different to last night): the Demon, if chosen, learns who you are then doesn’t wake tonight.",
     team: "townsfolk",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/c/c2/Icon_exorcist.png",
@@ -589,7 +589,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   },
   fool: {
     name: "Fool",
-    ability: "The 1st time you die, you don't.",
+    ability: "The 1st time you die, you don’t.",
     team: "townsfolk",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/d/d9/Icon_fool.png",
@@ -737,7 +737,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
       "https://wiki.bloodontheclocktower.com/images/6/60/Icon_harlot.png",
     id: "harlot",
     otherNightReminder:
-      "The Harlot points at any living player. Then, put the Harlot to sleep. Wake the chosen player, show them the *THIS CHARACTER SELECTED YOU* token, then the Harlot token. That player either nods their head yes or shakes their head no. If they nodded their head yes, wake the Harlot and show them the chosen player's character token. Then, you may decide that both players die.",
+      "The Harlot points at any living player. Then, put the Harlot to sleep. Wake the chosen player, show them the *THIS CHARACTER SELECTED YOU* token, then the Harlot token. That player either nods their head yes or shakes their head no. If they nodded their head yes, wake the Harlot and show them the chosen player’s character token. Then, you may decide that both players die.",
   },
   harpy: {
     name: "Harpy",
@@ -764,7 +764,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
       "If the Hatter died today or tonight, wake Minions and Demons, allow them to choose new characters.",
   },
   hellslibrarian: {
-    name: "Hell's Librarian",
+    name: "Hell’s Librarian",
     ability:
       "Something bad might happen to whoever talks when the Storyteller has asked for silence.",
     team: "fabled",
@@ -835,7 +835,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   innkeeper: {
     name: "Innkeeper",
     ability:
-      "Each night*, choose 2 players: they can't die tonight, but 1 is drunk until dusk.",
+      "Each night*, choose 2 players: they can’t die tonight, but 1 is drunk until dusk.",
     team: "townsfolk",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/0/0c/Icon_innkeeper.png",
@@ -949,9 +949,9 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
       "Show the Outsider character token. Point to both the *OUTSIDER* and *WRONG* players.",
   },
   lilmonsta: {
-    name: "Lil' Monsta",
+    name: "Lil’ Monsta",
     ability:
-      "Each night, Minions choose who babysits Lil' Monsta & 'is the Demon'. Each night*, a player might die. [+1 Minion]",
+      "Each night, Minions choose who babysits Lil' Monsta & “is the Demon”. Each night*, a player might die. [+1 Minion]",
     team: "demon",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/c/c3/Icon_lilmonsta.png",
@@ -1000,7 +1000,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   lycanthrope: {
     name: "Lycanthrope",
     ability:
-      "Each night*, choose an alive player. If good, they die & the Demon doesn't kill tonight. One good player registers as evil.",
+      "Each night*, choose an alive player. If good, they die & the Demon doesn’t kill tonight. One good player registers as evil.",
     team: "townsfolk",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/9/92/Icon_lycanthrope.png",
@@ -1041,7 +1041,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   mathematician: {
     name: "Mathematician",
     ability:
-      "Each night, you learn how many players' abilities worked abnormally (since dawn) due to another character's ability.",
+      "Each night, you learn how many players' abilities worked abnormally (since dawn) due to another character’s ability.",
     team: "townsfolk",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/f/f1/Icon_mathematician.png",
@@ -1152,7 +1152,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   ogre: {
     name: "Ogre",
     ability:
-      "On your 1st night, choose a player (not yourself): you become their alignment (you don't know which) even if drunk or poisoned.",
+      "On your 1st night, choose a player (not yourself): you become their alignment (you don’t know which) even if drunk or poisoned.",
     team: "outsider",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/2/25/Icon_ogre.png",
@@ -1311,13 +1311,13 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   princess: {
     name: "Princess",
     ability:
-      "On your 1st day, if you nominated & executed a player, the Demon doesn't kill tonight.",
+      "On your 1st day, if you nominated & executed a player, the Demon doesn’t kill tonight.",
     team: "townsfolk",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/3/36/Icon_princess.png",
     id: "princess",
     otherNightReminder:
-      "If the Princess nominated the player who was executed today, the Demon wakes as normal, but no one dies to the Demon's ability.",
+      "If the Princess nominated the player who was executed today, the Demon wakes as normal, but no one dies to the Demon’s ability.",
   },
   professor: {
     name: "Professor",
@@ -1369,7 +1369,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
       "https://wiki.bloodontheclocktower.com/images/e/ef/Icon_ravenkeeper.png",
     id: "ravenkeeper",
     otherNightReminder:
-      "If the Ravenkeeper died tonight, the Ravenkeeper chooses a player. Show that player's character token.",
+      "If the Ravenkeeper died tonight, the Ravenkeeper chooses a player. Show that player’s character token.",
   },
   recluse: {
     name: "Recluse",
@@ -1410,7 +1410,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   sailor: {
     name: "Sailor",
     ability:
-      "Each night, choose an alive player: either you or they are drunk until dusk. You can't die.",
+      "Each night, choose an alive player: either you or they are drunk until dusk. You can’t die.",
     team: "townsfolk",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/1/16/Icon_sailor.png",
@@ -1447,7 +1447,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   scarletwoman: {
     name: "Scarlet Woman",
     ability:
-      "If there are 5 or more players alive & the Demon dies, you become the Demon. (Travellers don't count.)",
+      "If there are 5 or more players alive & the Demon dies, you become the Demon. (Travellers don’t count.)",
     team: "minion",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/1/13/Icon_scarletwoman.png",
@@ -1539,7 +1539,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   },
   spiritofivory: {
     name: "Spirit of Ivory",
-    ability: "There can't be more than 1 extra evil player.",
+    ability: "There can’t be more than 1 extra evil player.",
     team: "fabled",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/9/96/Icon_spiritofivory.png",
@@ -1597,11 +1597,11 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
       "https://wiki.bloodontheclocktower.com/images/6/6a/Icon_sweetheart.png",
     id: "sweetheart",
     otherNightReminder:
-      "If the Sweetheart died, a player became drunk immediately. If you haven't done this yet, do so now. :reminder:",
+      "If the Sweetheart died, a player became drunk immediately. If you haven’t done this yet, do so now. :reminder:",
   },
   tealady: {
     name: "Tea Lady",
-    ability: "If both your alive neighbors are good, they can't die.",
+    ability: "If both your alive neighbors are good, they can’t die.",
     team: "townsfolk",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/1/16/Icon_tealady.png",
@@ -1637,7 +1637,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
       "https://wiki.bloodontheclocktower.com/images/6/61/Icon_tor.png",
     team: "loric",
     ability:
-      "Players don't know their character or alignment. They learn them when they die.",
+      "Players don’t know their character or alignment. They learn them when they die.",
   },
   towncrier: {
     name: "Town Crier",
@@ -1727,7 +1727,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   voudon: {
     name: "Voudon",
     ability:
-      "Only you & the dead can vote. They don't need a vote token to do so. A 50% majority isn't required.",
+      "Only you & the dead can vote. They don’t need a vote token to do so. A 50% majority isn’t required.",
     team: "traveller",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/6/6d/Icon_voudon.png",
@@ -1773,8 +1773,8 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/b/b5/Icon_wizard.png",
     id: "wizard",
-    firstNightReminder: "Run the Wizard's ability, if applicable.",
-    otherNightReminder: "Run the Wizard's ability, if applicable.",
+    firstNightReminder: "Run the Wizard’s ability, if applicable.",
+    otherNightReminder: "Run the Wizard’s ability, if applicable.",
   },
   wraith: {
     name: "Wraith",
