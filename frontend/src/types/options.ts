@@ -40,7 +40,7 @@ export const DEFAULT_OPTIONS: ScriptOptions = {
   appearance: "normal",
   overleaf: "backingSheet",
   showNightSheet: true,
-  iconScale: 1.6,
+  iconScale: 1.7,
   formatMinorWords: false,
   displayNightOrder: true,
   displayPlayerCounts: true,
