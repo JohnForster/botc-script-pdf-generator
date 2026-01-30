@@ -7,6 +7,13 @@ interface ChangelogEntry {
 
 const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    date: "2026-01-30",
+    changes: [
+      "Add share button, letting users generate unique links to their scripts",
+      "Fix some minor typography issues, where text used the wrong punctuation",
+    ],
+  },
+  {
     date: "2026-01-27",
     changes: [
       "Add script logo support",
