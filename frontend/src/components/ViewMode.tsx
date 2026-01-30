@@ -5,6 +5,7 @@ import { DEFAULT_OPTIONS } from "../types/options";
 import { loadScript as loadSharedScript } from "../utils/scriptStorage";
 import { parseScript } from "../utils/scriptParser";
 import { calculateNightOrders } from "../utils/nightOrders";
+import { useMobilePreviewScale } from "../hooks/useMobileControls";
 
 interface ViewModeProps {
   scriptId: string;
@@ -19,6 +20,8 @@ export function ViewMode({ scriptId }: ViewModeProps) {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useMobilePreviewScale(options.dimensions.width);
 
   useEffect(() => {
     async function fetchSharedScript() {
