@@ -108,11 +108,13 @@ export function App() {
   // Auto-adjust icon scale when appearance changes
   useEffect(() => {
     if (options.appearance === "compact") {
-      setOptions((prev) => ({ ...prev, iconScale: 1.5 }));
+      setOptions((prev) => ({ ...prev, iconScale: 1.6 }));
     } else if (options.appearance === "super-compact") {
+      setOptions((prev) => ({ ...prev, iconScale: 1.5 }));
+    } else if (options.appearance === "mega-compact") {
       setOptions((prev) => ({ ...prev, iconScale: 1.4 }));
     } else {
-      setOptions((prev) => ({ ...prev, iconScale: 1.6 }));
+      setOptions((prev) => ({ ...prev, iconScale: 1.7 }));
     }
   }, [options.appearance]);
 
