@@ -735,6 +735,7 @@ select.form-control-input:focus {
   text-align: center;
   animation: slideUp 0.3s ease-out;
   overflow-y: auto;
+  min-width: 50vw;
 }
 
 @keyframes slideUp {
@@ -822,6 +823,10 @@ select.form-control-input:focus {
 }
 
 @media (max-width: 1024px) {
+  .modal-content {
+    padding: 20px;
+  }
+
   .pdf-preview {
     height: 400px;
   }
