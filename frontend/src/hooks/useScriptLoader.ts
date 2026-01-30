@@ -6,6 +6,7 @@ import { NightOrders, ParsedScript, ScriptOptions } from "botc-character-sheet";
 import { calculateNightOrders } from "../utils/nightOrders";
 import { downloadBlob } from "../utils/downloadFile";
 import { DEFAULT_OPTIONS } from "../types/options";
+import { loadScript as loadSharedScript } from "../utils/scriptStorage";
 import JSON5 from "json5";
 
 // Check if a specific option was provided in URL params
@@ -172,11 +173,17 @@ export function useScriptLoader() {
     downloadBlob(blob, filename);
   };
 
+  // Store loaded options from shared script
+  const [sharedOptions, setSharedOptions] = useState<ScriptOptions | null>(
+    null,
+  );
+
   // Load script from URL query parameter on mount
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const scriptParam = params.get("script");
     const scriptUrlParam = params.get("script_url");
+    const sharedParam = params.get("shared");
 
     // Prioritize inline script over URL
     if (scriptParam) {
@@ -211,6 +218,25 @@ export function useScriptLoader() {
             err instanceof Error
               ? err.message
               : "Failed to fetch script from URL",
+          );
+        });
+    } else if (sharedParam) {
+      // Load from Firestore shared script
+      loadSharedScript(sharedParam)
+        .then((data) => {
+          if (!data) {
+            setError("Shared script not found");
+            return;
+          }
+          loadScript(data.rawScript);
+          setSharedOptions(data.options);
+        })
+        .catch((err) => {
+          console.error("Failed to load shared script:", err);
+          setError(
+            err instanceof Error
+              ? err.message
+              : "Failed to load shared script",
           );
         });
     }
@@ -262,6 +288,7 @@ export function useScriptLoader() {
     scriptText,
     isScriptSorted,
     nightOrders: nightOrdersState,
+    sharedOptions,
     loadScript,
     handleScriptTextChange,
     handleFileUpload,

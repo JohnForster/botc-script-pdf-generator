@@ -36,6 +36,10 @@ interface ScriptControlsProps {
   onGeneratePDF: () => void;
   onGenerateImages: () => void;
   onPrint: () => void;
+  onShare: () => void;
+  isSharing: boolean;
+  shareUrl: string | null;
+  shareError: string | null;
   onScriptChange: (text: string) => void;
   onSave: () => void;
 }
@@ -59,6 +63,10 @@ export function ScriptControls({
   onGeneratePDF,
   onGenerateImages,
   onPrint,
+  onShare,
+  isSharing,
+  shareUrl,
+  shareError,
   onScriptChange,
   onSave,
 }: ScriptControlsProps) {
@@ -107,6 +115,10 @@ export function ScriptControls({
               onGeneratePDF={onGeneratePDF}
               onGenerateImages={onGenerateImages}
               onPrint={onPrint}
+              onShare={onShare}
+              isSharing={isSharing}
+              shareUrl={shareUrl}
+              shareError={shareError}
             />
 
             <CollapsibleSection title="General">

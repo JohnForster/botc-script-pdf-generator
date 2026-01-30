@@ -4,5 +4,11 @@
   "installCommand": "bun install",
   "buildCommand": "bun run build",
   "outputDirectory": "frontend/dist",
-  "bunVersion": "1.x"
+  "bunVersion": "1.x",
+  "rewrites": [
+    {
+      "source": "/view/:id",
+      "destination": "/index.html"
+    }
+  ]
 }

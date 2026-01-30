@@ -13,16 +13,39 @@ import { usePdfGeneration } from "./hooks/usePdfGeneration";
 import { useImageGeneration } from "./hooks/useImageGeneration";
 import { useOverflowDetection } from "./hooks/useOverflowDetection";
 import { useMobileControls } from "./hooks/useMobileControls";
+import { useShare } from "./hooks/useShare";
 import { ScriptControls } from "./components/ScriptControls";
 import { PdfModal } from "./components/PdfModal";
 import { ImageModal } from "./components/ImageModal";
 import { Changelog } from "./components/Changelog";
 import { MobileControlsToggle } from "./components/MobileControlsToggle";
+import { ViewMode } from "./components/ViewMode";
 import { randomColor } from "./types/options";
 import "./app.css";
-import { FancyDoc, ScriptOptions, TeensyDoc } from "botc-character-sheet";
+import {
+  FancyDoc,
+  ScriptOptions,
+  TeensyDoc,
+} from "botc-character-sheet";
+
+// Check if we're in view mode (URL pattern: /view/:id)
+function getViewModeId(): string | null {
+  const path = window.location.pathname;
+  const match = path.match(/^\/view\/([a-zA-Z0-9]+)$/);
+  return match ? match[1] : null;
+}
 
 export function App() {
+  // Check if we're in view mode
+  const viewModeId = getViewModeId();
+  if (viewModeId) {
+    return <ViewMode scriptId={viewModeId} />;
+  }
+
+  return <EditMode />;
+}
+
+function EditMode() {
   const {
     script,
     rawScript,
@@ -30,6 +53,7 @@ export function App() {
     scriptText,
     isScriptSorted,
     nightOrders,
+    sharedOptions,
     loadScript,
     handleScriptTextChange,
     handleFileUpload,
@@ -60,6 +84,9 @@ export function App() {
     closeImageModal,
   } = useImageGeneration();
 
+  const { isSharing, shareUrl, shareError, handleShare, clearShareState } =
+    useShare();
+
   const [options, setOptions] = useState<ScriptOptions>(
     getInitialOptionsFromUrl,
   );
@@ -72,6 +99,13 @@ export function App() {
     sheetWidthMm: options.dimensions.width,
     hasScript: !!script,
   });
+
+  // Apply shared options when loaded from ?shared= parameter
+  useEffect(() => {
+    if (sharedOptions) {
+      setOptions(sharedOptions);
+    }
+  }, [sharedOptions]);
 
   // Auto-detect overflow and adjust compactness
   useOverflowDetection({
@@ -223,6 +257,12 @@ export function App() {
     generateImages(script, options, nightOrders);
   };
 
+  const handleShareScript = () => {
+    if (!rawScript) return;
+    clearShareState();
+    handleShare(rawScript, options);
+  };
+
   const handleDownloadPDF = () => {
     downloadPDF(script?.metadata?.name);
   };
@@ -266,6 +306,10 @@ export function App() {
             onGeneratePDF={handleGeneratePDF}
             onGenerateImages={handleGenerateImages}
             onPrint={handlePrint}
+            onShare={handleShareScript}
+            isSharing={isSharing}
+            shareUrl={shareUrl}
+            shareError={shareError}
           />
         </div>
 
