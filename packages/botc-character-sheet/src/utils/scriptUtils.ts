@@ -3,7 +3,7 @@ import { ResolvedCharacter, GroupedCharacters, Jinx } from "../types";
 import jinxesData from "../data/jinxes.json";
 
 export function groupCharactersByTeam(
-  characters: ResolvedCharacter[]
+  characters: ResolvedCharacter[],
 ): GroupedCharacters {
   const grouped: GroupedCharacters = {
     townsfolk: [],
@@ -28,7 +28,7 @@ export function groupCharactersByTeam(
 
 export function findJinxes(
   characters: ResolvedCharacter[],
-  useOldJinxes = false
+  useOldJinxes = false,
 ): Jinx[] {
   const characterIds = new Set(characters.map((c) => c.id.toLowerCase()));
   const applicableJinxes: Jinx[] = [];
@@ -80,7 +80,7 @@ export function findJinxes(
           const exists = applicableJinxes.some(
             (j) =>
               (j.characters[0] === char1Id && j.characters[1] === char2Id) ||
-              (j.characters[0] === char2Id && j.characters[1] === char1Id)
+              (j.characters[0] === char2Id && j.characters[1] === char1Id),
           );
           console.log("Jinx already exists:", exists);
 
@@ -117,19 +117,24 @@ export const getImageUrl = (character: ResolvedCharacter) => {
 export function getJinxedCharacters(
   character: ResolvedCharacter,
   jinxes: Jinx[],
-  allCharacters: ResolvedCharacter[]
+  allCharacters: ResolvedCharacter[],
+  mode: "none" | "primary" | "both" = "both",
 ): ResolvedCharacter[] {
+  if (mode === "none") {
+    return [];
+  }
+
   const jinxedCharacterIds: string[] = [];
 
   jinxes.forEach((jinx) => {
     if (jinx.characters[0] === character.id) {
+      // Current character is the primary (first) in the jinx pair
       jinxedCharacterIds.push(jinx.characters[1]);
-    } else if (jinx.characters[1] === character.id) {
+    } else if (jinx.characters[1] === character.id && mode === "both") {
+      // Current character is secondary - only include in "both" mode
       jinxedCharacterIds.push(jinx.characters[0]);
     }
   });
 
-  return allCharacters.filter((char) =>
-    jinxedCharacterIds.includes(char.id)
-  );
+  return allCharacters.filter((char) => jinxedCharacterIds.includes(char.id));
 }

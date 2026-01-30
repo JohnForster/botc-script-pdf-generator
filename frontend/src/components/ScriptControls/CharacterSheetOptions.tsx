@@ -1,6 +1,8 @@
 import { Toggle, Select, Slider } from "../ui";
 import { AppearanceLevel, OverleafType } from "../../types/options";
 
+export type InlineJinxIconsMode = "none" | "primary" | "both";
+
 interface CharacterSheetOptionsProps {
   overleaf: OverleafType;
   appearance: AppearanceLevel;
@@ -8,7 +10,7 @@ interface CharacterSheetOptionsProps {
   showLogo: boolean;
   showTitle: boolean;
   showJinxes: boolean;
-  inlineJinxIcons: boolean;
+  inlineJinxIcons: InlineJinxIconsMode;
   useOldJinxes: boolean;
   showSwirls: boolean;
   solidTitle: boolean;
@@ -19,7 +21,7 @@ interface CharacterSheetOptionsProps {
   onShowLogoChange: (value: boolean) => void;
   onShowTitleChange: (value: boolean) => void;
   onShowJinxesChange: (value: boolean) => void;
-  onInlineJinxIconsChange: (value: boolean) => void;
+  onInlineJinxIconsChange: (value: InlineJinxIconsMode) => void;
   onUseOldJinxesChange: (value: boolean) => void;
   onShowSwirlsChange: (value: boolean) => void;
   onSolidTitleChange: (value: boolean) => void;
@@ -105,10 +107,17 @@ export function CharacterSheetOptions({
         onChange={onShowJinxesChange}
       />
 
-      <Toggle
-        label="Inline Jinx Icons"
-        checked={inlineJinxIcons}
-        onChange={onInlineJinxIconsChange}
+      <Select
+        label="Inline Jinx Icons:"
+        value={inlineJinxIcons}
+        options={[
+          { value: "none", label: "None" },
+          { value: "primary", label: "Primary Character Only" },
+          { value: "both", label: "Both Characters" },
+        ]}
+        onChange={(value) =>
+          onInlineJinxIconsChange(value as InlineJinxIconsMode)
+        }
       />
 
       <Toggle

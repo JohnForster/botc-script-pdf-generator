@@ -58,7 +58,7 @@ export interface ScriptOptions {
   displayNightOrder: boolean;
   displayPlayerCounts: boolean;
   numberOfCharacterSheets: number;
-  inlineJinxIcons: boolean;
+  inlineJinxIcons: "none" | "primary" | "both";
   dimensions: PageDimensions;
   teensy: boolean;
 }

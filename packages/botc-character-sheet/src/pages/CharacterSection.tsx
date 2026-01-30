@@ -8,7 +8,7 @@ interface CharacterSectionProps {
   iconScale: number;
   jinxes: Jinx[];
   allCharacters: ResolvedCharacter[];
-  inlineJinxIcons: boolean;
+  inlineJinxIcons: "none" | "primary" | "both";
 }
 // Threshold to switch from evenly spaced to space-between layout
 const BALANCE_POINT = 8;
@@ -25,8 +25,8 @@ export function CharacterSection({
     characters.length > BALANCE_POINT
       ? "space-between"
       : characters.length % 2 === 0
-      ? "space-around"
-      : "flex-start";
+        ? "space-around"
+        : "flex-start";
 
   const midpoint = calculateMidpoint(characters);
 
@@ -41,8 +41,12 @@ export function CharacterSection({
               character={char}
               color={charNameColor}
               iconScale={iconScale}
-              jinxedCharacters={getJinxedCharacters(char, jinxes, allChars)}
-              inlineJinxIcons={inlineJinxIcons}
+              jinxedCharacters={getJinxedCharacters(
+                char,
+                jinxes,
+                allChars,
+                inlineJinxIcons,
+              )}
             />
           ))}
         </div>
@@ -53,8 +57,12 @@ export function CharacterSection({
               character={char}
               color={charNameColor}
               iconScale={iconScale}
-              jinxedCharacters={getJinxedCharacters(char, jinxes, allChars)}
-              inlineJinxIcons={inlineJinxIcons}
+              jinxedCharacters={getJinxedCharacters(
+                char,
+                jinxes,
+                allChars,
+                inlineJinxIcons,
+              )}
             />
           ))}
         </div>
@@ -67,14 +75,12 @@ interface CharacterCardProps {
   color: string;
   iconScale: number;
   jinxedCharacters: ResolvedCharacter[];
-  inlineJinxIcons: boolean;
 }
 function CharacterCard({
   character,
   color,
   iconScale,
   jinxedCharacters,
-  inlineJinxIcons,
 }: CharacterCardProps) {
   const renderAbility = (ability: string) => {
     // Match square brackets at the end of the ability
@@ -116,7 +122,7 @@ function CharacterCard({
       <div className="character-info">
         <h3 className="character-name" style={{ color: color }}>
           {character.name}
-          {inlineJinxIcons && jinxedCharacters.length > 0 && (
+          {jinxedCharacters.length > 0 && (
             <span className="inline-jinx-icons">
               {jinxedCharacters.map((jinxedChar) => {
                 const jinxImageUrl = getImageUrl(jinxedChar);
@@ -160,11 +166,11 @@ function calculateMidpoint(characters: ResolvedCharacter[]): number {
 
   const totalAbilityLengthFirstHalf = largerFirstHalf.reduce(
     (sum, char) => sum + char.ability.length,
-    0
+    0,
   );
   const totalAbilityLengthSecondHalf = largerSecondHalf.reduce(
     (sum, char) => sum + char.ability.length,
-    0
+    0,
   );
 
   // Return the midpoint that results in more balanced ability lengths
