@@ -6,6 +6,7 @@ interface CharacterSheetOptionsProps {
   appearance: AppearanceLevel;
   showAuthor: boolean;
   showLogo: boolean;
+  showTitle: boolean;
   showJinxes: boolean;
   inlineJinxIcons: boolean;
   useOldJinxes: boolean;
@@ -16,6 +17,7 @@ interface CharacterSheetOptionsProps {
   onAppearanceChange: (value: AppearanceLevel) => void;
   onShowAuthorChange: (value: boolean) => void;
   onShowLogoChange: (value: boolean) => void;
+  onShowTitleChange: (value: boolean) => void;
   onShowJinxesChange: (value: boolean) => void;
   onInlineJinxIconsChange: (value: boolean) => void;
   onUseOldJinxesChange: (value: boolean) => void;
@@ -29,6 +31,7 @@ export function CharacterSheetOptions({
   appearance,
   showAuthor,
   showLogo,
+  showTitle,
   showJinxes,
   inlineJinxIcons,
   useOldJinxes,
@@ -39,6 +42,7 @@ export function CharacterSheetOptions({
   onAppearanceChange,
   onShowAuthorChange,
   onShowLogoChange,
+  onShowTitleChange,
   onShowJinxesChange,
   onInlineJinxIconsChange,
   onUseOldJinxesChange,
@@ -81,6 +85,12 @@ export function CharacterSheetOptions({
         label="Show Logo"
         checked={showLogo}
         onChange={onShowLogoChange}
+      />
+
+      <Toggle
+        label="Show Title"
+        checked={showTitle}
+        onChange={onShowTitleChange}
       />
 
       <Toggle

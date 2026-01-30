@@ -133,6 +133,7 @@ export function ScriptControls({
                 appearance={options.appearance}
                 showAuthor={options.showAuthor}
                 showLogo={options.showLogo}
+                showTitle={options.showTitle}
                 showJinxes={options.showJinxes}
                 inlineJinxIcons={options.inlineJinxIcons}
                 useOldJinxes={options.useOldJinxes}
@@ -148,6 +149,9 @@ export function ScriptControls({
                 }
                 onShowLogoChange={(value) =>
                   onOptionChange("showLogo", value)
+                }
+                onShowTitleChange={(value) =>
+                  onOptionChange("showTitle", value)
                 }
                 onShowJinxesChange={(value) =>
                   onOptionChange("showJinxes", value)

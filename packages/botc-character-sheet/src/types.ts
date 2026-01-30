@@ -43,6 +43,7 @@ export interface ScriptOptions {
   color: string | string[];
   logo: string;
   showLogo: boolean;
+  showTitle: boolean;
   showAuthor: boolean;
   showJinxes: boolean;
   useOldJinxes: boolean;

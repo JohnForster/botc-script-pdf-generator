@@ -35,6 +35,7 @@ export function CharacterSheet({
     color,
     logo,
     showLogo,
+    showTitle,
     showSwirls,
     includeMargins,
     solidTitle,
@@ -100,6 +101,7 @@ export function CharacterSheet({
         <div className="sheet-content">
           <Header
             showSwirls={showSwirls}
+            showTitle={showTitle}
             title={title}
             author={author}
             logo={showLogo ? logo : undefined}
@@ -162,17 +164,24 @@ export function CharacterSheet({
 
 function Header({
   showSwirls,
+  showTitle,
   title,
   author,
   logo,
   solidHeader = false,
 }: {
   showSwirls: boolean;
+  showTitle: boolean;
   title: string;
   author?: string;
   logo?: string;
   solidHeader?: boolean;
 }) {
+  // If showTitle is false and there's no logo and no swirls, hide header entirely
+  if (!showTitle && !logo && !showSwirls) {
+    return null;
+  }
+
   return (
     <>
       <h1 className="sheet-header">
@@ -184,13 +193,15 @@ function Header({
         )}
 
         {logo && <img className="script-logo" src={logo}></img>}
-        <span
-          style={{
-            mixBlendMode: solidHeader ? "normal" : "multiply",
-          }}
-        >
-          {title}
-        </span>
+        {showTitle && (
+          <span
+            style={{
+              mixBlendMode: solidHeader ? "normal" : "multiply",
+            }}
+          >
+            {title}
+          </span>
+        )}
         {showSwirls && (
           <img
             src="/images/black-swirl-divider.png"

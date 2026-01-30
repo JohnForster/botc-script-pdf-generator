@@ -30,6 +30,7 @@ export const DEFAULT_OPTIONS: ScriptOptions = {
   color: randomColor(),
   logo: "",
   showLogo: true,
+  showTitle: true,
   showAuthor: true,
   showJinxes: true,
   useOldJinxes: false,
