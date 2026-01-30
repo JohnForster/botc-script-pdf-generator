@@ -45,7 +45,7 @@ export function useOverflowDetection({
 
     // Debounce to allow DOM to settle after appearance changes
     const timeoutId = setTimeout(() => {
-      const characterSheet = document.getElementById("character-sheet");
+      const characterSheet = document.querySelector(".sheet-content");
       if (!characterSheet) return;
 
       const currentAppearance = options.appearance;
