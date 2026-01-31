@@ -13,7 +13,7 @@
       "dependencies": {
         "@sparticuz/chromium": "^143.0.4",
         "botc-character-sheet": "workspace:*",
-        "botc-script-checker": "^0.2.4",
+        "botc-script-checker": "0.2.5",
         "pdf-lib": "^1.17.1",
         "preact": "^10.19.3",
         "preact-render-to-string": "^6.4.0",
@@ -32,7 +32,7 @@
       "version": "0.0.1",
       "dependencies": {
         "botc-character-sheet": "workspace:*",
-        "botc-script-checker": "^0.2.4",
+        "botc-script-checker": "0.2.5",
         "firebase": "^12.8.0",
         "json5": "^2.2.3",
         "preact": "^10.19.3",
@@ -47,7 +47,7 @@
       "name": "botc-character-sheet",
       "version": "0.19.1",
       "dependencies": {
-        "botc-script-checker": "0.2.4",
+        "botc-script-checker": "0.2.5",
       },
       "devDependencies": {
         "@preact/preset-vite": "^2.8.1",
@@ -570,7 +570,7 @@
 
     "botc-character-sheet": ["botc-character-sheet@workspace:packages/botc-character-sheet"],
 
-    "botc-script-checker": ["botc-script-checker@0.2.4", "", { "peerDependencies": { "typescript": "^5" } }, "sha512-41qDMyukvHEa/DEc7iSkglRhX3Va6SR5pWQMzZ+ud7Pm1LCBjCEVQmMeHJIqnVUzpwBylTZvkgEE4GHMjy+f5A=="],
+    "botc-script-checker": ["botc-script-checker@0.2.5", "", { "peerDependencies": { "typescript": "^5" } }, "sha512-Yy/WR9cwSbBEyoIVMuuBwfNUV+eNWi32Bdka/bAMkHwhnqRwvtLhTOr+2Qz87YLDv5z6F57ijQIXvLRfnkMVoQ=="],
 
     "brace-expansion": ["brace-expansion@1.1.12", "", { "dependencies": { "balanced-match": "^1.0.0", "concat-map": "0.0.1" } }, "sha512-9T9UjW3r0UW5c1Q7GTwllptXwhvYmEzFhzMfZ9H7FQWt+uZePjZPjBP/W1ZEyZ1twGWom5/56TF4lPcqjnDHcg=="],
 

@@ -31,6 +31,6 @@
     "vite": "^5.0.8"
   },
   "dependencies": {
-    "botc-script-checker": "0.2.4"
+    "botc-script-checker": "0.2.5"
   }
 }
