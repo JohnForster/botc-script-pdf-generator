@@ -44,7 +44,12 @@
 }
 
 .reminder-name {
-  font-family: Goudy Old Style, Goudy Oldstyle, Goudy, Georgia, serif;
+  font-family:
+    Goudy Old Style,
+    Goudy Oldstyle,
+    Goudy,
+    Georgia,
+    serif;
   font-weight: 700;
   font-size: 3.3mm;
 }
@@ -65,6 +70,7 @@
 .night-sheet-entry > img {
   width: 7mm;
   height: 7mm;
+  object-fit: contain;
   flex-shrink: 0;
   scale: 2;
   margin-right: 3mm;

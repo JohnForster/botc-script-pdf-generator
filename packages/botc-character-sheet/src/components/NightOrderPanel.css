@@ -38,6 +38,8 @@
 
 .icon {
   width: 6mm;
+  height: 6mm;
+  object-fit: contain;
   box-sizing: border-box;
   scale: 2.1;
   filter: drop-shadow(0px 0px 2px #2224);
