@@ -5,7 +5,6 @@ interface CharacterSectionProps {
   title: string;
   characters: ResolvedCharacter[];
   charNameColor: string;
-  iconScale: number;
   jinxes: Jinx[];
   allCharacters: ResolvedCharacter[];
   inlineJinxIcons: "none" | "primary" | "both";
@@ -17,7 +16,6 @@ export function CharacterSection({
   title,
   characters,
   charNameColor,
-  iconScale,
   jinxes,
   allCharacters: allChars,
   inlineJinxIcons,
@@ -42,7 +40,6 @@ export function CharacterSection({
               key={char.id}
               character={char}
               color={charNameColor}
-              iconScale={iconScale}
               iconUrlTemplate={iconUrlTemplate}
               jinxedCharacters={getJinxedCharacters(
                 char,
@@ -59,7 +56,6 @@ export function CharacterSection({
               key={char.id}
               character={char}
               color={charNameColor}
-              iconScale={iconScale}
               iconUrlTemplate={iconUrlTemplate}
               jinxedCharacters={getJinxedCharacters(
                 char,
@@ -77,14 +73,12 @@ export function CharacterSection({
 interface CharacterCardProps {
   character: ResolvedCharacter;
   color: string;
-  iconScale: number;
   jinxedCharacters: ResolvedCharacter[];
   iconUrlTemplate?: string;
 }
 function CharacterCard({
   character,
   color,
-  iconScale,
   jinxedCharacters,
   iconUrlTemplate,
 }: CharacterCardProps) {
@@ -114,12 +108,11 @@ function CharacterCard({
             src={imageUrl}
             alt={character.name}
             className="character-icon"
-            style={{ scale: iconScale.toString() }}
           />
         ) : (
           <div
             className="character-icon-placeholder"
-            style={{ color, scale: iconScale.toString() }}
+            style={{ color }}
           >
             {character.name.charAt(0)}
           </div>

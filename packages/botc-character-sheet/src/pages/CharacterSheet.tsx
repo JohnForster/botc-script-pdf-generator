@@ -93,6 +93,7 @@ export function CharacterSheet({
             "--title-font": options.titleFont,
             "--title-letter-spacing": `${options.titleLetterSpacing}mm`,
             "--title-word-spacing": `${options.titleWordSpacing}mm`,
+            "--icon-scale": (iconScale / 1.7).toString(),
             transform: includeMargins ? "scale(0.952)" : undefined,
           } as CSSProperties
         }
@@ -120,7 +121,6 @@ export function CharacterSheet({
                   title={section.title.toUpperCase()}
                   characters={section.chars}
                   charNameColor={section.color}
-                  iconScale={iconScale}
                   jinxes={jinxes}
                   allCharacters={[
                     ...characters.townsfolk,

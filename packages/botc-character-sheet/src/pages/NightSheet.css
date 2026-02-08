@@ -72,8 +72,12 @@
   height: 7mm;
   object-fit: contain;
   flex-shrink: 0;
-  scale: 2;
+  scale: calc(2 * var(--icon-scale, 1));
   margin-right: 3mm;
+}
+
+.night-sheet-entry > img.marker-icon {
+  scale: 2;
 }
 
 .reminder-icon {

@@ -29,6 +29,7 @@ export const BottomTrimSheet = ({ options, children }: BottomTrimSheetProps) => 
           "--title-font": options.titleFont,
           "--title-letter-spacing": `${options.titleLetterSpacing}mm`,
           "--title-word-spacing": `${options.titleWordSpacing}mm`,
+          "--icon-scale": (options.iconScale / 1.7).toString(),
         }}
       >
         <img

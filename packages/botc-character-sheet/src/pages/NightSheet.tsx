@@ -80,9 +80,11 @@ export const NightSheetEntry = (props: NightSheetEntryProps) => {
     return <>{withBold}</>;
   };
 
+  const isMarker = typeof props.entry === "string";
+
   return (
     <div className="night-sheet-entry">
-      <img src={src}></img>
+      <img src={src} className={isMarker ? "marker-icon" : undefined}></img>
       <div className="night-sheet-entry-text">
         <p className="reminder-name" style={{ color: colour }}>
           {name}

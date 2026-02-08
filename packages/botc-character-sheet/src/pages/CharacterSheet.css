@@ -214,6 +214,7 @@
   max-height: 13mm;
   object-fit: contain;
   filter: drop-shadow(1px 1px 2px #0004);
+  scale: calc(1.7 * var(--icon-scale, 1));
 }
 
 .character-icon-placeholder {
@@ -250,7 +251,7 @@
   height: 5mm;
   object-fit: contain;
   filter: drop-shadow(0.5px 0.5px 0.5px #0004);
-  scale: 1.7;
+  scale: calc(1.7 * var(--icon-scale, 1));
 }
 
 .inline-jinx-icon-placeholder {
@@ -435,7 +436,7 @@
   width: 3.5mm;
   height: 3.5mm;
   object-fit: contain;
-  scale: 2.8;
+  scale: calc(2.8 * var(--icon-scale, 1));
 }
 
 .jinx-icon-placeholder {
