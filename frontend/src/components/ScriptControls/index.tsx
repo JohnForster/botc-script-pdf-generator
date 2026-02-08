@@ -2,6 +2,7 @@ import { ScriptOptions } from "botc-character-sheet";
 import { CollapsibleSection } from "../ui";
 import { UploadSection } from "./UploadSection";
 import { AppearanceOptions } from "./AppearanceOptions";
+import { FontOptions } from "./FontOptions";
 import { CharacterSheetOptions } from "./CharacterSheetOptions";
 import { CharacterSheetBackOptions } from "./CharacterSheetBackOptions";
 import { PrintOptions } from "./PrintOptions";
@@ -140,6 +141,27 @@ export function ScriptControls({
                   onOptionChange("showNightSheet", value)
                 }
                 onTeensyModeChange={(value) => onOptionChange("teensy", value)}
+              />
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Font" defaultOpen={false}>
+              <FontOptions
+                titleFont={options.titleFont}
+                customFontUrl={options.customFontUrl}
+                titleLetterSpacing={options.titleLetterSpacing}
+                titleWordSpacing={options.titleWordSpacing}
+                onTitleFontChange={(value) =>
+                  onOptionChange("titleFont", value)
+                }
+                onCustomFontUrlChange={(value) =>
+                  onOptionChange("customFontUrl", value)
+                }
+                onTitleLetterSpacingChange={(value) =>
+                  onOptionChange("titleLetterSpacing", value)
+                }
+                onTitleWordSpacingChange={(value) =>
+                  onOptionChange("titleWordSpacing", value)
+                }
               />
             </CollapsibleSection>
 

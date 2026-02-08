@@ -20,7 +20,7 @@ import { ImageModal } from "./components/ImageModal";
 import { Changelog } from "./components/Changelog";
 import { MobileControlsToggle } from "./components/MobileControlsToggle";
 import { ViewMode } from "./components/ViewMode";
-import { randomColor } from "./types/options";
+import { randomColor, TITLE_FONT_DEFAULTS } from "./types/options";
 import "./app.css";
 import {
   FancyDoc,
@@ -144,6 +144,16 @@ function EditMode() {
     localStorage.setItem("iconUrlTemplate", options.iconUrlTemplate);
   }, [options.iconUrlTemplate]);
 
+  // Persist title font to localStorage
+  useEffect(() => {
+    localStorage.setItem("titleFont", options.titleFont);
+  }, [options.titleFont]);
+
+  // Persist custom font URL to localStorage
+  useEffect(() => {
+    localStorage.setItem("customFontUrl", options.customFontUrl);
+  }, [options.customFontUrl]);
+
   // Auto-adjust icon scale when appearance changes
   useEffect(() => {
     if (options.appearance === "compact") {
@@ -156,6 +166,18 @@ function EditMode() {
       setOptions((prev) => ({ ...prev, iconScale: 1.7 }));
     }
   }, [options.appearance]);
+
+  // Auto-update spacing when title font changes
+  useEffect(() => {
+    const defaults = TITLE_FONT_DEFAULTS[options.titleFont];
+    if (defaults) {
+      setOptions((prev) => ({
+        ...prev,
+        titleLetterSpacing: defaults.letterSpacing,
+        titleWordSpacing: defaults.wordSpacing,
+      }));
+    }
+  }, [options.titleFont]);
 
   const updateOption = <K extends keyof ScriptOptions>(
     key: K,

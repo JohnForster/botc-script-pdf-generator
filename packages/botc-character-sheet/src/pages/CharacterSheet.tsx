@@ -90,6 +90,9 @@ export function CharacterSheet({
           {
             "--header-gradient": gradient,
             "--sidebar-width": options.teensy ? "10mm" : "15mm",
+            "--title-font": options.titleFont,
+            "--title-letter-spacing": `${options.titleLetterSpacing}mm`,
+            "--title-word-spacing": `${options.titleWordSpacing}mm`,
             transform: includeMargins ? "scale(0.952)" : undefined,
           } as CSSProperties
         }

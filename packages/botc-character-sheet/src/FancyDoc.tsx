@@ -14,7 +14,13 @@ export type FancyDocProps = {
   nightOrders: NightOrders;
 };
 
-export function FancyDoc({ script, options, nightOrders }: FancyDocProps) {
+export function FancyDoc({ script, options: rawOptions, nightOrders }: FancyDocProps) {
+  // If a custom font URL is provided, inject a @font-face and override titleFont
+  const hasCustomFont = !!rawOptions.customFontUrl;
+  const options = hasCustomFont
+    ? { ...rawOptions, titleFont: "CustomTitleFont" }
+    : rawOptions;
+
   const groupedCharacters = groupCharactersByTeam(script.characters);
   const jinxes = options.showJinxes
     ? findJinxes(script.characters, options.useOldJinxes)
@@ -33,6 +39,9 @@ export function FancyDoc({ script, options, nightOrders }: FancyDocProps) {
 
   return (
     <div className="sheet-wrapper">
+      {hasCustomFont && (
+        <style>{`@font-face { font-family: "CustomTitleFont"; src: url("${rawOptions.customFontUrl}"); }`}</style>
+      )}
       {Array(options.numberOfCharacterSheets)
         .fill(true)
         .map((_, i) => (

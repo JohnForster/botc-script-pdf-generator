@@ -15,7 +15,13 @@ type TeensyDocProps = {
   nightOrders: NightOrders;
 };
 
-export const TeensyDoc = ({ script, options, nightOrders }: TeensyDocProps) => {
+export const TeensyDoc = ({ script, options: rawOptions, nightOrders }: TeensyDocProps) => {
+  // If a custom font URL is provided, inject a @font-face and override titleFont
+  const hasCustomFont = !!rawOptions.customFontUrl;
+  const options = hasCustomFont
+    ? { ...rawOptions, titleFont: "CustomTitleFont" }
+    : rawOptions;
+
   const numberOfSheets =
     options.numberOfCharacterSheets + (options.numberOfCharacterSheets % 2); // Round up to even number
 
@@ -38,6 +44,9 @@ export const TeensyDoc = ({ script, options, nightOrders }: TeensyDocProps) => {
   const fabledAndLoric = getFabledOrLoric(script.characters, options.iconUrlTemplate);
   return (
     <div className="sheet-wrapper teensy">
+      {hasCustomFont && (
+        <style>{`@font-face { font-family: "CustomTitleFont"; src: url("${rawOptions.customFontUrl}"); }`}</style>
+      )}
       {Array.from({ length: numberOfSheets }).map(
         (_, i) =>
           !(i % 2) && (

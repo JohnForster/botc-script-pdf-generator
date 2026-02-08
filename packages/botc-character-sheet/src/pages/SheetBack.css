@@ -28,7 +28,7 @@
 }
 
 .sheet-backing h1 {
-  font-family: "Unlovable", serif;
+  font-family: var(--title-font), serif;
   mix-blend-mode: normal;
   font-weight: 100;
   font-size: 30mm;
@@ -46,7 +46,8 @@
   background-size: 100mm;
   filter: drop-shadow(0.5mm 0.5mm black) drop-shadow(0mm 0mm 1mm black);
   /* word-break: break-word; */
-  word-spacing: -10mm;
+  letter-spacing: var(--title-letter-spacing);
+  word-spacing: var(--title-word-spacing);
   flex: 0 1 130mm;
 
   display: flex;

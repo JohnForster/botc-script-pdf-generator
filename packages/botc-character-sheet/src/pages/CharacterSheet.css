@@ -91,15 +91,15 @@
 
 .sheet-header span {
   font-weight: lighter;
-  letter-spacing: 0mm;
+  letter-spacing: var(--title-letter-spacing);
   filter: drop-shadow(2px 0px 0px #cb8b);
-  word-spacing: -3mm;
+  word-spacing: var(--title-word-spacing);
 
   background: var(--header-gradient);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-family: "Unlovable", serif;
+  font-family: var(--title-font), serif;
   font-weight: 100;
   font-size: 14mm;
   padding: 2mm 8mm;

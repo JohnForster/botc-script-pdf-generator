@@ -11,7 +11,7 @@
 }
 
 .night-sheet-heading .script-title {
-  font-family: "Unlovable", serif;
+  font-family: var(--title-font), serif;
   font-weight: lighter;
 
   background: var(--header-gradient);
@@ -26,7 +26,8 @@
 
   max-width: 50%;
   text-align: center;
-  word-spacing: -4mm;
+  letter-spacing: var(--title-letter-spacing);
+  word-spacing: var(--title-word-spacing);
   filter: drop-shadow(0.2mm 0.1mm 0 #222d) drop-shadow(0mm 0mm 0.1mm #2228);
 }
 

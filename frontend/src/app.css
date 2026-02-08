@@ -18,15 +18,28 @@ a:visited {
 }
 
 @font-face {
-  font-family: Unlovable;
-  src: url("/fonts/LHF Unlovable/LHF Unlovable.eot");
-  src:
-    url("/fonts/LHF Unlovable/LHF Unlovable.eot?#iefix")
-      format("embedded-opentype"),
-    url("/fonts/LHF Unlovable/LHF Unlovable.woff") format("woff"),
-    url("/fonts/LHF Unlovable/LHF Unlovable.woff2") format("woff2"),
-    url("/fonts/LHF Unlovable/LHF Unlovable.ttf") format("truetype"),
-    url("/fonts/LHF Unlovable/LHF Unlovable.svg#LHF Unlovable") format("svg");
+  font-family: Alice in Wonderland;
+  src: url("/fonts/AliceInWonderland.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Anglican;
+  src: url("/fonts/Anglican.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Canterbury Regular;
+  src: url("/fonts/CanterburyRegular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Utm Agin;
+  src: url("/fonts/UtmAgin.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Waters Gothic;
+  src: url("/fonts/WatersGothic.ttf") format("truetype");
 }
 
 @font-face {
@@ -383,7 +396,7 @@ select.form-control-input:focus {
   border-radius: 6px;
   background: var(--card-bg);
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: 12px;
   transition: border-color 0.2s;
 }
 

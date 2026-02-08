@@ -43,6 +43,9 @@ export const SheetBack = ({
         className="sheet-backing"
         style={{
           transform: includeMargins ? "scale(0.952)" : undefined,
+          "--title-font": options.titleFont,
+          "--title-letter-spacing": `${options.titleLetterSpacing}mm`,
+          "--title-word-spacing": `${options.titleWordSpacing}mm`,
         }}
       >
         <div className="sheet-background">

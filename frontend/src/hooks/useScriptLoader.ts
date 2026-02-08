@@ -18,10 +18,14 @@ export function hasUrlParam(key: string): boolean {
 export function getInitialOptionsFromUrl(): ScriptOptions {
   const params = new URLSearchParams(window.location.search);
   const savedIconUrlTemplate = localStorage.getItem("iconUrlTemplate");
+  const savedTitleFont = localStorage.getItem("titleFont");
+  const savedCustomFontUrl = localStorage.getItem("customFontUrl");
   const options: ScriptOptions = {
     ...DEFAULT_OPTIONS,
     dimensions: { ...DEFAULT_OPTIONS.dimensions },
     ...(savedIconUrlTemplate !== null && { iconUrlTemplate: savedIconUrlTemplate }),
+    ...(savedTitleFont !== null && { titleFont: savedTitleFont }),
+    ...(savedCustomFontUrl !== null && { customFontUrl: savedCustomFontUrl }),
   };
 
   type OptionsKey = keyof ScriptOptions;

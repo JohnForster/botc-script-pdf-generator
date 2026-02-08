@@ -26,6 +26,9 @@ export const BottomTrimSheet = ({ options, children }: BottomTrimSheetProps) => 
         style={{
           transform: includeMargins ? "scale(0.952)" : undefined,
           "--header-gradient": gradient,
+          "--title-font": options.titleFont,
+          "--title-letter-spacing": `${options.titleLetterSpacing}mm`,
+          "--title-word-spacing": `${options.titleWordSpacing}mm`,
         }}
       >
         <img

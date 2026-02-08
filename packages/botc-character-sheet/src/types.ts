@@ -59,6 +59,10 @@ export interface ScriptOptions {
   numberOfCharacterSheets: number;
   inlineJinxIcons: "none" | "primary" | "both";
   iconUrlTemplate: string;
+  titleFont: string;
+  titleLetterSpacing: number;
+  titleWordSpacing: number;
+  customFontUrl: string;
   dimensions: PageDimensions;
   teensy: boolean;
 }

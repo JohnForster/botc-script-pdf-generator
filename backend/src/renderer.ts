@@ -68,10 +68,24 @@ function getFontFaces(assetBase: string): string {
   console.log(`Loading fonts from: ${assetBase}`);
   return `
     @font-face {
-      font-family: 'Unlovable';
-      src: url('${assetBase}/fonts/LHF_Unlovable.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
+      font-family: 'Alice in Wonderland';
+      src: url('${assetBase}/fonts/AliceInWonderland.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Anglican';
+      src: url('${assetBase}/fonts/Anglican.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Canterbury Regular';
+      src: url('${assetBase}/fonts/CanterburyRegular.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Utm Agin';
+      src: url('${assetBase}/fonts/UtmAgin.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Waters Gothic';
+      src: url('${assetBase}/fonts/WatersGothic.ttf') format('truetype');
     }
     @font-face {
       font-family: 'Dumbledor';
@@ -104,6 +118,7 @@ export function renderCharacterSheet(
   requestOrigin?: string,
 ): string {
   const assetBase = getAssetBase(requestOrigin);
+
   let docHTML;
   if (options.teensy) {
     const dimensions = {
