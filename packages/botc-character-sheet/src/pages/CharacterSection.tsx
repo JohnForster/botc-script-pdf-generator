@@ -9,6 +9,7 @@ interface CharacterSectionProps {
   jinxes: Jinx[];
   allCharacters: ResolvedCharacter[];
   inlineJinxIcons: "none" | "primary" | "both";
+  iconUrlTemplate?: string;
 }
 // Threshold to switch from evenly spaced to space-between layout
 const BALANCE_POINT = 8;
@@ -20,6 +21,7 @@ export function CharacterSection({
   jinxes,
   allCharacters: allChars,
   inlineJinxIcons,
+  iconUrlTemplate,
 }: CharacterSectionProps) {
   const justifyContent =
     characters.length > BALANCE_POINT
@@ -41,6 +43,7 @@ export function CharacterSection({
               character={char}
               color={charNameColor}
               iconScale={iconScale}
+              iconUrlTemplate={iconUrlTemplate}
               jinxedCharacters={getJinxedCharacters(
                 char,
                 jinxes,
@@ -57,6 +60,7 @@ export function CharacterSection({
               character={char}
               color={charNameColor}
               iconScale={iconScale}
+              iconUrlTemplate={iconUrlTemplate}
               jinxedCharacters={getJinxedCharacters(
                 char,
                 jinxes,
@@ -75,12 +79,14 @@ interface CharacterCardProps {
   color: string;
   iconScale: number;
   jinxedCharacters: ResolvedCharacter[];
+  iconUrlTemplate?: string;
 }
 function CharacterCard({
   character,
   color,
   iconScale,
   jinxedCharacters,
+  iconUrlTemplate,
 }: CharacterCardProps) {
   const renderAbility = (ability: string) => {
     // Match square brackets at the end of the ability
@@ -99,7 +105,7 @@ function CharacterCard({
     return ability;
   };
 
-  const imageUrl = getImageUrl(character);
+  const imageUrl = getImageUrl(character, iconUrlTemplate);
   return (
     <div className="character-card">
       <div className="character-icon-wrapper">
@@ -125,7 +131,7 @@ function CharacterCard({
           {jinxedCharacters.length > 0 && (
             <span className="inline-jinx-icons">
               {jinxedCharacters.map((jinxedChar) => {
-                const jinxImageUrl = getImageUrl(jinxedChar);
+                const jinxImageUrl = getImageUrl(jinxedChar, iconUrlTemplate);
                 return jinxImageUrl ? (
                   <img
                     key={jinxedChar.id}

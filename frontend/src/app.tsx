@@ -139,6 +139,11 @@ function EditMode() {
     }
   }, [script]);
 
+  // Persist icon URL template to localStorage
+  useEffect(() => {
+    localStorage.setItem("iconUrlTemplate", options.iconUrlTemplate);
+  }, [options.iconUrlTemplate]);
+
   // Auto-adjust icon scale when appearance changes
   useEffect(() => {
     if (options.appearance === "compact") {

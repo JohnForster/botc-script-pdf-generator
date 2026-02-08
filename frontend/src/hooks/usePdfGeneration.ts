@@ -17,7 +17,7 @@ export function usePdfGeneration() {
   const generatePDF = async (
     script: ParsedScript,
     options: ScriptOptions,
-    nightOrders: NightOrders
+    nightOrders: NightOrders,
   ) => {
     // Show modal and reset state
     setShowPdfModal(true);
@@ -35,15 +35,15 @@ export function usePdfGeneration() {
 
     try {
       const apiUrl = import.meta.env.VITE_PDF_API_URL || "";
+      console.log(apiUrl);
       const response = await fetch(`${apiUrl}/api/generate-pdf`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Origin: window.location.origin,
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Origin: window.location.origin,
+        },
+        body: JSON.stringify(payload),
+      });
 
       if (!response.ok) {
         throw new Error(`Failed to generate PDF: ${response.statusText}`);
@@ -57,7 +57,7 @@ export function usePdfGeneration() {
     } catch (error) {
       console.error("Error generating PDF:", error);
       setPdfError(
-        "Failed to generate PDF. Please try the browser print option instead."
+        "Failed to generate PDF. Please try the browser print option instead.",
       );
       setPdfLoading(false);
     }

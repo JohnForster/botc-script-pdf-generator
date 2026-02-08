@@ -1,6 +1,10 @@
 import { NightOrderEntry } from "../types";
+import { resolveIconUrl } from "./scriptUtils";
 
-export function getImageSrc(entry: NightOrderEntry): string | undefined {
+export function getImageSrc(
+  entry: NightOrderEntry,
+  iconUrlTemplate?: string,
+): string | undefined {
   if (typeof entry === "string") {
     return entry === "dawn"
       ? "/images/dawn-icon.png"
@@ -13,7 +17,7 @@ export function getImageSrc(entry: NightOrderEntry): string | undefined {
     return entry.image;
   } else if (Array.isArray(entry.image) && entry.image.length) {
     return entry.image[0];
-  } else {
-    return entry.wiki_image;
+  } else if (iconUrlTemplate) {
+    return resolveIconUrl(iconUrlTemplate, entry.id) ?? undefined;
   }
 }

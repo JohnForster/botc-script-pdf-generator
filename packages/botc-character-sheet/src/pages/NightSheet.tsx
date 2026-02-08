@@ -27,7 +27,7 @@ export const NightSheet = ({
           </div>
           <div className="night-sheet-order">
             {firstNightOrder.map((reminder) => (
-              <NightSheetEntry entry={reminder} night="first" />
+              <NightSheetEntry entry={reminder} night="first" iconUrlTemplate={options.iconUrlTemplate} />
             ))}
           </div>
         </BottomTrimSheet>
@@ -40,7 +40,7 @@ export const NightSheet = ({
           </div>
           <div className="night-sheet-order">
             {otherNightOrder.map((reminder) => (
-              <NightSheetEntry entry={reminder} night="other" />
+              <NightSheetEntry entry={reminder} night="other" iconUrlTemplate={options.iconUrlTemplate} />
             ))}
           </div>
         </BottomTrimSheet>
@@ -52,6 +52,7 @@ export const NightSheet = ({
 type NightSheetEntryProps = {
   entry: NightOrderEntry;
   night: "first" | "other";
+  iconUrlTemplate?: string;
 };
 
 const ReminderIcon = () => (
@@ -59,7 +60,7 @@ const ReminderIcon = () => (
 );
 
 export const NightSheetEntry = (props: NightSheetEntryProps) => {
-  const src = getImageSrc(props.entry);
+  const src = getImageSrc(props.entry, props.iconUrlTemplate);
   const { reminderText, name } = getReminderText(props.entry, props.night);
   const colour =
     typeof props.entry === "string" ? "#222" : teamColours[props.entry.team];

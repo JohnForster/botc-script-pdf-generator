@@ -35,7 +35,7 @@ export const TeensyDoc = ({ script, options, nightOrders }: TeensyDocProps) => {
     },
   );
 
-  const fabledAndLoric = getFabledOrLoric(script.characters);
+  const fabledAndLoric = getFabledOrLoric(script.characters, options.iconUrlTemplate);
   return (
     <div className="sheet-wrapper teensy">
       {Array.from({ length: numberOfSheets }).map(

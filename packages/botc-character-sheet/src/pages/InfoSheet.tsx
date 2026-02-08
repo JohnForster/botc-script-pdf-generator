@@ -29,7 +29,7 @@ export const InfoSheet = ({
   travellers,
   options,
 }: InfoSheetProps) => {
-  const { displayNightOrder, displayPlayerCounts } = options;
+  const { displayNightOrder, displayPlayerCounts, iconUrlTemplate } = options;
   return (
     <>
       <BottomTrimSheet options={options}>
@@ -43,7 +43,7 @@ export const InfoSheet = ({
               <div class="info-sheet-section">
                 <div className="icon-row">
                   {firstNightOrder.map((item) => (
-                    <img src={getImageSrc(item)} class="icon"></img>
+                    <img src={getImageSrc(item, iconUrlTemplate)} class="icon"></img>
                   ))}
                 </div>
               </div>
@@ -55,7 +55,7 @@ export const InfoSheet = ({
               <div class="info-sheet-section">
                 <div className="icon-row">
                   {otherNightOrder.map((item) => (
-                    <img src={getImageSrc(item)} class="icon"></img>
+                    <img src={getImageSrc(item, iconUrlTemplate)} class="icon"></img>
                   ))}
                 </div>
               </div>
@@ -95,12 +95,12 @@ export const InfoSheet = ({
                 {jinxes?.map((jinx) => (
                   <div className="info-jinx-entry">
                     <img
-                      src={getImageSrc(jinx.characters[0])}
+                      src={getImageSrc(jinx.characters[0], iconUrlTemplate)}
                       alt={jinx.text}
                       class="icon"
                     ></img>
                     <img
-                      src={getImageSrc(jinx.characters[1])}
+                      src={getImageSrc(jinx.characters[1], iconUrlTemplate)}
                       alt={jinx.text}
                       class="icon"
                     ></img>
@@ -125,7 +125,7 @@ export const InfoSheet = ({
                 {travellers?.map((entry) => (
                   <div className="info-fabled-loric-entry">
                     <img
-                      src={getImageSrc(entry)}
+                      src={getImageSrc(entry, iconUrlTemplate)}
                       alt={entry.name}
                       class="icon"
                     ></img>

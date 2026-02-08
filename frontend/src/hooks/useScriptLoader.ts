@@ -17,9 +17,11 @@ export function hasUrlParam(key: string): boolean {
 
 export function getInitialOptionsFromUrl(): ScriptOptions {
   const params = new URLSearchParams(window.location.search);
+  const savedIconUrlTemplate = localStorage.getItem("iconUrlTemplate");
   const options: ScriptOptions = {
     ...DEFAULT_OPTIONS,
     dimensions: { ...DEFAULT_OPTIONS.dimensions },
+    ...(savedIconUrlTemplate !== null && { iconUrlTemplate: savedIconUrlTemplate }),
   };
 
   type OptionsKey = keyof ScriptOptions;

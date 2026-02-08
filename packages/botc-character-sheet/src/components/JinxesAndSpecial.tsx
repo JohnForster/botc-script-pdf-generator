@@ -1,11 +1,13 @@
 import { Jinx, ResolvedCharacter } from "../types";
 import { FabledOrLoric } from "../utils/fabledOrLoric";
+import { getImageUrl } from "../utils/scriptUtils";
 
 interface JinxesSectionProps {
   jinxes: Jinx[];
   allCharacters: ResolvedCharacter[];
   fabledAndLoric: FabledOrLoric[];
   bootleggerRules: string[];
+  iconUrlTemplate?: string;
 }
 
 export function JinxesAndSpecial({
@@ -13,6 +15,7 @@ export function JinxesAndSpecial({
   allCharacters,
   fabledAndLoric,
   bootleggerRules,
+  iconUrlTemplate,
 }: JinxesSectionProps) {
   // Create a map for quick character lookup
   const characterMap = new Map(
@@ -40,7 +43,7 @@ export function JinxesAndSpecial({
   let rightColumn;
   if (hasBothJinxesAndFabledLoric) {
     leftColumn = jinxes.map((jinx, i) => (
-      <JinxItem key={`lc-${i}`} jinx={jinx} charMap={characterMap} />
+      <JinxItem key={`lc-${i}`} jinx={jinx} charMap={characterMap} iconUrlTemplate={iconUrlTemplate} />
     ));
     rightColumn = fabledAndLoric.map((fl, i) => (
       <FabledLoricItem
@@ -53,12 +56,12 @@ export function JinxesAndSpecial({
     leftColumn = jinxes
       .slice(0, midpoint)
       .map((jinx, i) => (
-        <JinxItem key={`lc-${i}`} jinx={jinx} charMap={characterMap} />
+        <JinxItem key={`lc-${i}`} jinx={jinx} charMap={characterMap} iconUrlTemplate={iconUrlTemplate} />
       ));
     rightColumn = jinxes
       .slice(midpoint)
       .map((jinx, i) => (
-        <JinxItem key={`rc-${i}`} jinx={jinx} charMap={characterMap} />
+        <JinxItem key={`rc-${i}`} jinx={jinx} charMap={characterMap} iconUrlTemplate={iconUrlTemplate} />
       ));
   } else if (hasSpecialOnly && useTwoColumns) {
     leftColumn = fabledAndLoric
@@ -81,7 +84,7 @@ export function JinxesAndSpecial({
       ));
   } else if (hasJinxesOnly) {
     leftColumn = jinxes.map((jinx, i) => (
-      <JinxItem key={`lc-${i}`} jinx={jinx} charMap={characterMap} />
+      <JinxItem key={`lc-${i}`} jinx={jinx} charMap={characterMap} iconUrlTemplate={iconUrlTemplate} />
     ));
   } else if (hasSpecialOnly) {
     leftColumn = fabledAndLoric.map((item, i) => (
@@ -114,9 +117,10 @@ export function JinxesAndSpecial({
 type JinxItemProps = {
   charMap: Map<string, ResolvedCharacter>;
   jinx: Jinx;
+  iconUrlTemplate?: string;
 };
 
-const JinxItem = ({ charMap, jinx }: JinxItemProps) => {
+const JinxItem = ({ charMap, jinx, iconUrlTemplate }: JinxItemProps) => {
   const char1 = charMap.get(jinx.characters[0]);
   const char2 = charMap.get(jinx.characters[1]);
   return (
@@ -124,9 +128,9 @@ const JinxItem = ({ charMap, jinx }: JinxItemProps) => {
       <div className="jinx-icons">
         {char1 && (
           <div className="jinx-icon-wrapper">
-            {getImageUrl(char1) ? (
+            {getImageUrl(char1, iconUrlTemplate) ? (
               <img
-                src={getImageUrl(char1)!}
+                src={getImageUrl(char1, iconUrlTemplate)!}
                 alt={char1.name}
                 className="jinx-icon"
               />
@@ -140,9 +144,9 @@ const JinxItem = ({ charMap, jinx }: JinxItemProps) => {
         <span className="jinx-divider"></span>
         {char2 && (
           <div className="jinx-icon-wrapper">
-            {getImageUrl(char2) ? (
+            {getImageUrl(char2, iconUrlTemplate) ? (
               <img
-                src={getImageUrl(char2)!}
+                src={getImageUrl(char2, iconUrlTemplate)!}
                 alt={char2.name}
                 className="jinx-icon"
               />
@@ -189,17 +193,3 @@ function FabledLoricItem({
   );
 }
 
-function getImageUrl(
-  character: Pick<ResolvedCharacter, "image" | "wiki_image">
-) {
-  if (character.wiki_image) {
-    return character.wiki_image;
-  }
-  if (!character.image) {
-    return null;
-  }
-  if (typeof character.image === "string") {
-    return character.image;
-  }
-  return character.image[0];
-}

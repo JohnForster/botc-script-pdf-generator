@@ -46,6 +46,7 @@ export const DEFAULT_OPTIONS: ScriptOptions = {
   displayPlayerCounts: true,
   numberOfCharacterSheets: 1,
   inlineJinxIcons: "primary",
+  iconUrlTemplate: "https://raw.githubusercontent.com/tomozbot/botc-icons/refs/heads/main/PNG/{id}.png",
   dimensions: { width: 210, height: 297, margin: 0, bleed: 0 },
   teensy: false,
 };

@@ -59,7 +59,7 @@ export const SheetBack = ({
         <div className="back-info-container">
           {displayPlayerCounts && <PlayerCount />}
 
-          {displayNightOrder && <NightOrderPanel nightOrders={nightOrders} />}
+          {displayNightOrder && <NightOrderPanel nightOrders={nightOrders} iconUrlTemplate={options.iconUrlTemplate} />}
         </div>
       </div>
     </PrintablePage>

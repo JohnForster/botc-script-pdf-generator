@@ -125,6 +125,7 @@ export function ScriptControls({
               <AppearanceOptions
                 color={options.color}
                 logo={options.logo}
+                iconUrlTemplate={options.iconUrlTemplate}
                 showNightSheet={options.showNightSheet}
                 teensyMode={options.teensy}
                 onColorChange={onColorChange}
@@ -132,6 +133,9 @@ export function ScriptControls({
                 onAddColor={onAddColor}
                 onRemoveColor={onRemoveColor}
                 onLogoChange={onLogoChange}
+                onIconUrlTemplateChange={(value) =>
+                  onOptionChange("iconUrlTemplate", value)
+                }
                 onShowNightSheetChange={(value) =>
                   onOptionChange("showNightSheet", value)
                 }

@@ -42,6 +42,7 @@ export function CharacterSheet({
     iconScale,
     appearance,
     inlineJinxIcons,
+    iconUrlTemplate,
     dimensions,
   } = options;
   const sections = [
@@ -125,6 +126,7 @@ export function CharacterSheet({
                     ...characters.demon,
                   ]}
                   inlineJinxIcons={inlineJinxIcons}
+                  iconUrlTemplate={iconUrlTemplate}
                 />
                 {i < sections.length - 1 && (
                   <img src="/images/divider.png" className="section-divider" />
@@ -144,6 +146,7 @@ export function CharacterSheet({
                     ...characters.demon,
                   ]}
                   bootleggerRules={bootleggerRules}
+                  iconUrlTemplate={iconUrlTemplate}
                 />
               </>
             )}

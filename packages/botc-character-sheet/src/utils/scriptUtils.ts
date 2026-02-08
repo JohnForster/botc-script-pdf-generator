@@ -98,20 +98,30 @@ export function findJinxes(
   return applicableJinxes;
 }
 
-export const getImageUrl = (character: ResolvedCharacter) => {
-  // Prefer wiki_image for official characters
-  if (character.wiki_image) {
-    return character.wiki_image;
+export function resolveIconUrl(
+  template: string,
+  id: string,
+): string | null {
+  if (!template) return null;
+  return template.replace("{id}", id);
+}
+
+export const getImageUrl = (
+  character: ResolvedCharacter,
+  iconUrlTemplate?: string,
+) => {
+  // Use custom image if provided on the character
+  if (character.image) {
+    if (typeof character.image === "string") {
+      return character.image;
+    }
+    return character.image[0];
   }
-  // Fall back to custom image for custom characters
-  if (!character.image) {
-    return null;
+  // Fall back to icon URL template
+  if (iconUrlTemplate) {
+    return resolveIconUrl(iconUrlTemplate, character.id);
   }
-  if (typeof character.image === "string") {
-    return character.image;
-  }
-  // If it's an array, use the first image
-  return character.image[0];
+  return null;
 };
 
 export function getJinxedCharacters(

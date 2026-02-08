@@ -29,7 +29,7 @@ export function FancyDoc({ script, options, nightOrders }: FancyDocProps) {
       };
     },
   );
-  const fabledAndLoric = getFabledOrLoric(script.characters);
+  const fabledAndLoric = getFabledOrLoric(script.characters, options.iconUrlTemplate);
 
   return (
     <div className="sheet-wrapper">

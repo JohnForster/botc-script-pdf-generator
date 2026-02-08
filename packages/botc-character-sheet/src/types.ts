@@ -10,7 +10,6 @@ export type CharacterTeam =
   | "fabled";
 
 export type ResolvedCharacter = ScriptCharacter & {
-  wiki_image?: string;
   edition?: string;
   isCustom?: boolean;
 };
@@ -59,6 +58,7 @@ export interface ScriptOptions {
   displayPlayerCounts: boolean;
   numberOfCharacterSheets: number;
   inlineJinxIcons: "none" | "primary" | "both";
+  iconUrlTemplate: string;
   dimensions: PageDimensions;
   teensy: boolean;
 }
