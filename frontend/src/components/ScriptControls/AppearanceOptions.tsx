@@ -123,7 +123,7 @@ export function AppearanceOptions({
           </p>
         )}
         <p className="print-options-hint">
-          For custom icons, Use <code>{"{id}"}</code> as a placeholder for the
+          For custom icons, use <code>{"{id}"}</code> as a placeholder for the
           character ID, e.g. <code>https://example.com/icons/{"{id}"}.png</code>
         </p>
       </div>
