@@ -49,9 +49,7 @@ export function AppearanceOptions({
             type="text"
             value={logo}
             placeholder="https://example.com/logo.png"
-            onInput={(e) =>
-              onLogoChange((e.target as HTMLInputElement).value)
-            }
+            onInput={(e) => onLogoChange((e.target as HTMLInputElement).value)}
             className="text-input"
           />
         </label>
@@ -117,9 +115,16 @@ export function AppearanceOptions({
             </button>
           )}
         </div>
+        {iconUrlTemplate === DEFAULT_OPTIONS.iconUrlTemplate && (
+          <p className="print-options-hint">
+            Default icons from{" "}
+            <a href="https://github.com/tomozbot/botc-icons">tomozbot</a> &{" "}
+            <a href="https://klutzbanana.com">klutzbanana.com</a>
+          </p>
+        )}
         <p className="print-options-hint">
-          Use <code>{"{id}"}</code> as a placeholder for the character ID, e.g.{" "}
-          <code>https://example.com/icons/{"{id}"}.png</code>
+          For custom icons, Use <code>{"{id}"}</code> as a placeholder for the
+          character ID, e.g. <code>https://example.com/icons/{"{id}"}.png</code>
         </p>
       </div>
       <Toggle

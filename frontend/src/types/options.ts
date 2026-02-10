@@ -26,9 +26,12 @@ export const randomColor = () => {
   return hex;
 };
 
-export const TITLE_FONT_DEFAULTS: Record<string, { letterSpacing: number; wordSpacing: number }> = {
+export const TITLE_FONT_DEFAULTS: Record<
+  string,
+  { letterSpacing: number; wordSpacing: number }
+> = {
   "Alice in Wonderland": { letterSpacing: -0.6, wordSpacing: 0 },
-  "Anglican": { letterSpacing: -0.2, wordSpacing: 0 },
+  Anglican: { letterSpacing: -0.2, wordSpacing: 0 },
   "Canterbury Regular": { letterSpacing: -0.6, wordSpacing: 0 },
   "Utm Agin": { letterSpacing: -0.6, wordSpacing: 0 },
   "Waters Gothic": { letterSpacing: 0, wordSpacing: 0 },
@@ -54,7 +57,8 @@ export const DEFAULT_OPTIONS: ScriptOptions = {
   displayPlayerCounts: true,
   numberOfCharacterSheets: 1,
   inlineJinxIcons: "primary",
-  iconUrlTemplate: "https://raw.githubusercontent.com/tomozbot/botc-icons/refs/heads/main/PNG/{id}.png",
+  iconUrlTemplate:
+    "https://images.klutzbanana.com/characters_unofficial/{id}.png",
   titleFont: "Utm Agin",
   titleLetterSpacing: -0.6,
   titleWordSpacing: 0,
