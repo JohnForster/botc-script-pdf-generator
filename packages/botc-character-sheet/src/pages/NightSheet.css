@@ -20,8 +20,8 @@
   -webkit-text-fill-color: transparent;
 
   font-size: 11mm;
-  line-height: 9mm;
-  margin: -20mm -7mm;
+  line-height: var(--title-line-height);
+  margin: calc(-20mm + var(--title-margin-top)) -7mm calc(var(--title-margin-bottom)) -7mm;
   padding: 7mm;
 
   max-width: 50%;

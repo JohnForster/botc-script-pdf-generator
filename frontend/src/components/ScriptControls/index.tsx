@@ -146,21 +146,12 @@ export function ScriptControls({
 
             <CollapsibleSection title="Font" defaultOpen={false}>
               <FontOptions
-                titleFont={options.titleFont}
-                customFontUrl={options.customFontUrl}
-                titleLetterSpacing={options.titleLetterSpacing}
-                titleWordSpacing={options.titleWordSpacing}
-                onTitleFontChange={(value) =>
-                  onOptionChange("titleFont", value)
-                }
-                onCustomFontUrlChange={(value) =>
-                  onOptionChange("customFontUrl", value)
-                }
-                onTitleLetterSpacingChange={(value) =>
-                  onOptionChange("titleLetterSpacing", value)
-                }
-                onTitleWordSpacingChange={(value) =>
-                  onOptionChange("titleWordSpacing", value)
+                titleStyle={options.titleStyle}
+                onTitleStyleChange={(key, value) =>
+                  onOptionChange("titleStyle", {
+                    ...options.titleStyle,
+                    [key]: value,
+                  })
                 }
               />
             </CollapsibleSection>

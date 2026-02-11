@@ -38,6 +38,16 @@ export interface NightOrders {
   other: NightOrderEntry[];
 }
 
+export interface TitleStyle {
+  font: string;
+  letterSpacing: number;
+  wordSpacing: number;
+  lineHeight: number;
+  marginTop: number;
+  marginBottom: number;
+  customFontUrl: string;
+}
+
 export interface ScriptOptions {
   color: string | string[];
   logo: string;
@@ -59,10 +69,7 @@ export interface ScriptOptions {
   numberOfCharacterSheets: number;
   inlineJinxIcons: "none" | "primary" | "both";
   iconUrlTemplate: string;
-  titleFont: string;
-  titleLetterSpacing: number;
-  titleWordSpacing: number;
-  customFontUrl: string;
+  titleStyle: TitleStyle;
   dimensions: PageDimensions;
   teensy: boolean;
 }

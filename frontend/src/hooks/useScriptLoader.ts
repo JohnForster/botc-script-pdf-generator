@@ -23,9 +23,12 @@ export function getInitialOptionsFromUrl(): ScriptOptions {
   const options: ScriptOptions = {
     ...DEFAULT_OPTIONS,
     dimensions: { ...DEFAULT_OPTIONS.dimensions },
+    titleStyle: {
+      ...DEFAULT_OPTIONS.titleStyle,
+      ...(savedTitleFont !== null && { font: savedTitleFont }),
+      ...(savedCustomFontUrl !== null && { customFontUrl: savedCustomFontUrl }),
+    },
     ...(savedIconUrlTemplate !== null && { iconUrlTemplate: savedIconUrlTemplate }),
-    ...(savedTitleFont !== null && { titleFont: savedTitleFont }),
-    ...(savedCustomFontUrl !== null && { customFontUrl: savedCustomFontUrl }),
   };
 
   type OptionsKey = keyof ScriptOptions;

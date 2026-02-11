@@ -1,4 +1,5 @@
 import { Select } from "../ui";
+import { TitleStyle } from "../../types/options";
 
 const TITLE_FONT_OPTIONS = [
   { value: "Alice in Wonderland", label: "Alice in Wonderland" },
@@ -9,33 +10,21 @@ const TITLE_FONT_OPTIONS = [
 ];
 
 interface FontOptionsProps {
-  titleFont: string;
-  customFontUrl: string;
-  titleLetterSpacing: number;
-  titleWordSpacing: number;
-  onTitleFontChange: (value: string) => void;
-  onCustomFontUrlChange: (value: string) => void;
-  onTitleLetterSpacingChange: (value: number) => void;
-  onTitleWordSpacingChange: (value: number) => void;
+  titleStyle: TitleStyle;
+  onTitleStyleChange: <K extends keyof TitleStyle>(key: K, value: TitleStyle[K]) => void;
 }
 
 export function FontOptions({
-  titleFont,
-  customFontUrl,
-  titleLetterSpacing,
-  titleWordSpacing,
-  onTitleFontChange,
-  onCustomFontUrlChange,
-  onTitleLetterSpacingChange,
-  onTitleWordSpacingChange,
+  titleStyle,
+  onTitleStyleChange,
 }: FontOptionsProps) {
   return (
     <>
       <Select
         label="Title Font"
-        value={titleFont}
+        value={titleStyle.font}
         options={TITLE_FONT_OPTIONS}
-        onChange={onTitleFontChange}
+        onChange={(value) => onTitleStyleChange("font", value)}
       />
       <div>
         <div className="form-control">
@@ -43,19 +32,19 @@ export function FontOptions({
             <span className="form-control-text">Custom Font URL</span>
             <input
               type="text"
-              value={customFontUrl}
+              value={titleStyle.customFontUrl}
               placeholder="https://example.com/font.ttf"
               onInput={(e) =>
-                onCustomFontUrlChange((e.target as HTMLInputElement).value)
+                onTitleStyleChange("customFontUrl", (e.target as HTMLInputElement).value)
               }
               className="text-input"
             />
           </label>
-          {customFontUrl && (
+          {titleStyle.customFontUrl && (
             <button
               type="button"
               className="delete-button"
-              onClick={() => onCustomFontUrlChange("")}
+              onClick={() => onTitleStyleChange("customFontUrl", "")}
               title="Clear custom font URL"
             >
               <svg
@@ -83,10 +72,11 @@ export function FontOptions({
           <span className="form-control-text">Letter Spacing (mm)</span>
           <input
             type="number"
-            value={titleLetterSpacing}
+            value={titleStyle.letterSpacing}
             step={0.1}
             onInput={(e) =>
-              onTitleLetterSpacingChange(
+              onTitleStyleChange(
+                "letterSpacing",
                 parseFloat((e.target as HTMLInputElement).value) || 0,
               )
             }
@@ -100,10 +90,65 @@ export function FontOptions({
           <span className="form-control-text">Word Spacing (mm)</span>
           <input
             type="number"
-            value={titleWordSpacing}
+            value={titleStyle.wordSpacing}
             step={0.1}
             onInput={(e) =>
-              onTitleWordSpacingChange(
+              onTitleStyleChange(
+                "wordSpacing",
+                parseFloat((e.target as HTMLInputElement).value) || 0,
+              )
+            }
+            className="text-input"
+            style={{ width: "80px" }}
+          />
+        </label>
+      </div>
+      <div className="form-control">
+        <label className="form-control-label">
+          <span className="form-control-text">Line Height (mm)</span>
+          <input
+            type="number"
+            value={titleStyle.lineHeight}
+            step={0.5}
+            onInput={(e) =>
+              onTitleStyleChange(
+                "lineHeight",
+                parseFloat((e.target as HTMLInputElement).value) || 0,
+              )
+            }
+            className="text-input"
+            style={{ width: "80px" }}
+          />
+        </label>
+      </div>
+      <div className="form-control">
+        <label className="form-control-label">
+          <span className="form-control-text">Margin Top (mm)</span>
+          <input
+            type="number"
+            value={titleStyle.marginTop}
+            step={0.5}
+            onInput={(e) =>
+              onTitleStyleChange(
+                "marginTop",
+                parseFloat((e.target as HTMLInputElement).value) || 0,
+              )
+            }
+            className="text-input"
+            style={{ width: "80px" }}
+          />
+        </label>
+      </div>
+      <div className="form-control">
+        <label className="form-control-label">
+          <span className="form-control-text">Margin Bottom (mm)</span>
+          <input
+            type="number"
+            value={titleStyle.marginBottom}
+            step={0.5}
+            onInput={(e) =>
+              onTitleStyleChange(
+                "marginBottom",
                 parseFloat((e.target as HTMLInputElement).value) || 0,
               )
             }

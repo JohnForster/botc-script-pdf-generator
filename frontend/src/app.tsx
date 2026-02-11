@@ -146,13 +146,13 @@ function EditMode() {
 
   // Persist title font to localStorage
   useEffect(() => {
-    localStorage.setItem("titleFont", options.titleFont);
-  }, [options.titleFont]);
+    localStorage.setItem("titleFont", options.titleStyle.font);
+  }, [options.titleStyle.font]);
 
   // Persist custom font URL to localStorage
   useEffect(() => {
-    localStorage.setItem("customFontUrl", options.customFontUrl);
-  }, [options.customFontUrl]);
+    localStorage.setItem("customFontUrl", options.titleStyle.customFontUrl);
+  }, [options.titleStyle.customFontUrl]);
 
   // Auto-adjust icon scale when appearance changes
   useEffect(() => {
@@ -167,17 +167,19 @@ function EditMode() {
     }
   }, [options.appearance]);
 
-  // Auto-update spacing when title font changes
+  // Auto-update title style defaults when title font changes
   useEffect(() => {
-    const defaults = TITLE_FONT_DEFAULTS[options.titleFont];
+    const defaults = TITLE_FONT_DEFAULTS[options.titleStyle.font];
     if (defaults) {
       setOptions((prev) => ({
         ...prev,
-        titleLetterSpacing: defaults.letterSpacing,
-        titleWordSpacing: defaults.wordSpacing,
+        titleStyle: {
+          ...prev.titleStyle,
+          ...defaults,
+        },
       }));
     }
-  }, [options.titleFont]);
+  }, [options.titleStyle.font]);
 
   const updateOption = <K extends keyof ScriptOptions>(
     key: K,

@@ -12,6 +12,7 @@ export type {
   NightMarker,
   NightOrderEntry,
   NightOrders,
+  TitleStyle,
   ScriptOptions,
   ParsedScript,
   NetworkPayload,

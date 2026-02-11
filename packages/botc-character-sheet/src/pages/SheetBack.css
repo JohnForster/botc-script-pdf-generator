@@ -48,6 +48,9 @@
   /* word-break: break-word; */
   letter-spacing: var(--title-letter-spacing);
   word-spacing: var(--title-word-spacing);
+  line-height: var(--title-line-height);
+  margin-top: var(--title-margin-top);
+  margin-bottom: var(--title-margin-bottom);
   flex: 0 1 130mm;
 
   display: flex;

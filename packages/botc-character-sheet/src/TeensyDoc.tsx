@@ -16,10 +16,10 @@ type TeensyDocProps = {
 };
 
 export const TeensyDoc = ({ script, options: rawOptions, nightOrders }: TeensyDocProps) => {
-  // If a custom font URL is provided, inject a @font-face and override titleFont
-  const hasCustomFont = !!rawOptions.customFontUrl;
+  // If a custom font URL is provided, inject a @font-face and override titleStyle.font
+  const hasCustomFont = !!rawOptions.titleStyle.customFontUrl;
   const options = hasCustomFont
-    ? { ...rawOptions, titleFont: "CustomTitleFont" }
+    ? { ...rawOptions, titleStyle: { ...rawOptions.titleStyle, font: "CustomTitleFont" } }
     : rawOptions;
 
   const numberOfSheets =
@@ -45,7 +45,7 @@ export const TeensyDoc = ({ script, options: rawOptions, nightOrders }: TeensyDo
   return (
     <div className="sheet-wrapper teensy">
       {hasCustomFont && (
-        <style>{`@font-face { font-family: "CustomTitleFont"; src: url("${rawOptions.customFontUrl}"); }`}</style>
+        <style>{`@font-face { font-family: "CustomTitleFont"; src: url("${rawOptions.titleStyle.customFontUrl}"); }`}</style>
       )}
       {Array.from({ length: numberOfSheets }).map(
         (_, i) =>
