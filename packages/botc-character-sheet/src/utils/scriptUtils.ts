@@ -98,10 +98,7 @@ export function findJinxes(
   return applicableJinxes;
 }
 
-export function resolveIconUrl(
-  template: string,
-  id: string,
-): string | null {
+export function resolveIconUrl(template: string, id: string): string | null {
   if (!template) return null;
   return template.replace("{id}", id);
 }

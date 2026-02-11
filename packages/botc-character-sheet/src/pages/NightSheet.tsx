@@ -27,7 +27,11 @@ export const NightSheet = ({
           </div>
           <div className="night-sheet-order">
             {firstNightOrder.map((reminder) => (
-              <NightSheetEntry entry={reminder} night="first" iconUrlTemplate={options.iconUrlTemplate} />
+              <NightSheetEntry
+                entry={reminder}
+                night="first"
+                iconUrlTemplate={options.iconUrlTemplate}
+              />
             ))}
           </div>
         </BottomTrimSheet>
@@ -40,7 +44,11 @@ export const NightSheet = ({
           </div>
           <div className="night-sheet-order">
             {otherNightOrder.map((reminder) => (
-              <NightSheetEntry entry={reminder} night="other" iconUrlTemplate={options.iconUrlTemplate} />
+              <NightSheetEntry
+                entry={reminder}
+                night="other"
+                iconUrlTemplate={options.iconUrlTemplate}
+              />
             ))}
           </div>
         </BottomTrimSheet>

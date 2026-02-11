@@ -14,11 +14,18 @@ export type FancyDocProps = {
   nightOrders: NightOrders;
 };
 
-export function FancyDoc({ script, options: rawOptions, nightOrders }: FancyDocProps) {
+export function FancyDoc({
+  script,
+  options: rawOptions,
+  nightOrders,
+}: FancyDocProps) {
   // If a custom font URL is provided, inject a @font-face and override titleStyle.font
   const hasCustomFont = !!rawOptions.titleStyle.customFontUrl;
   const options = hasCustomFont
-    ? { ...rawOptions, titleStyle: { ...rawOptions.titleStyle, font: "CustomTitleFont" } }
+    ? {
+        ...rawOptions,
+        titleStyle: { ...rawOptions.titleStyle, font: "CustomTitleFont" },
+      }
     : rawOptions;
 
   const groupedCharacters = groupCharactersByTeam(script.characters);
@@ -35,7 +42,10 @@ export function FancyDoc({ script, options: rawOptions, nightOrders }: FancyDocP
       };
     },
   );
-  const fabledAndLoric = getFabledOrLoric(script.characters, options.iconUrlTemplate);
+  const fabledAndLoric = getFabledOrLoric(
+    script.characters,
+    options.iconUrlTemplate,
+  );
 
   return (
     <div className="sheet-wrapper">

@@ -16,7 +16,8 @@
   font-size: 11mm;
   line-height: var(--title-line-height);
 
-  margin: calc(-7mm + var(--title-margin-top)) -7mm calc(-7mm + var(--title-margin-bottom)) -7mm;
+  margin: calc(-7mm + var(--title-margin-top)) -7mm
+    calc(-7mm + var(--title-margin-bottom)) -7mm;
   padding: 7mm;
 
   max-width: 50%;

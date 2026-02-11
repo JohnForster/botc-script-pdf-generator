@@ -52,13 +52,10 @@ export const formatWithMinorWords = (text: string): JSX.Element[] => {
 
         const needsSpace = acc.length > 0;
         acc.push(
-          <span
-            key={wordIndex}
-            className={isMinor ? "minor-word" : undefined}
-          >
+          <span key={wordIndex} className={isMinor ? "minor-word" : undefined}>
             {needsSpace && " "}
             {sequence.join(" ")}
-          </span>
+          </span>,
         );
       }
       // Skip if we're in the middle of a sequence (already rendered)

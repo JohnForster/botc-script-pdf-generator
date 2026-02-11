@@ -5,10 +5,10 @@ Preact components for rendering Blood on the Clocktower character sheets.
 ## Usage
 
 ```tsx
-import { FancyDoc, TeensyDoc } from 'botc-character-sheet';
-import 'botc-character-sheet/style.css';
+import { FancyDoc, TeensyDoc } from "botc-character-sheet";
+import "botc-character-sheet/style.css";
 
-<FancyDoc script={script} options={options} nightOrders={nightOrders} />
+<FancyDoc script={script} options={options} nightOrders={nightOrders} />;
 ```
 
 ## Components

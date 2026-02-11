@@ -104,16 +104,9 @@ function CharacterCard({
     <div className="character-card">
       <div className="character-icon-wrapper">
         {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt={character.name}
-            className="character-icon"
-          />
+          <img src={imageUrl} alt={character.name} className="character-icon" />
         ) : (
-          <div
-            className="character-icon-placeholder"
-            style={{ color }}
-          >
+          <div className="character-icon-placeholder" style={{ color }}>
             {character.name.charAt(0)}
           </div>
         )}

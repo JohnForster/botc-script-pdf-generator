@@ -32,6 +32,7 @@ Runs at `http://localhost:3001`
 Generates a PDF from a BotC script.
 
 **Request:**
+
 ```json
 {
   "script": [...],

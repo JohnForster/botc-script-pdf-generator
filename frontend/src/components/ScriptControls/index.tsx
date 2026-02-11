@@ -176,9 +176,7 @@ export function ScriptControls({
                 onShowAuthorChange={(value) =>
                   onOptionChange("showAuthor", value)
                 }
-                onShowLogoChange={(value) =>
-                  onOptionChange("showLogo", value)
-                }
+                onShowLogoChange={(value) => onOptionChange("showLogo", value)}
                 onShowTitleChange={(value) =>
                   onOptionChange("showTitle", value)
                 }

@@ -28,7 +28,9 @@ export function getInitialOptionsFromUrl(): ScriptOptions {
       ...(savedTitleFont !== null && { font: savedTitleFont }),
       ...(savedCustomFontUrl !== null && { customFontUrl: savedCustomFontUrl }),
     },
-    ...(savedIconUrlTemplate !== null && { iconUrlTemplate: savedIconUrlTemplate }),
+    ...(savedIconUrlTemplate !== null && {
+      iconUrlTemplate: savedIconUrlTemplate,
+    }),
   };
 
   type OptionsKey = keyof ScriptOptions;
@@ -56,7 +58,9 @@ export function getInitialOptionsFromUrl(): ScriptOptions {
 
   // Handle dimensions as flat params (width, height, margin, bleed)
   type DimensionsKey = keyof typeof DEFAULT_OPTIONS.dimensions;
-  for (const key of Object.keys(DEFAULT_OPTIONS.dimensions) as DimensionsKey[]) {
+  for (const key of Object.keys(
+    DEFAULT_OPTIONS.dimensions,
+  ) as DimensionsKey[]) {
     const param = params.get(key);
     if (param !== null) {
       const num = parseFloat(param);
@@ -243,9 +247,7 @@ export function useScriptLoader() {
         .catch((err) => {
           console.error("Failed to load shared script:", err);
           setError(
-            err instanceof Error
-              ? err.message
-              : "Failed to load shared script",
+            err instanceof Error ? err.message : "Failed to load shared script",
           );
         });
     }

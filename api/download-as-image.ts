@@ -58,7 +58,7 @@ function corsHeaders(origin: string | null): HeadersInit {
 function jsonResponse(
   data: object,
   status: number,
-  origin: string | null
+  origin: string | null,
 ): Response {
   return new Response(JSON.stringify(data), {
     status,
@@ -98,7 +98,7 @@ export default {
       return jsonResponse(
         { error: "Unauthorized: Invalid API key" },
         401,
-        origin
+        origin,
       );
     }
 
@@ -113,7 +113,7 @@ export default {
             error: `Payload too large. Maximum size is ${MAX_PAYLOAD_SIZE / 1024}KB`,
           },
           413,
-          origin
+          origin,
         );
       }
 
@@ -142,7 +142,7 @@ export default {
         script,
         renderOptions,
         nightOrders || { first: [], other: [] },
-        origin || undefined
+        origin || undefined,
       );
 
       // Launch Puppeteer
@@ -217,7 +217,7 @@ export default {
           message: error instanceof Error ? error.message : "Unknown error",
         },
         500,
-        origin
+        origin,
       );
     }
   },
@@ -232,7 +232,7 @@ function validateScript(script: ParsedScript): void {
   // Validate character count
   const characterCount = script.characters.filter(
     (el: any) =>
-      typeof el === "string" || (typeof el === "object" && el.id !== "_meta")
+      typeof el === "string" || (typeof el === "object" && el.id !== "_meta"),
   ).length;
 
   if (characterCount > MAX_CHARACTERS) {

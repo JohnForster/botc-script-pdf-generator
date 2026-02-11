@@ -22,11 +22,7 @@ import { MobileControlsToggle } from "./components/MobileControlsToggle";
 import { ViewMode } from "./components/ViewMode";
 import { randomColor, TITLE_FONT_DEFAULTS } from "./types/options";
 import "./app.css";
-import {
-  FancyDoc,
-  ScriptOptions,
-  TeensyDoc,
-} from "botc-character-sheet";
+import { FancyDoc, ScriptOptions, TeensyDoc } from "botc-character-sheet";
 
 // Check if we're in view mode (URL pattern: /view/:id)
 function getViewModeId(): string | null {

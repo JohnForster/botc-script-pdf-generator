@@ -46,7 +46,10 @@ export function ColorPicker({
                 type="color"
                 value={c}
                 onInput={(e) =>
-                  onColorArrayChange(index, (e.target as HTMLInputElement).value)
+                  onColorArrayChange(
+                    index,
+                    (e.target as HTMLInputElement).value,
+                  )
                 }
                 className="color-input"
               />

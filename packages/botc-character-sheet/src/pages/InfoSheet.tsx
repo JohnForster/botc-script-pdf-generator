@@ -43,7 +43,10 @@ export const InfoSheet = ({
               <div class="info-sheet-section">
                 <div className="icon-row">
                   {firstNightOrder.map((item) => (
-                    <img src={getImageSrc(item, iconUrlTemplate)} class="icon"></img>
+                    <img
+                      src={getImageSrc(item, iconUrlTemplate)}
+                      class="icon"
+                    ></img>
                   ))}
                 </div>
               </div>
@@ -55,7 +58,10 @@ export const InfoSheet = ({
               <div class="info-sheet-section">
                 <div className="icon-row">
                   {otherNightOrder.map((item) => (
-                    <img src={getImageSrc(item, iconUrlTemplate)} class="icon"></img>
+                    <img
+                      src={getImageSrc(item, iconUrlTemplate)}
+                      class="icon"
+                    ></img>
                   ))}
                 </div>
               </div>

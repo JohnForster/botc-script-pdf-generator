@@ -19,7 +19,12 @@
 }
 
 .info-author-credit {
-  font-family: Goudy Old Style, Goudy Oldstyle, Goudy, Georgia, serif;
+  font-family:
+    Goudy Old Style,
+    Goudy Oldstyle,
+    Goudy,
+    Georgia,
+    serif;
   font-size: 3.2mm;
   color: #222;
   opacity: 0.6;

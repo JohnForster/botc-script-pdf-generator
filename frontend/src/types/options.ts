@@ -30,11 +30,41 @@ export const TITLE_FONT_DEFAULTS: Record<
   string,
   Omit<TitleStyle, "font" | "customFontUrl">
 > = {
-  "Alice in Wonderland": { letterSpacing: -0.6, wordSpacing: 0, lineHeight: 11, marginTop: -2, marginBottom: 0 },
-  Anglican:              { letterSpacing: -0.2, wordSpacing: 0, lineHeight: 11, marginTop: -2, marginBottom: 0 },
-  "Canterbury Regular":  { letterSpacing: -0.6, wordSpacing: 0, lineHeight: 11, marginTop: -1, marginBottom: 0 },
-  "Utm Agin":            { letterSpacing: -0.6, wordSpacing: 0, lineHeight: 11, marginTop: -2, marginBottom: 0 },
-  "Waters Gothic":       { letterSpacing: 0,    wordSpacing: 0, lineHeight: 11, marginTop: 0,  marginBottom: -3 },
+  "Alice in Wonderland": {
+    letterSpacing: -0.6,
+    wordSpacing: 0,
+    lineHeight: 11,
+    marginTop: -2,
+    marginBottom: 0,
+  },
+  Anglican: {
+    letterSpacing: -0.2,
+    wordSpacing: 0,
+    lineHeight: 11,
+    marginTop: -2,
+    marginBottom: 0,
+  },
+  "Canterbury Regular": {
+    letterSpacing: -0.6,
+    wordSpacing: 0,
+    lineHeight: 11,
+    marginTop: -1,
+    marginBottom: 0,
+  },
+  "Utm Agin": {
+    letterSpacing: -0.6,
+    wordSpacing: 0,
+    lineHeight: 11,
+    marginTop: -2,
+    marginBottom: 0,
+  },
+  "Waters Gothic": {
+    letterSpacing: 0,
+    wordSpacing: 0,
+    lineHeight: 11,
+    marginTop: 0,
+    marginBottom: -3,
+  },
 };
 
 export const DEFAULT_OPTIONS: ScriptOptions = {

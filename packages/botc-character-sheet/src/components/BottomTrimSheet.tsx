@@ -13,7 +13,10 @@ export type BottomTrimSheetProps = {
   children: ComponentChildren;
 };
 
-export const BottomTrimSheet = ({ options, children }: BottomTrimSheetProps) => {
+export const BottomTrimSheet = ({
+  options,
+  children,
+}: BottomTrimSheetProps) => {
   const { color, includeMargins, dimensions } = options;
   const colors = normalizeColors(color);
   const gradient = createGradient(colors, 20);

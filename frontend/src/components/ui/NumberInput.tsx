@@ -22,7 +22,9 @@ export function NumberInput({
           value={value}
           min={min}
           max={max}
-          onChange={(e) => onChange(parseInt((e.target as HTMLInputElement).value))}
+          onChange={(e) =>
+            onChange(parseInt((e.target as HTMLInputElement).value))
+          }
           className="number-input"
         />
       </label>

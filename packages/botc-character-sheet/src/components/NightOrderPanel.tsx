@@ -16,7 +16,10 @@ export const NightOrderPanel = (props: NightOrderPanelProps) => {
         <p>First Night:</p>
         <div class="icon-row">
           {firstNightOrder.map((item) => (
-            <img src={getImageSrc(item, props.iconUrlTemplate)} class={typeof item === "string" ? "icon marker-icon" : "icon"}></img>
+            <img
+              src={getImageSrc(item, props.iconUrlTemplate)}
+              class={typeof item === "string" ? "icon marker-icon" : "icon"}
+            ></img>
           ))}
         </div>
       </div>
@@ -24,7 +27,10 @@ export const NightOrderPanel = (props: NightOrderPanelProps) => {
         <p>Other Nights:</p>
         <div class="icon-row">
           {otherNightOrder.map((item) => (
-            <img src={getImageSrc(item, props.iconUrlTemplate)} class={typeof item === "string" ? "icon marker-icon" : "icon"}></img>
+            <img
+              src={getImageSrc(item, props.iconUrlTemplate)}
+              class={typeof item === "string" ? "icon marker-icon" : "icon"}
+            ></img>
           ))}
         </div>
       </div>

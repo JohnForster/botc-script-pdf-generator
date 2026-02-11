@@ -11,7 +11,10 @@ const TITLE_FONT_OPTIONS = [
 
 interface FontOptionsProps {
   titleStyle: TitleStyle;
-  onTitleStyleChange: <K extends keyof TitleStyle>(key: K, value: TitleStyle[K]) => void;
+  onTitleStyleChange: <K extends keyof TitleStyle>(
+    key: K,
+    value: TitleStyle[K],
+  ) => void;
 }
 
 export function FontOptions({
@@ -35,7 +38,10 @@ export function FontOptions({
               value={titleStyle.customFontUrl}
               placeholder="https://example.com/font.ttf"
               onInput={(e) =>
-                onTitleStyleChange("customFontUrl", (e.target as HTMLInputElement).value)
+                onTitleStyleChange(
+                  "customFontUrl",
+                  (e.target as HTMLInputElement).value,
+                )
               }
               className="text-input"
             />

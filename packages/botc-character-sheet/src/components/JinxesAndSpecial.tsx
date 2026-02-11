@@ -19,7 +19,7 @@ export function JinxesAndSpecial({
 }: JinxesSectionProps) {
   // Create a map for quick character lookup
   const characterMap = new Map(
-    allCharacters.map((char) => [char.id.toLowerCase(), char])
+    allCharacters.map((char) => [char.id.toLowerCase(), char]),
   );
 
   const hasBothJinxesAndFabledLoric =
@@ -43,7 +43,12 @@ export function JinxesAndSpecial({
   let rightColumn;
   if (hasBothJinxesAndFabledLoric) {
     leftColumn = jinxes.map((jinx, i) => (
-      <JinxItem key={`lc-${i}`} jinx={jinx} charMap={characterMap} iconUrlTemplate={iconUrlTemplate} />
+      <JinxItem
+        key={`lc-${i}`}
+        jinx={jinx}
+        charMap={characterMap}
+        iconUrlTemplate={iconUrlTemplate}
+      />
     ));
     rightColumn = fabledAndLoric.map((fl, i) => (
       <FabledLoricItem
@@ -56,12 +61,22 @@ export function JinxesAndSpecial({
     leftColumn = jinxes
       .slice(0, midpoint)
       .map((jinx, i) => (
-        <JinxItem key={`lc-${i}`} jinx={jinx} charMap={characterMap} iconUrlTemplate={iconUrlTemplate} />
+        <JinxItem
+          key={`lc-${i}`}
+          jinx={jinx}
+          charMap={characterMap}
+          iconUrlTemplate={iconUrlTemplate}
+        />
       ));
     rightColumn = jinxes
       .slice(midpoint)
       .map((jinx, i) => (
-        <JinxItem key={`rc-${i}`} jinx={jinx} charMap={characterMap} iconUrlTemplate={iconUrlTemplate} />
+        <JinxItem
+          key={`rc-${i}`}
+          jinx={jinx}
+          charMap={characterMap}
+          iconUrlTemplate={iconUrlTemplate}
+        />
       ));
   } else if (hasSpecialOnly && useTwoColumns) {
     leftColumn = fabledAndLoric
@@ -84,7 +99,12 @@ export function JinxesAndSpecial({
       ));
   } else if (hasJinxesOnly) {
     leftColumn = jinxes.map((jinx, i) => (
-      <JinxItem key={`lc-${i}`} jinx={jinx} charMap={characterMap} iconUrlTemplate={iconUrlTemplate} />
+      <JinxItem
+        key={`lc-${i}`}
+        jinx={jinx}
+        charMap={characterMap}
+        iconUrlTemplate={iconUrlTemplate}
+      />
     ));
   } else if (hasSpecialOnly) {
     leftColumn = fabledAndLoric.map((item, i) => (
@@ -192,4 +212,3 @@ function FabledLoricItem({
     </div>
   );
 }
-

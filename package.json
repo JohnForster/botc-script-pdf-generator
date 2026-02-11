@@ -1,7 +1,11 @@
 {
   "name": "ravenswood-monorepo",
   "private": true,
-  "workspaces": ["frontend", "backend", "packages/*"],
+  "workspaces": [
+    "frontend",
+    "backend",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "concurrently \"bun run dev:packages\" \"bun run dev:frontend\" \"bun run dev:backend\"",
     "dev:packages": "bun run --cwd packages/botc-character-sheet dev",
@@ -10,9 +14,11 @@
     "build": "bun run build:packages && bun run build:frontend",
     "build:packages": "bun run --cwd packages/botc-character-sheet build",
     "build:frontend": "bun run --cwd frontend build",
-    "typecheck": "bun run --cwd frontend typecheck && bun run --cwd backend typecheck"
+    "typecheck": "bun run --cwd frontend typecheck && bun run --cwd backend typecheck",
+    "lint": "bun run prettier . --write"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "prettier": "^3.8.1"
   }
 }

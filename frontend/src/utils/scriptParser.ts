@@ -43,7 +43,7 @@ export function parseScript(json: unknown): ParsedScript {
   // If the script metadata includes bootlegger rules but the character isn't
   // present in the script, add it.
   const bootleggerInCharacters = characters.find(
-    (c) => c.id.toLowerCase() === "bootlegger"
+    (c) => c.id.toLowerCase() === "bootlegger",
   );
   if (metadata?.bootlegger?.length && !bootleggerInCharacters) {
     const bootleggerChar = resolveOfficialCharacter("bootlegger");

@@ -44,7 +44,7 @@ const getPosition = (
   entry: NightOrderEntry,
   nightType: "firstNight" | "otherNight",
   orderList: string[],
-  rawCharMap: RawCharMap
+  rawCharMap: RawCharMap,
 ): number => {
   const id = typeof entry === "string" ? entry : entry.id;
 
@@ -74,7 +74,7 @@ const getPosition = (
 const buildNightOrder = (
   characters: NightOrderEntry[],
   nightType: "firstNight" | "otherNight",
-  rawCharMap: RawCharMap
+  rawCharMap: RawCharMap,
 ): NightOrderEntry[] => {
   const orderList =
     nightType === "firstNight"
@@ -105,7 +105,7 @@ const buildNightOrder = (
 
 export const calculateNightOrders = (
   parsedScript: ParsedScript,
-  rawScriptData: Script
+  rawScriptData: Script,
 ): NightOrders => {
   const rawCharMap = createRawCharMap(rawScriptData);
 
@@ -122,15 +122,15 @@ export const calculateNightOrders = (
 
 const parseNightOrder = (
   nightOrder: string[],
-  characters: ScriptCharacter[]
+  characters: ScriptCharacter[],
 ): NightOrderEntry[] => {
   let nightOrderEntries: NightOrderEntry[] = [];
   for (const entry of nightOrder) {
     const foundChar = characters.find(
-      (c) => c.id.toLowerCase() === entry.toLowerCase()
+      (c) => c.id.toLowerCase() === entry.toLowerCase(),
     );
     const isNightMarker = ["dawn", "dusk", "minioninfo", "demoninfo"].includes(
-      entry.toLowerCase()
+      entry.toLowerCase(),
     );
     if (foundChar) {
       nightOrderEntries.push(foundChar);

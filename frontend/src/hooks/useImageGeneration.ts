@@ -14,7 +14,7 @@ interface ImageResponse {
 export function useImageGeneration() {
   const [showImageModal, setShowImageModal] = useState(false);
   const [characterSheetUrl, setCharacterSheetUrl] = useState<string | null>(
-    null
+    null,
   );
   const [infoSheetUrl, setInfoSheetUrl] = useState<string | null>(null);
   const [imageLoading, setImageLoading] = useState(false);
@@ -23,7 +23,7 @@ export function useImageGeneration() {
   const generateImages = async (
     script: ParsedScript,
     options: ScriptOptions,
-    nightOrders: NightOrders
+    nightOrders: NightOrders,
   ) => {
     // Show modal and reset state
     setShowImageModal(true);
@@ -67,7 +67,7 @@ export function useImageGeneration() {
     } catch (error) {
       console.error("Error generating images:", error);
       setImageError(
-        "Failed to generate images. Please try the browser print option instead."
+        "Failed to generate images. Please try the browser print option instead.",
       );
       setImageLoading(false);
     }
@@ -77,7 +77,7 @@ export function useImageGeneration() {
     if (!characterSheetUrl) return;
     downloadDataUrl(
       characterSheetUrl,
-      `${scriptName || "script"}-character-sheet.png`
+      `${scriptName || "script"}-character-sheet.png`,
     );
   };
 

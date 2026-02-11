@@ -1,5 +1,9 @@
 import { useState, useEffect } from "preact/hooks";
-import type { ScriptOptions, ParsedScript, NightOrders } from "botc-character-sheet";
+import type {
+  ScriptOptions,
+  ParsedScript,
+  NightOrders,
+} from "botc-character-sheet";
 import { FancyDoc, TeensyDoc } from "botc-character-sheet";
 import { DEFAULT_OPTIONS } from "../types/options";
 import { loadScript as loadSharedScript } from "../utils/scriptStorage";
@@ -82,7 +86,11 @@ export function ViewMode({ scriptId }: ViewModeProps) {
 
   return (
     <div className="app view-mode">
-      <a href={`/?shared=${scriptId}`} className="edit-button" title="Open in Editor">
+      <a
+        href={`/?shared=${scriptId}`}
+        className="edit-button"
+        title="Open in Editor"
+      >
         Edit
       </a>
 
@@ -105,7 +113,11 @@ export function ViewMode({ scriptId }: ViewModeProps) {
 
       {script && !options.teensy && (
         <div className="preview-section">
-          <FancyDoc script={script} options={options} nightOrders={nightOrders} />
+          <FancyDoc
+            script={script}
+            options={options}
+            nightOrders={nightOrders}
+          />
         </div>
       )}
     </div>
