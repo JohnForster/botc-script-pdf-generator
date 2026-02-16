@@ -129,6 +129,24 @@ export function FontOptions({
       </div>
       <div className="form-control">
         <label className="form-control-label">
+          <span className="form-control-text">Back Line Height (mm)</span>
+          <input
+            type="number"
+            value={titleStyle.backLineHeight}
+            step={0.5}
+            onInput={(e) =>
+              onTitleStyleChange(
+                "backLineHeight",
+                parseFloat((e.target as HTMLInputElement).value) || 0,
+              )
+            }
+            className="text-input"
+            style={{ width: "80px" }}
+          />
+        </label>
+      </div>
+      <div className="form-control">
+        <label className="form-control-label">
           <span className="form-control-text">Margin Top (mm)</span>
           <input
             type="number"

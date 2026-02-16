@@ -46,7 +46,7 @@ export const SheetBack = ({
           "--title-font": options.titleStyle.font,
           "--title-letter-spacing": `${options.titleStyle.letterSpacing}mm`,
           "--title-word-spacing": `${options.titleStyle.wordSpacing}mm`,
-          "--title-line-height": `${options.titleStyle.lineHeight}mm`,
+          "--title-line-height": `${options.titleStyle.backLineHeight}mm`,
           "--title-margin-top": `${options.titleStyle.marginTop}mm`,
           "--title-margin-bottom": `${options.titleStyle.marginBottom}mm`,
           "--icon-scale": (options.iconScale / 1.7).toString(),

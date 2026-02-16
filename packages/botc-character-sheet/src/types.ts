@@ -43,6 +43,7 @@ export interface TitleStyle {
   letterSpacing: number;
   wordSpacing: number;
   lineHeight: number;
+  backLineHeight: number;
   marginTop: number;
   marginBottom: number;
   customFontUrl: string;
