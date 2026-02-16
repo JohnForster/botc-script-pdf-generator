@@ -135,20 +135,10 @@ function EditMode() {
     }
   }, [script]);
 
-  // Persist icon URL template to localStorage
+  // Persist options to localStorage
   useEffect(() => {
-    localStorage.setItem("iconUrlTemplate", options.iconUrlTemplate);
-  }, [options.iconUrlTemplate]);
-
-  // Persist title font to localStorage
-  useEffect(() => {
-    localStorage.setItem("titleFont", options.titleStyle.font);
-  }, [options.titleStyle.font]);
-
-  // Persist custom font URL to localStorage
-  useEffect(() => {
-    localStorage.setItem("customFontUrl", options.titleStyle.customFontUrl);
-  }, [options.titleStyle.customFontUrl]);
+    localStorage.setItem("options", JSON.stringify(options));
+  }, [options]);
 
   // Auto-adjust icon scale when appearance changes
   useEffect(() => {

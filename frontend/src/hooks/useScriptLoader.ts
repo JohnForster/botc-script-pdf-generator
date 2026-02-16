@@ -17,20 +17,19 @@ export function hasUrlParam(key: string): boolean {
 
 export function getInitialOptionsFromUrl(): ScriptOptions {
   const params = new URLSearchParams(window.location.search);
-  const savedIconUrlTemplate = localStorage.getItem("iconUrlTemplate");
-  const savedTitleFont = localStorage.getItem("titleFont");
-  const savedCustomFontUrl = localStorage.getItem("customFontUrl");
+  const saved = localStorage.getItem("options");
+  const savedOptions = saved ? JSON.parse(saved) : null;
   const options: ScriptOptions = {
     ...DEFAULT_OPTIONS,
-    dimensions: { ...DEFAULT_OPTIONS.dimensions },
+    ...savedOptions,
+    dimensions: {
+      ...DEFAULT_OPTIONS.dimensions,
+      ...savedOptions?.dimensions,
+    },
     titleStyle: {
       ...DEFAULT_OPTIONS.titleStyle,
-      ...(savedTitleFont !== null && { font: savedTitleFont }),
-      ...(savedCustomFontUrl !== null && { customFontUrl: savedCustomFontUrl }),
+      ...savedOptions?.titleStyle,
     },
-    ...(savedIconUrlTemplate !== null && {
-      iconUrlTemplate: savedIconUrlTemplate,
-    }),
   };
 
   type OptionsKey = keyof ScriptOptions;
@@ -186,6 +185,13 @@ export function useScriptLoader() {
     downloadBlob(blob, filename);
   };
 
+  // Persist script to localStorage
+  useEffect(() => {
+    if (rawScript) {
+      localStorage.setItem("script", JSON.stringify(rawScript));
+    }
+  }, [rawScript]);
+
   // Store loaded options from shared script
   const [sharedOptions, setSharedOptions] = useState<ScriptOptions | null>(
     null,
@@ -250,6 +256,16 @@ export function useScriptLoader() {
             err instanceof Error ? err.message : "Failed to load shared script",
           );
         });
+    } else {
+      // Load from localStorage
+      const saved = localStorage.getItem("script");
+      if (saved) {
+        try {
+          loadScript(JSON.parse(saved));
+        } catch {
+          /* ignore corrupt data */
+        }
+      }
     }
   }, []);
 
