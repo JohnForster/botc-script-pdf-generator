@@ -15,7 +15,6 @@
         "@sparticuz/chromium": "^143.0.4",
         "botc-character-sheet": "workspace:*",
         "botc-script-checker": "0.2.5",
-        "pdf-lib": "^1.17.1",
         "preact": "^10.19.3",
         "preact-render-to-string": "^6.4.0",
         "puppeteer-core": "^22.6.0",
@@ -36,6 +35,7 @@
         "botc-script-checker": "0.2.5",
         "firebase": "^12.8.0",
         "json5": "^2.2.3",
+        "pdf-lib": "^1.17.1",
         "preact": "^10.19.3",
       },
       "devDependencies": {

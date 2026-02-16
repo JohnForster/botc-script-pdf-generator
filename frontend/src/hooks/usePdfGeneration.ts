@@ -5,6 +5,7 @@ import {
   ParsedScript,
   ScriptOptions,
 } from "botc-character-sheet";
+import { PDFDocument } from "pdf-lib";
 import { downloadBlob } from "../utils/downloadFile";
 
 export function usePdfGeneration() {
@@ -50,8 +51,9 @@ export function usePdfGeneration() {
       }
 
       const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      setPdfBlob(blob);
+      const duplicatedBlob = await duplicatePages(blob, options);
+      const url = URL.createObjectURL(duplicatedBlob);
+      setPdfBlob(duplicatedBlob);
       setPdfUrl(url);
       setPdfLoading(false);
     } catch (error) {
@@ -89,4 +91,34 @@ export function usePdfGeneration() {
     downloadPDF,
     closePdfModal,
   };
+}
+
+async function duplicatePages(
+  blob: Blob,
+  options: ScriptOptions,
+): Promise<Blob> {
+  if (options.teensy || options.numberOfCharacterSheets <= 1) {
+    return blob;
+  }
+
+  const arrayBuffer = await blob.arrayBuffer();
+  const pdfDoc = await PDFDocument.load(arrayBuffer);
+
+  if (options.overleaf === "none") {
+    const [copiedPage] = await pdfDoc.copyPages(pdfDoc, [1]);
+    for (let i = 1; i < options.numberOfCharacterSheets; i++) {
+      pdfDoc.insertPage(1, copiedPage);
+    }
+  } else {
+    const [sheet, back] = await pdfDoc.copyPages(pdfDoc, [0, 1]);
+    for (let i = 1; i < options.numberOfCharacterSheets; i++) {
+      pdfDoc.insertPage(2, back);
+      pdfDoc.insertPage(2, sheet);
+    }
+  }
+
+  const modifiedBytes = await pdfDoc.save();
+  const buffer = new ArrayBuffer(modifiedBytes.byteLength);
+  new Uint8Array(buffer).set(modifiedBytes);
+  return new Blob([buffer], { type: "application/pdf" });
 }

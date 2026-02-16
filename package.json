@@ -10,7 +10,7 @@
     "dev": "concurrently \"bun run dev:packages\" \"bun run dev:frontend\" \"bun run dev:backend\"",
     "dev:packages": "bun run --cwd packages/botc-character-sheet dev",
     "dev:frontend": "bun run --cwd frontend dev",
-    "dev:backend": "bun run --cwd backend serve",
+    "dev:backend": "sleep 3 && bun run --cwd backend serve",
     "build": "bun run build:packages && bun run build:frontend",
     "build:packages": "bun run --cwd packages/botc-character-sheet build",
     "build:frontend": "bun run --cwd frontend build",

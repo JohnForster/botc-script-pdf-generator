@@ -1,12 +1,7 @@
 import { renderCharacterSheet } from "../backend/src/renderer";
-import {
-  NetworkPayload,
-  ParsedScript,
-  ScriptOptions,
-} from "botc-character-sheet";
+import { NetworkPayload, ParsedScript } from "botc-character-sheet";
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
-import { PDFDocument } from "pdf-lib";
 
 // Conditionally import puppeteer based on environment
 const isServerless =
@@ -193,22 +188,15 @@ export default {
 
       browser.close();
 
-      const pdfDoc = await PDFDocument.load(pdf);
-      let finalPDF = await duplicateCharacterSheets(pdfDoc, options);
-
       // Set response headers
       const pdfFilename = filename || "script.pdf";
 
-      // Create a new ArrayBuffer copy to satisfy TypeScript's BlobPart type
-      const pdfBuffer = new ArrayBuffer(finalPDF.byteLength);
-      new Uint8Array(pdfBuffer).set(finalPDF);
-      const pdfBlob = new Blob([pdfBuffer], { type: "application/pdf" });
-
-      return new Response(pdfBlob, {
+      return new Response(pdf, {
         status: 200,
         headers: {
+          "Content-Type": "application/pdf",
           "Content-Disposition": `attachment; filename="${pdfFilename}"`,
-          "Content-Length": finalPDF.byteLength.toString(),
+          "Content-Length": pdf.byteLength.toString(),
           ...corsHeaders(origin),
         },
       });
@@ -243,26 +231,3 @@ function validateScript(script: ParsedScript): void {
   }
 }
 
-async function duplicateCharacterSheets(
-  pdfDoc: PDFDocument,
-  options: ScriptOptions,
-) {
-  if (options.teensy) {
-    return pdfDoc.save();
-  }
-
-  if (options.overleaf === "none") {
-    const [copiedPage] = await pdfDoc.copyPages(pdfDoc, [1]);
-    for (let i = 1; i < options.numberOfCharacterSheets; i++) {
-      pdfDoc.insertPage(1, copiedPage);
-    }
-  } else {
-    const [sheet, back] = await pdfDoc.copyPages(pdfDoc, [0, 1]);
-    for (let i = 1; i < options.numberOfCharacterSheets; i++) {
-      pdfDoc.insertPage(2, back);
-      pdfDoc.insertPage(2, sheet);
-    }
-  }
-  const modifiedBytes = await pdfDoc.save();
-  return modifiedBytes;
-}
