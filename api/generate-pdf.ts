@@ -2,6 +2,7 @@ import { renderCharacterSheet } from "../backend/src/renderer";
 import { NetworkPayload, ParsedScript } from "botc-character-sheet";
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
+import { gzipSync } from "node:zlib";
 
 // Conditionally import puppeteer based on environment
 const isServerless =
@@ -190,13 +191,15 @@ export default {
 
       // Set response headers
       const pdfFilename = filename || "script.pdf";
+      const compressed = gzipSync(pdf);
 
-      return new Response(pdf, {
+      return new Response(compressed, {
         status: 200,
         headers: {
           "Content-Type": "application/pdf",
+          "Content-Encoding": "gzip",
           "Content-Disposition": `attachment; filename="${pdfFilename}"`,
-          "Content-Length": pdf.byteLength.toString(),
+          "Content-Length": compressed.byteLength.toString(),
           ...corsHeaders(origin),
         },
       });
