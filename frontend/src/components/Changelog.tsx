@@ -7,45 +7,52 @@ interface ChangelogEntry {
 
 const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    date: "2026-02-16",
+    changes: [
+      "Reduced PDF file sizes by optimising background images",
+      "Reduced network load by duplicating repeated pages client-side",
+    ],
+  },
+  {
     date: "2026-02-08",
     changes: [
-      "Remove copyrighted material, and content that broke TOS",
-      "Add font selection with a number of open source fonts",
-      "Add ability to link custom icons and font",
+      "Removed copyrighted material, and content that broke TOS",
+      "Added font selection with a number of open source fonts",
+      "Added ability to link custom icons and font",
     ],
   },
   {
     date: "2026-01-30",
     changes: [
-      "Add share button, letting users generate unique links to their scripts",
-      "Fix some minor typography issues, where text used the wrong punctuation",
+      "Added share button, letting users generate unique links to their scripts",
+      "Fixed some minor typography issues, where text used the wrong punctuation",
     ],
   },
   {
     date: "2026-01-27",
     changes: [
-      "Add script logo support",
-      "Add the ability to download a fancy script as an image, for easier sharing to Reddit etc.",
-      "Fix some ability typos (Thank you Heather!)",
+      "Added script logo support",
+      "Added the ability to download a fancy script as an image, for easier sharing to Reddit etc.",
+      "Fixed some ability typos (Thank you Heather!)",
     ],
   },
   {
     date: "2026-01-21",
     changes: [
-      "Add half-size Teensyville support",
-      "Fix bug that was stopping server-side generation from working",
+      "Added half-size Teensyville support",
+      "Fixed a bug that was stopping server-side generation from working",
     ],
   },
   {
     date: "2026-01-18",
-    changes: ["Add support for Zenomancer, Hindu and Pope lorics"],
+    changes: ["Added support for Zenomancer, Hindu and Pope lorics"],
   },
   {
     date: "2026-01-16",
     changes: [
-      "Add print dimensions options to customize the size and margins of the character sheets for printing.",
-      "Add support for Letter paper size, used by countries such as Canada, the Phillippines and the USA.",
-      "Improve UI to make it cleaner and less cluttered",
+      "Added print dimensions options to customize the size and margins of the character sheets for printing.",
+      "Added support for Letter paper size, used by countries such as Canada, the Phillippines and the USA.",
+      "Improved UI to make it cleaner and less cluttered",
     ],
   },
   {
