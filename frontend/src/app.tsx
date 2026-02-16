@@ -14,11 +14,14 @@ import { useImageGeneration } from "./hooks/useImageGeneration";
 import { useOverflowDetection } from "./hooks/useOverflowDetection";
 import { useMobileControls } from "./hooks/useMobileControls";
 import { useShare } from "./hooks/useShare";
+import { useSavedScripts } from "./hooks/useSavedScripts";
 import { ScriptControls } from "./components/ScriptControls";
 import { PdfModal } from "./components/PdfModal";
 import { ImageModal } from "./components/ImageModal";
 import { Changelog } from "./components/Changelog";
 import { MobileControlsToggle } from "./components/MobileControlsToggle";
+import { MobileSavedScriptsToggle } from "./components/MobileSavedScriptsToggle";
+import { SavedScriptsPanel } from "./components/SavedScriptsPanel";
 import { ViewMode } from "./components/ViewMode";
 import { randomColor, TITLE_FONT_DEFAULTS } from "./types/options";
 import "./app.css";
@@ -82,6 +85,11 @@ function EditMode() {
 
   const { isSharing, shareUrl, shareError, handleShare, clearShareState } =
     useShare();
+
+  const { savedScripts, saveScript, deleteScript, saveStatus } =
+    useSavedScripts();
+
+  const [savedScriptsPanelOpen, setSavedScriptsPanelOpen] = useState(false);
 
   const [options, setOptions] = useState<ScriptOptions>(
     getInitialOptionsFromUrl,
@@ -278,6 +286,18 @@ function EditMode() {
     handleShare(rawScript, options);
   };
 
+  const handleSaveToLibrary = () => {
+    if (!rawScript) return;
+    const name = script?.metadata?.name || "Untitled Script";
+    saveScript(rawScript, options, name);
+  };
+
+  const handleLoadSavedScript = (saved: (typeof savedScripts)[number]) => {
+    loadScript(saved.script);
+    setOptions(saved.options);
+    setSavedScriptsPanelOpen(false);
+  };
+
   const handleDownloadPDF = () => {
     downloadPDF(script?.metadata?.name);
   };
@@ -294,10 +314,17 @@ function EditMode() {
     <>
       <div className="app">
         {script && (
-          <MobileControlsToggle
-            isOpen={mobileControlsOpen}
-            onToggle={toggleMobileControls}
-          />
+          <div className="mobile-toggles">
+            <MobileControlsToggle
+              isOpen={mobileControlsOpen}
+              onToggle={toggleMobileControls}
+            />
+            {savedScripts.length > 0 && (
+              <MobileSavedScriptsToggle
+                onToggle={() => setSavedScriptsPanelOpen(true)}
+              />
+            )}
+          </div>
         )}
         <div className={`controls ${controlsClassName}`}>
           <ScriptControls
@@ -325,6 +352,8 @@ function EditMode() {
             isSharing={isSharing}
             shareUrl={shareUrl}
             shareError={shareError}
+            onSaveToLibrary={handleSaveToLibrary}
+            saveStatus={saveStatus}
           />
         </div>
 
@@ -353,6 +382,16 @@ function EditMode() {
               nightOrders={nightOrders}
             />
           </div>
+        )}
+
+        {savedScripts.length > 0 && (
+          <SavedScriptsPanel
+            savedScripts={savedScripts}
+            onLoad={handleLoadSavedScript}
+            onDelete={deleteScript}
+            isMobileOpen={savedScriptsPanelOpen}
+            onMobileClose={() => setSavedScriptsPanelOpen(false)}
+          />
         )}
 
         {!script && !error && (

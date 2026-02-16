@@ -12,8 +12,7 @@ export const API_KEY = process.env.PDF_API_KEY;
 
 export function isAllowedOrigin(origin: string | null): boolean {
   if (!origin) return false;
-  if (origin.includes("localhost") || origin.includes("127.0.0.1"))
-    return true;
+  if (origin.includes("localhost") || origin.includes("127.0.0.1")) return true;
   if (origin === "https://fancy.ravenswoodstudio.xyz") return true;
   if (origin === "https://pdf.ravenswoodstudio.xyz") return true;
   if (origin.endsWith(".vercel.app")) return true;

@@ -488,13 +488,18 @@ select.form-control-input:focus {
   }
 }
 
+.save-share-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  justify-content: center;
+}
+
 .share-button {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin: auto;
-  margin-top: 16px;
   padding: 12px 20px;
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
@@ -524,6 +529,44 @@ select.form-control-input:focus {
 }
 
 .share-button svg {
+  flex-shrink: 0;
+}
+
+.save-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.save-button:hover {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.save-button:active {
+  transform: translateY(0);
+}
+
+.save-button:disabled {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  cursor: default;
+  transform: none;
+}
+
+.save-button svg {
   flex-shrink: 0;
 }
 
@@ -1022,8 +1065,13 @@ select.form-control-input:focus {
   accent-color: var(--button-bg);
 }
 
-/* Mobile controls toggle - hidden by default on desktop */
-.mobile-controls-toggle {
+/* Mobile toggles container - hidden by default on desktop */
+.mobile-toggles {
+  display: none;
+}
+
+.mobile-controls-toggle,
+.mobile-saved-scripts-toggle {
   display: none;
 }
 
@@ -1077,15 +1125,23 @@ select.form-control-input:focus {
     max-height: 100vh;
   }
 
-  /* Show toggle button on mobile */
+  /* Mobile toggles container */
+  .mobile-toggles {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: sticky;
+    top: 10px;
+    z-index: 101;
+    align-self: flex-start;
+    margin-bottom: -106px;
+  }
+
+  /* Show toggle buttons on mobile */
   .mobile-controls-toggle {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: sticky;
-    top: 10px;
-    left: 10px;
-    z-index: 101;
     width: 48px;
     height: 48px;
     border-radius: 50%;
@@ -1097,9 +1153,6 @@ select.form-control-input:focus {
     transition:
       background 0.2s,
       transform 0.2s;
-    flex-shrink: 0;
-    align-self: flex-start;
-    margin-bottom: -48px;
   }
 
   .mobile-controls-toggle:hover {
@@ -1116,6 +1169,31 @@ select.form-control-input:focus {
 
   .mobile-controls-toggle-icon.open {
     transform: rotate(90deg);
+  }
+
+  .mobile-saved-scripts-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    transition:
+      background 0.2s,
+      transform 0.2s;
+  }
+
+  .mobile-saved-scripts-toggle:hover {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  }
+
+  .mobile-saved-scripts-toggle:active {
+    transform: scale(0.95);
   }
 
   /* Adjust title size on mobile */

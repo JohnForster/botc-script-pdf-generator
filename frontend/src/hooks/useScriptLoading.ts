@@ -68,9 +68,7 @@ export function useScriptLoading(
         .catch((err) => {
           console.error("Failed to load shared script:", err);
           setError(
-            err instanceof Error
-              ? err.message
-              : "Failed to load shared script",
+            err instanceof Error ? err.message : "Failed to load shared script",
           );
         });
     } else {

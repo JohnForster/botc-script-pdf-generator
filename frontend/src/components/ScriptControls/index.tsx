@@ -1,4 +1,5 @@
 import { ScriptOptions } from "botc-character-sheet";
+import type { SaveStatus } from "../../hooks/useSavedScripts";
 import { CollapsibleSection } from "../ui";
 import { UploadSection } from "./UploadSection";
 import { AppearanceOptions } from "./AppearanceOptions";
@@ -35,6 +36,8 @@ interface ScriptControlsProps {
   isSharing: boolean;
   shareUrl: string | null;
   shareError: string | null;
+  onSaveToLibrary: () => void;
+  saveStatus: SaveStatus;
   onScriptChange: (text: string) => void;
   onSave: () => void;
 }
@@ -62,6 +65,8 @@ export function ScriptControls({
   isSharing,
   shareUrl,
   shareError,
+  onSaveToLibrary,
+  saveStatus,
   onScriptChange,
   onSave,
 }: ScriptControlsProps) {
@@ -96,6 +101,8 @@ export function ScriptControls({
               isSharing={isSharing}
               shareUrl={shareUrl}
               shareError={shareError}
+              onSaveToLibrary={onSaveToLibrary}
+              saveStatus={saveStatus}
             />
 
             <CollapsibleSection title="General">
@@ -142,10 +149,7 @@ export function ScriptControls({
             )}
 
             <CollapsibleSection title="Print Options" defaultOpen={false}>
-              <PrintOptions
-                options={options}
-                onOptionChange={onOptionChange}
-              />
+              <PrintOptions options={options} onOptionChange={onOptionChange} />
             </CollapsibleSection>
 
             <CollapsibleSection title="Edit Script JSON" defaultOpen={false}>

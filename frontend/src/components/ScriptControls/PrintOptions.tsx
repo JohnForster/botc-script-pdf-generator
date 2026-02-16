@@ -14,10 +14,7 @@ interface PrintOptionsProps {
   ) => void;
 }
 
-export function PrintOptions({
-  options,
-  onOptionChange,
-}: PrintOptionsProps) {
+export function PrintOptions({ options, onOptionChange }: PrintOptionsProps) {
   const paperType = getPaperType(options.dimensions.width);
 
   const handlePaperChange = (paper: PaperType) => {

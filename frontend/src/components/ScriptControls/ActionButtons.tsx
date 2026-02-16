@@ -1,3 +1,5 @@
+import type { SaveStatus } from "../../hooks/useSavedScripts";
+
 interface ActionButtonsProps {
   isScriptSorted: boolean;
   error: string | null;
@@ -9,6 +11,8 @@ interface ActionButtonsProps {
   isSharing: boolean;
   shareUrl: string | null;
   shareError: string | null;
+  onSaveToLibrary: () => void;
+  saveStatus: SaveStatus;
 }
 
 export function ActionButtons({
@@ -22,6 +26,8 @@ export function ActionButtons({
   isSharing,
   shareUrl,
   shareError,
+  onSaveToLibrary,
+  saveStatus,
 }: ActionButtonsProps) {
   return (
     <div className="action-buttons-section">
@@ -62,10 +68,21 @@ export function ActionButtons({
 
       {error && <div className="error-message">{error}</div>}
 
-      <button onClick={onShare} className="share-button" disabled={isSharing}>
-        <ShareIcon />
-        {isSharing ? "Sharing..." : "Share Script"}
-      </button>
+      <div className="save-share-buttons">
+        <button
+          onClick={onSaveToLibrary}
+          className="save-button"
+          disabled={saveStatus === "saved"}
+        >
+          <BookmarkIcon />
+          {saveStatus === "saved" ? "Saved!" : "Save to Library"}
+        </button>
+
+        <button onClick={onShare} className="share-button" disabled={isSharing}>
+          <ShareIcon />
+          {isSharing ? "Sharing..." : "Share Script"}
+        </button>
+      </div>
 
       {shareUrl && (
         <div className="success-message">
@@ -78,6 +95,23 @@ export function ActionButtons({
 
       {shareError && <div className="error-message">{shareError}</div>}
     </div>
+  );
+}
+
+function BookmarkIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+    </svg>
   );
 }
 
