@@ -1,32 +1,48 @@
+import { ScriptOptions } from "botc-character-sheet";
 import { Select, NumberInput } from "../ui";
-import { PageDimensions, PaperType } from "../../types/options";
+import { PaperType } from "../../types/options";
+
+function getPaperType(width: number): PaperType {
+  return width === 216 ? "Letter" : "A4";
+}
 
 interface PrintOptionsProps {
-  numberOfCharacterSheets: number;
-  paperType: PaperType;
-  dimensions: PageDimensions;
-  onNumberOfCharacterSheetsChange: (value: number) => void;
-  onPaperChange: (paper: PaperType) => void;
-  onMarginChange: (margin: number) => void;
-  onBleedChange: (bleed: number) => void;
+  options: ScriptOptions;
+  onOptionChange: <K extends keyof ScriptOptions>(
+    key: K,
+    value: ScriptOptions[K],
+  ) => void;
 }
 
 export function PrintOptions({
-  numberOfCharacterSheets,
-  paperType,
-  dimensions,
-  onNumberOfCharacterSheetsChange,
-  onPaperChange,
-  onMarginChange,
-  onBleedChange,
+  options,
+  onOptionChange,
 }: PrintOptionsProps) {
+  const paperType = getPaperType(options.dimensions.width);
+
+  const handlePaperChange = (paper: PaperType) => {
+    if (paper === "A4") {
+      onOptionChange("dimensions", {
+        ...options.dimensions,
+        width: 210,
+        height: 297,
+      });
+    } else {
+      onOptionChange("dimensions", {
+        ...options.dimensions,
+        width: 216,
+        height: 279,
+      });
+    }
+  };
+
   return (
     <>
       <NumberInput
         label="Number of Character Sheets:"
-        value={numberOfCharacterSheets}
+        value={options.numberOfCharacterSheets}
         min={1}
-        onChange={onNumberOfCharacterSheetsChange}
+        onChange={(value) => onOptionChange("numberOfCharacterSheets", value)}
       />
 
       <Select
@@ -36,21 +52,31 @@ export function PrintOptions({
           { value: "A4", label: "A4" },
           { value: "Letter", label: "Letter" },
         ]}
-        onChange={(value) => onPaperChange(value as PaperType)}
+        onChange={(value) => handlePaperChange(value as PaperType)}
       />
 
       <NumberInput
         label="Print Margin (mm):"
-        value={dimensions.margin}
+        value={options.dimensions.margin}
         min={0}
-        onChange={onMarginChange}
+        onChange={(value) =>
+          onOptionChange("dimensions", {
+            ...options.dimensions,
+            margin: value,
+          })
+        }
       />
 
       <NumberInput
         label="Bleed (mm):"
-        value={dimensions.bleed}
+        value={options.dimensions.bleed}
         min={0}
-        onChange={onBleedChange}
+        onChange={(value) =>
+          onOptionChange("dimensions", {
+            ...options.dimensions,
+            bleed: value,
+          })
+        }
       />
 
       <p className="print-options-hint">

@@ -1,42 +1,34 @@
+import { ScriptOptions } from "botc-character-sheet";
 import { Toggle } from "../ui";
 import { ColorPicker } from "./ColorPicker";
 import { DEFAULT_OPTIONS } from "../../types/options";
 
 interface AppearanceOptionsProps {
-  color: string | string[];
-  logo: string;
-  iconUrlTemplate: string;
-  showNightSheet: boolean;
-  teensyMode: boolean;
+  options: ScriptOptions;
+  onOptionChange: <K extends keyof ScriptOptions>(
+    key: K,
+    value: ScriptOptions[K],
+  ) => void;
   onColorChange: (color: string | string[]) => void;
   onColorArrayChange: (index: number, color: string) => void;
   onAddColor: () => void;
   onRemoveColor: (index: number) => void;
   onLogoChange: (logo: string) => void;
-  onIconUrlTemplateChange: (value: string) => void;
-  onShowNightSheetChange: (value: boolean) => void;
-  onTeensyModeChange: (value: boolean) => void;
 }
 
 export function AppearanceOptions({
-  color,
-  logo,
-  iconUrlTemplate,
-  showNightSheet,
-  teensyMode,
+  options,
+  onOptionChange,
   onColorChange,
   onColorArrayChange,
   onAddColor,
   onRemoveColor,
   onLogoChange,
-  onIconUrlTemplateChange,
-  onTeensyModeChange,
-  onShowNightSheetChange,
 }: AppearanceOptionsProps) {
   return (
     <>
       <ColorPicker
-        color={color}
+        color={options.color}
         onColorChange={onColorChange}
         onColorArrayChange={onColorArrayChange}
         onAddColor={onAddColor}
@@ -47,13 +39,13 @@ export function AppearanceOptions({
           <span className="form-control-text">Logo URL</span>
           <input
             type="text"
-            value={logo}
+            value={options.logo}
             placeholder="https://example.com/logo.png"
             onInput={(e) => onLogoChange((e.target as HTMLInputElement).value)}
             className="text-input"
           />
         </label>
-        {logo && (
+        {options.logo && (
           <button
             type="button"
             className="delete-button"
@@ -82,20 +74,26 @@ export function AppearanceOptions({
             <span className="form-control-text">Icon URL Template</span>
             <input
               type="text"
-              value={iconUrlTemplate}
+              value={options.iconUrlTemplate}
               placeholder="https://example.com/icons/{id}.png"
               onInput={(e) =>
-                onIconUrlTemplateChange((e.target as HTMLInputElement).value)
+                onOptionChange(
+                  "iconUrlTemplate",
+                  (e.target as HTMLInputElement).value,
+                )
               }
               className="text-input"
             />
           </label>
-          {iconUrlTemplate !== DEFAULT_OPTIONS.iconUrlTemplate && (
+          {options.iconUrlTemplate !== DEFAULT_OPTIONS.iconUrlTemplate && (
             <button
               type="button"
               className="delete-button"
               onClick={() =>
-                onIconUrlTemplateChange(DEFAULT_OPTIONS.iconUrlTemplate)
+                onOptionChange(
+                  "iconUrlTemplate",
+                  DEFAULT_OPTIONS.iconUrlTemplate,
+                )
               }
               title="Reset to default"
             >
@@ -115,7 +113,7 @@ export function AppearanceOptions({
             </button>
           )}
         </div>
-        {iconUrlTemplate === DEFAULT_OPTIONS.iconUrlTemplate && (
+        {options.iconUrlTemplate === DEFAULT_OPTIONS.iconUrlTemplate && (
           <p className="print-options-hint">
             Default icons from{" "}
             <a href="https://github.com/tomozbot/botc-icons">tomozbot</a> &{" "}
@@ -129,13 +127,13 @@ export function AppearanceOptions({
       </div>
       <Toggle
         label="Include Night Sheet"
-        checked={showNightSheet}
-        onChange={onShowNightSheetChange}
+        checked={options.showNightSheet}
+        onChange={(value) => onOptionChange("showNightSheet", value)}
       />
       <Toggle
         label="Teensy Mode"
-        checked={teensyMode}
-        onChange={onTeensyModeChange}
+        checked={options.teensy}
+        onChange={(value) => onOptionChange("teensy", value)}
       />
     </>
   );

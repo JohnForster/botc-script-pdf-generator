@@ -7,13 +7,7 @@ import { CharacterSheetOptions } from "./CharacterSheetOptions";
 import { CharacterSheetBackOptions } from "./CharacterSheetBackOptions";
 import { PrintOptions } from "./PrintOptions";
 import { ActionButtons } from "./ActionButtons";
-import { PaperType } from "../../types/options";
 import { ScriptEditor } from "../ScriptEditor";
-
-// Derive paper type from dimensions
-function getPaperType(width: number): PaperType {
-  return width === 216 ? "Letter" : "A4";
-}
 
 interface ScriptControlsProps {
   hasScript: boolean;
@@ -71,24 +65,6 @@ export function ScriptControls({
   onScriptChange,
   onSave,
 }: ScriptControlsProps) {
-  const paperType = getPaperType(options.dimensions.width);
-
-  const handlePaperChange = (paper: PaperType) => {
-    if (paper === "A4") {
-      onOptionChange("dimensions", {
-        ...options.dimensions,
-        width: 210,
-        height: 297,
-      });
-    } else {
-      onOptionChange("dimensions", {
-        ...options.dimensions,
-        width: 216,
-        height: 279,
-      });
-    }
-  };
-
   return (
     <>
       <h1 className="app-title">
@@ -124,23 +100,13 @@ export function ScriptControls({
 
             <CollapsibleSection title="General">
               <AppearanceOptions
-                color={options.color}
-                logo={options.logo}
-                iconUrlTemplate={options.iconUrlTemplate}
-                showNightSheet={options.showNightSheet}
-                teensyMode={options.teensy}
+                options={options}
+                onOptionChange={onOptionChange}
                 onColorChange={onColorChange}
                 onColorArrayChange={onColorArrayChange}
                 onAddColor={onAddColor}
                 onRemoveColor={onRemoveColor}
                 onLogoChange={onLogoChange}
-                onIconUrlTemplateChange={(value) =>
-                  onOptionChange("iconUrlTemplate", value)
-                }
-                onShowNightSheetChange={(value) =>
-                  onOptionChange("showNightSheet", value)
-                }
-                onTeensyModeChange={(value) => onOptionChange("teensy", value)}
               />
             </CollapsibleSection>
 
@@ -158,46 +124,8 @@ export function ScriptControls({
 
             <CollapsibleSection title="Character Sheet" defaultOpen={false}>
               <CharacterSheetOptions
-                overleaf={options.overleaf}
-                appearance={options.appearance}
-                showAuthor={options.showAuthor}
-                showLogo={options.showLogo}
-                showTitle={options.showTitle}
-                showJinxes={options.showJinxes}
-                inlineJinxIcons={options.inlineJinxIcons}
-                useOldJinxes={options.useOldJinxes}
-                showSwirls={options.showSwirls}
-                solidTitle={options.solidTitle}
-                iconScale={options.iconScale}
-                onOverleafChange={(value) => onOptionChange("overleaf", value)}
-                onAppearanceChange={(value) =>
-                  onOptionChange("appearance", value)
-                }
-                onShowAuthorChange={(value) =>
-                  onOptionChange("showAuthor", value)
-                }
-                onShowLogoChange={(value) => onOptionChange("showLogo", value)}
-                onShowTitleChange={(value) =>
-                  onOptionChange("showTitle", value)
-                }
-                onShowJinxesChange={(value) =>
-                  onOptionChange("showJinxes", value)
-                }
-                onInlineJinxIconsChange={(value) =>
-                  onOptionChange("inlineJinxIcons", value)
-                }
-                onUseOldJinxesChange={(value) =>
-                  onOptionChange("useOldJinxes", value)
-                }
-                onShowSwirlsChange={(value) =>
-                  onOptionChange("showSwirls", value)
-                }
-                onSolidTitleChange={(value) =>
-                  onOptionChange("solidTitle", value)
-                }
-                onIconScaleChange={(value) =>
-                  onOptionChange("iconScale", value)
-                }
+                options={options}
+                onOptionChange={onOptionChange}
               />
             </CollapsibleSection>
 
@@ -207,44 +135,16 @@ export function ScriptControls({
                 defaultOpen={false}
               >
                 <CharacterSheetBackOptions
-                  overleaf={options.overleaf}
-                  displayNightOrder={options.displayNightOrder}
-                  displayPlayerCounts={options.displayPlayerCounts}
-                  formatMinorWords={options.formatMinorWords}
-                  onDisplayNightOrderChange={(value) =>
-                    onOptionChange("displayNightOrder", value)
-                  }
-                  onDisplayPlayerCountsChange={(value) =>
-                    onOptionChange("displayPlayerCounts", value)
-                  }
-                  onFormatMinorWordsChange={(value) =>
-                    onOptionChange("formatMinorWords", value)
-                  }
+                  options={options}
+                  onOptionChange={onOptionChange}
                 />
               </CollapsibleSection>
             )}
 
             <CollapsibleSection title="Print Options" defaultOpen={false}>
               <PrintOptions
-                numberOfCharacterSheets={options.numberOfCharacterSheets}
-                paperType={paperType}
-                dimensions={options.dimensions}
-                onNumberOfCharacterSheetsChange={(value) =>
-                  onOptionChange("numberOfCharacterSheets", value)
-                }
-                onPaperChange={handlePaperChange}
-                onMarginChange={(value) =>
-                  onOptionChange("dimensions", {
-                    ...options.dimensions,
-                    margin: value,
-                  })
-                }
-                onBleedChange={(value) =>
-                  onOptionChange("dimensions", {
-                    ...options.dimensions,
-                    bleed: value,
-                  })
-                }
+                options={options}
+                onOptionChange={onOptionChange}
               />
             </CollapsibleSection>
 

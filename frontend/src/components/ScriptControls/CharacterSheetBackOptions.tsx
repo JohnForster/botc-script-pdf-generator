@@ -1,42 +1,36 @@
+import { ScriptOptions } from "botc-character-sheet";
 import { Toggle } from "../ui";
 
 interface CharacterSheetBackOptionsProps {
-  overleaf: "none" | "backingSheet" | "infoSheet";
-  displayNightOrder: boolean;
-  displayPlayerCounts: boolean;
-  formatMinorWords: boolean;
-  onDisplayNightOrderChange: (value: boolean) => void;
-  onDisplayPlayerCountsChange: (value: boolean) => void;
-  onFormatMinorWordsChange: (value: boolean) => void;
+  options: ScriptOptions;
+  onOptionChange: <K extends keyof ScriptOptions>(
+    key: K,
+    value: ScriptOptions[K],
+  ) => void;
 }
 
 export function CharacterSheetBackOptions({
-  overleaf,
-  displayNightOrder,
-  displayPlayerCounts,
-  formatMinorWords,
-  onDisplayNightOrderChange,
-  onDisplayPlayerCountsChange,
-  onFormatMinorWordsChange,
+  options,
+  onOptionChange,
 }: CharacterSheetBackOptionsProps) {
   return (
     <>
       <Toggle
         label="Include Night Order"
-        checked={displayNightOrder}
-        onChange={onDisplayNightOrderChange}
+        checked={options.displayNightOrder}
+        onChange={(value) => onOptionChange("displayNightOrder", value)}
       />
       <Toggle
         label="Include Player Counts"
-        checked={displayPlayerCounts}
-        onChange={onDisplayPlayerCountsChange}
+        checked={options.displayPlayerCounts}
+        onChange={(value) => onOptionChange("displayPlayerCounts", value)}
       />
 
-      {overleaf === "backingSheet" && (
+      {options.overleaf === "backingSheet" && (
         <Toggle
           label="Shrink Minor Words"
-          checked={formatMinorWords}
-          onChange={onFormatMinorWordsChange}
+          checked={options.formatMinorWords}
+          onChange={(value) => onOptionChange("formatMinorWords", value)}
         />
       )}
     </>

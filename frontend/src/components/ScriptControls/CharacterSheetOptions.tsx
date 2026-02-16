@@ -1,145 +1,111 @@
+import { ScriptOptions } from "botc-character-sheet";
 import { Toggle, Select, Slider } from "../ui";
 import { AppearanceLevel, OverleafType } from "../../types/options";
 
 export type InlineJinxIconsMode = "none" | "primary" | "both";
 
 interface CharacterSheetOptionsProps {
-  overleaf: OverleafType;
-  appearance: AppearanceLevel;
-  showAuthor: boolean;
-  showLogo: boolean;
-  showTitle: boolean;
-  showJinxes: boolean;
-  inlineJinxIcons: InlineJinxIconsMode;
-  useOldJinxes: boolean;
-  showSwirls: boolean;
-  solidTitle: boolean;
-  iconScale: number;
-  onOverleafChange: (value: OverleafType) => void;
-  onAppearanceChange: (value: AppearanceLevel) => void;
-  onShowAuthorChange: (value: boolean) => void;
-  onShowLogoChange: (value: boolean) => void;
-  onShowTitleChange: (value: boolean) => void;
-  onShowJinxesChange: (value: boolean) => void;
-  onInlineJinxIconsChange: (value: InlineJinxIconsMode) => void;
-  onUseOldJinxesChange: (value: boolean) => void;
-  onShowSwirlsChange: (value: boolean) => void;
-  onSolidTitleChange: (value: boolean) => void;
-  onIconScaleChange: (value: number) => void;
+  options: ScriptOptions;
+  onOptionChange: <K extends keyof ScriptOptions>(
+    key: K,
+    value: ScriptOptions[K],
+  ) => void;
 }
 
 export function CharacterSheetOptions({
-  overleaf,
-  appearance,
-  showAuthor,
-  showLogo,
-  showTitle,
-  showJinxes,
-  inlineJinxIcons,
-  useOldJinxes,
-  showSwirls,
-  solidTitle,
-  iconScale,
-  onOverleafChange,
-  onAppearanceChange,
-  onShowAuthorChange,
-  onShowLogoChange,
-  onShowTitleChange,
-  onShowJinxesChange,
-  onInlineJinxIconsChange,
-  onUseOldJinxesChange,
-  onShowSwirlsChange,
-  onSolidTitleChange,
-  onIconScaleChange,
+  options,
+  onOptionChange,
 }: CharacterSheetOptionsProps) {
   return (
     <>
       <Select
         label="Overleaf:"
-        value={overleaf}
+        value={options.overleaf}
         options={[
           { value: "backingSheet", label: "Backing Sheet" },
           { value: "infoSheet", label: "Info Sheet" },
           { value: "none", label: "None" },
         ]}
-        onChange={(value) => onOverleafChange(value as OverleafType)}
+        onChange={(value) => onOptionChange("overleaf", value as OverleafType)}
       />
 
       <Select
         label="Sizing:"
-        value={appearance}
+        value={options.appearance}
         options={[
           { value: "normal", label: "Normal" },
           { value: "compact", label: "Small" },
           { value: "super-compact", label: "Smaller" },
           { value: "mega-compact", label: "Smallest" },
         ]}
-        onChange={(value) => onAppearanceChange(value as AppearanceLevel)}
+        onChange={(value) =>
+          onOptionChange("appearance", value as AppearanceLevel)
+        }
       />
 
       <Toggle
         label="Show Author"
-        checked={showAuthor}
-        onChange={onShowAuthorChange}
+        checked={options.showAuthor}
+        onChange={(value) => onOptionChange("showAuthor", value)}
       />
 
       <Toggle
         label="Show Logo"
-        checked={showLogo}
-        onChange={onShowLogoChange}
+        checked={options.showLogo}
+        onChange={(value) => onOptionChange("showLogo", value)}
       />
 
       <Toggle
         label="Show Title"
-        checked={showTitle}
-        onChange={onShowTitleChange}
+        checked={options.showTitle}
+        onChange={(value) => onOptionChange("showTitle", value)}
       />
 
       <Toggle
         label="Show Swirls"
-        checked={showSwirls}
-        onChange={onShowSwirlsChange}
+        checked={options.showSwirls}
+        onChange={(value) => onOptionChange("showSwirls", value)}
       />
 
       <Toggle
         label="Show Jinxes"
-        checked={showJinxes}
-        onChange={onShowJinxesChange}
+        checked={options.showJinxes}
+        onChange={(value) => onOptionChange("showJinxes", value)}
       />
 
       <Select
         label="Inline Jinx Icons:"
-        value={inlineJinxIcons}
+        value={options.inlineJinxIcons}
         options={[
           { value: "none", label: "None" },
           { value: "primary", label: "Primary Character Only" },
           { value: "both", label: "Both Characters" },
         ]}
         onChange={(value) =>
-          onInlineJinxIconsChange(value as InlineJinxIconsMode)
+          onOptionChange("inlineJinxIcons", value as InlineJinxIconsMode)
         }
       />
 
       <Toggle
         label="Use Old Jinxes"
-        checked={useOldJinxes}
-        onChange={onUseOldJinxesChange}
+        checked={options.useOldJinxes}
+        onChange={(value) => onOptionChange("useOldJinxes", value)}
       />
 
       <Toggle
         label="Solid Title"
-        checked={solidTitle}
-        onChange={onSolidTitleChange}
+        checked={options.solidTitle}
+        onChange={(value) => onOptionChange("solidTitle", value)}
       />
 
       <Slider
         label="Icon Scale"
-        value={iconScale}
+        value={options.iconScale}
         min={0.5}
         max={3}
         step={0.1}
-        displayValue={iconScale.toFixed(1)}
-        onChange={onIconScaleChange}
+        displayValue={options.iconScale.toFixed(1)}
+        onChange={(value) => onOptionChange("iconScale", value)}
       />
     </>
   );
