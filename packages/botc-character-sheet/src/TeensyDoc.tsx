@@ -89,6 +89,9 @@ export const TeensyDoc = ({
                     options={options}
                   />
                 )}
+                {/* If there is only one more back sheet to display, and
+                    the user wants to show a night sheet, include the second 
+                    side of the night sheet in this pair */}
                 {options.overleaf !== "none" &&
                   i + 1 === options.numberOfCharacterSheets &&
                   options.showNightSheet && (
@@ -104,6 +107,9 @@ export const TeensyDoc = ({
               <div className="teensy-sheet-pair">
                 {options.overleaf === "backingSheet" && (
                   <>
+                    {/* If there is only one more back sheet to display, and
+                        the user wants to show a night sheet, include the 
+                        second side of the night sheet in this pair */}
                     {i + 1 === options.numberOfCharacterSheets &&
                       options.showNightSheet && (
                         <NightSheet
@@ -130,6 +136,9 @@ export const TeensyDoc = ({
 
                 {options.overleaf === "infoSheet" && (
                   <>
+                    {/* If there is only one more info sheet to display, and
+                    the user wants to show a night sheet, include the second 
+                    side of the night sheet in this pair */}
                     {i + 1 === options.numberOfCharacterSheets &&
                       options.showNightSheet && (
                         <NightSheet

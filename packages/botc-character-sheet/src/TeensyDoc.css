@@ -77,4 +77,9 @@
 
 .teensy .teensy-night-sheet {
   align-self: baseline;
+  width: 100%;
+}
+
+.teensy .teensy-night-sheet .printable-page:nth-child(2) {
+  margin-left: auto;
 }
