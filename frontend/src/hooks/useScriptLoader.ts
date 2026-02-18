@@ -1,4 +1,5 @@
-import { ScriptOptions } from "botc-character-sheet";
+import type { Script } from "botc-script-checker";
+import type { ParsedScript, ScriptOptions } from "botc-character-sheet";
 import { DEFAULT_OPTIONS } from "../types/options";
 import { useScriptParsing } from "./useScriptParsing";
 import { useScriptPersistence } from "./useScriptPersistence";
@@ -67,10 +68,16 @@ export function getInitialOptionsFromUrl(): ScriptOptions {
   return options;
 }
 
-export function useScriptLoader() {
+export function useScriptLoader(
+  onLoad?: (json: Script, parsed: ParsedScript) => void,
+) {
   const parsing = useScriptParsing();
   useScriptPersistence(parsing.rawScript, parsing.script?.metadata?.name);
-  const loading = useScriptLoading(parsing.loadScript, parsing.setError);
+  const loading = useScriptLoading(
+    parsing.loadScript,
+    parsing.setError,
+    onLoad,
+  );
 
   return {
     script: parsing.script,

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "preact/hooks";
+import { useState, useEffect, useRef, useCallback } from "preact/hooks";
 import type { Script } from "botc-script-checker";
 import type { ScriptOptions } from "botc-character-sheet";
 
@@ -9,8 +9,6 @@ export interface SavedScript {
   script: Script;
   options: ScriptOptions;
 }
-
-export type SaveStatus = "idle" | "saved";
 
 const STORAGE_KEY = "savedScripts";
 
@@ -26,49 +24,73 @@ function loadFromStorage(): SavedScript[] {
 export function useSavedScripts() {
   const [savedScripts, setSavedScripts] =
     useState<SavedScript[]>(loadFromStorage);
-  const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const [activeScriptId, setActiveScriptId] = useState<string | null>(null);
+  // Ref mirrors activeScriptId for synchronous reads in auto-save
+  const activeIdRef = useRef<string | null>(null);
 
   // Persist to localStorage when savedScripts changes
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(savedScripts));
   }, [savedScripts]);
 
-  // Clean up timer on unmount
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, []);
+  const createEntry = useCallback(
+    (rawScript: Script, options: ScriptOptions, name: string) => {
+      const id = crypto.randomUUID();
+      const entry: SavedScript = {
+        id,
+        name: name || "Untitled Script",
+        savedAt: Date.now(),
+        script: rawScript,
+        options,
+      };
 
-  const saveScript = (
-    rawScript: Script,
-    options: ScriptOptions,
-    name: string,
-  ) => {
-    const entry: SavedScript = {
-      id: crypto.randomUUID(),
-      name: name || "Untitled Script",
-      savedAt: Date.now(),
-      script: rawScript,
-      options,
-    };
+      setSavedScripts((prev) => [entry, ...prev]);
+      activeIdRef.current = id;
+      setActiveScriptId(id);
+    },
+    [],
+  );
 
-    setSavedScripts((prev) => [entry, ...prev]);
-    setSaveStatus("saved");
-
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setSaveStatus("idle"), 2000);
-  };
+  const updateActiveScript = useCallback(
+    (rawScript: Script, options: ScriptOptions, name: string) => {
+      const id = activeIdRef.current;
+      if (!id) return;
+      setSavedScripts((prev) =>
+        prev.map((s) =>
+          s.id === id
+            ? {
+                ...s,
+                script: rawScript,
+                options,
+                name: name || s.name,
+                savedAt: Date.now(),
+              }
+            : s,
+        ),
+      );
+    },
+    [],
+  );
 
   const deleteScript = (id: string) => {
     setSavedScripts((prev) => prev.filter((s) => s.id !== id));
+    if (activeIdRef.current === id) {
+      activeIdRef.current = null;
+      setActiveScriptId(null);
+    }
   };
+
+  const loadSavedScript = useCallback((id: string) => {
+    activeIdRef.current = id;
+    setActiveScriptId(id);
+  }, []);
 
   return {
     savedScripts,
-    saveScript,
+    createEntry,
+    updateActiveScript,
     deleteScript,
-    saveStatus,
+    loadSavedScript,
+    activeScriptId,
   };
 }

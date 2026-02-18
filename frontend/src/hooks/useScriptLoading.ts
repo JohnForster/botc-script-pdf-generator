@@ -7,6 +7,7 @@ import JSON5 from "json5";
 export function useScriptLoading(
   loadScript: (json: Script) => ParsedScript,
   setError: (error: string | null) => void,
+  onLoad?: (json: Script, parsed: ParsedScript) => void,
 ) {
   const [sharedOptions, setSharedOptions] = useState<ScriptOptions | null>(
     null,
@@ -24,7 +25,8 @@ export function useScriptLoading(
       try {
         const decoded = decodeURIComponent(scriptParam);
         const json = JSON5.parse(decoded);
-        loadScript(json);
+        const parsed = loadScript(json);
+        onLoad?.(json, parsed);
       } catch (err) {
         console.error("Failed to load script from URL:", err);
         setError(
@@ -44,7 +46,8 @@ export function useScriptLoading(
         })
         .then((text) => {
           const json = JSON5.parse(text);
-          loadScript(json);
+          const parsed = loadScript(json);
+          onLoad?.(json, parsed);
         })
         .catch((err) => {
           console.error("Failed to fetch script from URL:", err);
@@ -62,7 +65,8 @@ export function useScriptLoading(
             setError("Shared script not found");
             return;
           }
-          loadScript(data.rawScript);
+          const parsed = loadScript(data.rawScript);
+          onLoad?.(data.rawScript, parsed);
           setSharedOptions(data.options);
         })
         .catch((err) => {
@@ -76,7 +80,9 @@ export function useScriptLoading(
       const saved = localStorage.getItem("script");
       if (saved) {
         try {
-          loadScript(JSON.parse(saved));
+          const json = JSON.parse(saved);
+          const parsed = loadScript(json);
+          onLoad?.(json, parsed);
         } catch {
           /* ignore corrupt data */
         }
@@ -92,7 +98,8 @@ export function useScriptLoading(
 
       try {
         const json = JSON5.parse(pastedText);
-        loadScript(json);
+        const parsed = loadScript(json);
+        onLoad?.(json, parsed);
       } catch (err) {
         // Ignore paste if it's not valid JSON
         console.log("Pasted content is not valid JSON, ignoring");
@@ -115,7 +122,8 @@ export function useScriptLoading(
     reader.onload = (e) => {
       try {
         const json = JSON5.parse(e.target?.result as string);
-        loadScript(json);
+        const parsed = loadScript(json);
+        onLoad?.(json, parsed);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to parse JSON");
       }

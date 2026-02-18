@@ -495,6 +495,19 @@ select.form-control-input:focus {
   justify-content: center;
 }
 
+.button-label-short {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .button-label-full {
+    display: none;
+  }
+  .button-label-short {
+    display: inline;
+  }
+}
+
 .share-button {
   display: flex;
   align-items: center;
@@ -529,44 +542,6 @@ select.form-control-input:focus {
 }
 
 .share-button svg {
-  flex-shrink: 0;
-}
-
-.save-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 20px;
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
-}
-
-.save-button:hover {
-  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
-}
-
-.save-button:active {
-  transform: translateY(0);
-}
-
-.save-button:disabled {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
-  cursor: default;
-  transform: none;
-}
-
-.save-button svg {
   flex-shrink: 0;
 }
 

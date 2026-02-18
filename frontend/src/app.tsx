@@ -1,7 +1,8 @@
-import { useState, useEffect } from "preact/hooks";
+import { useState, useEffect, useCallback } from "preact/hooks";
 import "botc-character-sheet/style.css";
 import { logUsage } from "./utils/logger";
 import type { Script } from "botc-script-checker";
+import type { ParsedScript } from "botc-character-sheet";
 import exampleScript from "./data/example-script.json";
 import exampleTeensyville from "./data/example-teensy.json";
 import {
@@ -46,6 +47,28 @@ export function App() {
 
 function EditMode() {
   const {
+    savedScripts,
+    createEntry,
+    updateActiveScript,
+    deleteScript,
+    loadSavedScript,
+    activeScriptId,
+  } = useSavedScripts();
+
+  const [options, setOptions] = useState<ScriptOptions>(
+    getInitialOptionsFromUrl,
+  );
+
+  // onLoad callback: create a new library entry for every external load
+  const handleNewScriptLoaded = useCallback(
+    (json: Script, parsed: ParsedScript) => {
+      const name = parsed?.metadata?.name || "Untitled Script";
+      createEntry(json, options, name);
+    },
+    [createEntry, options],
+  );
+
+  const {
     script,
     rawScript,
     error,
@@ -59,7 +82,7 @@ function EditMode() {
     handleSort,
     handleSaveScript,
     updateScriptMetadata,
-  } = useScriptLoader();
+  } = useScriptLoader(handleNewScriptLoaded);
 
   const {
     showPdfModal,
@@ -86,14 +109,7 @@ function EditMode() {
   const { isSharing, shareUrl, shareError, handleShare, clearShareState } =
     useShare();
 
-  const { savedScripts, saveScript, deleteScript, saveStatus } =
-    useSavedScripts();
-
   const [savedScriptsPanelOpen, setSavedScriptsPanelOpen] = useState(false);
-
-  const [options, setOptions] = useState<ScriptOptions>(
-    getInitialOptionsFromUrl,
-  );
 
   const {
     isOpen: mobileControlsOpen,
@@ -148,6 +164,13 @@ function EditMode() {
     localStorage.setItem("options", JSON.stringify(options));
   }, [options]);
 
+  // Auto-save to active library entry when script or options change
+  useEffect(() => {
+    if (!rawScript) return;
+    const name = script?.metadata?.name || "";
+    updateActiveScript(rawScript, options, name);
+  }, [rawScript, options, updateActiveScript]);
+
   // Auto-adjust icon scale when appearance changes
   useEffect(() => {
     if (options.appearance === "compact") {
@@ -183,11 +206,21 @@ function EditMode() {
   };
 
   const handleLoadExample = () => {
-    loadScript(exampleScript as Script);
+    const parsed = loadScript(exampleScript as Script);
+    createEntry(
+      exampleScript as Script,
+      options,
+      parsed?.metadata?.name || "Example Script",
+    );
   };
   const handleLoadExampleTeensyville = () => {
-    loadScript(exampleTeensyville as Script);
+    const parsed = loadScript(exampleTeensyville as Script);
     updateOption("teensy", true);
+    createEntry(
+      exampleTeensyville as Script,
+      options,
+      parsed?.metadata?.name || "Example Teensyville",
+    );
   };
 
   const handleColorChange = (newColor: string | string[]) => {
@@ -286,15 +319,10 @@ function EditMode() {
     handleShare(rawScript, options);
   };
 
-  const handleSaveToLibrary = () => {
-    if (!rawScript) return;
-    const name = script?.metadata?.name || "Untitled Script";
-    saveScript(rawScript, options, name);
-  };
-
   const handleLoadSavedScript = (saved: (typeof savedScripts)[number]) => {
     loadScript(saved.script);
     setOptions(saved.options);
+    loadSavedScript(saved.id);
     setSavedScriptsPanelOpen(false);
   };
 
@@ -352,8 +380,6 @@ function EditMode() {
             isSharing={isSharing}
             shareUrl={shareUrl}
             shareError={shareError}
-            onSaveToLibrary={handleSaveToLibrary}
-            saveStatus={saveStatus}
           />
         </div>
 
@@ -387,6 +413,7 @@ function EditMode() {
         {savedScripts.length > 0 && (
           <SavedScriptsPanel
             savedScripts={savedScripts}
+            activeScriptId={activeScriptId}
             onLoad={handleLoadSavedScript}
             onDelete={deleteScript}
             isMobileOpen={savedScriptsPanelOpen}
