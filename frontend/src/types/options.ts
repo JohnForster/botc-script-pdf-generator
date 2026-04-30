@@ -92,8 +92,7 @@ export const DEFAULT_OPTIONS: ScriptOptions = {
   displayPlayerCounts: true,
   numberOfCharacterSheets: 1,
   inlineJinxIcons: "primary",
-  iconUrlTemplate:
-    "https://images.klutzbanana.com/characters_unofficial/{id}.png",
+  iconUrlTemplate: "/images/icons/{id}.webp",
   titleStyle: {
     font: "Utm Agin",
     letterSpacing: -0.6,
