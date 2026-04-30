@@ -1,5 +1,4 @@
-import { ParsedScript, ResolvedCharacter } from "botc-character-sheet";
-import { ALL_CHARACTERS } from "../data/all_characters";
+import { ParsedScript, ResolvedCharacter, ROLES_BY_ID } from "botc-character-sheet";
 import { toTitleCase } from "./stringUtils";
 import { ScriptMetadata, Script, ScriptCharacter } from "botc-script-checker";
 
@@ -55,7 +54,7 @@ export function parseScript(json: unknown): ParsedScript {
 
 function resolveOfficialCharacter(id: string): ResolvedCharacter | null {
   const lowerId = id.toLowerCase().replace("_", "");
-  const char = ALL_CHARACTERS[lowerId];
+  const char = ROLES_BY_ID[lowerId];
 
   if (!char) {
     console.warn(`Character not found: ${id}`);
