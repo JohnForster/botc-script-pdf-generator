@@ -1,7 +1,12 @@
 import { ResolvedCharacter } from "../types";
 import { resolveIconUrl } from "./scriptUtils";
 
-export type FabledOrLoric = { name: string; note: string; image?: string };
+export type FabledOrLoric = {
+  name: string;
+  note: string;
+  team: "fabled" | "loric";
+  image?: string;
+};
 
 export function getFabledOrLoric(
   characters: ResolvedCharacter[],
@@ -19,11 +24,13 @@ export function getFabledOrLoric(
     ...loric.map((lo) => ({
       name: lo.name,
       note: lo.ability,
+      team: "loric" as const,
       image: getImage(lo),
     })),
     ...fabled.map((fb) => ({
       name: fb.name,
       note: fb.ability,
+      team: "fabled" as const,
       image: getImage(fb),
     })),
   ];

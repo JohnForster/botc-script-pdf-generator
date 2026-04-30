@@ -1,5 +1,9 @@
 import { ResolvedCharacter, Jinx } from "../types";
-import { getJinxedCharacters, getImageUrl } from "../utils/scriptUtils";
+import {
+  getJinxedCharacters,
+  getImageUrl,
+  getGenericIconUrl,
+} from "../utils/scriptUtils";
 
 interface CharacterSectionProps {
   title: string;
@@ -103,13 +107,11 @@ function CharacterCard({
   return (
     <div className="character-card">
       <div className="character-icon-wrapper">
-        {imageUrl ? (
-          <img src={imageUrl} alt={character.name} className="character-icon" />
-        ) : (
-          <div className="character-icon-placeholder" style={{ color }}>
-            {character.name.charAt(0)}
-          </div>
-        )}
+        <img
+          src={imageUrl ?? getGenericIconUrl(character.team)}
+          alt={character.name}
+          className="character-icon"
+        />
       </div>
       <div className="character-info">
         <h3 className="character-name" style={{ color: color }}>
@@ -118,22 +120,14 @@ function CharacterCard({
             <span className="inline-jinx-icons">
               {jinxedCharacters.map((jinxedChar) => {
                 const jinxImageUrl = getImageUrl(jinxedChar, iconUrlTemplate);
-                return jinxImageUrl ? (
+                return (
                   <img
                     key={jinxedChar.id}
-                    src={jinxImageUrl}
+                    src={jinxImageUrl ?? getGenericIconUrl(jinxedChar.team)}
                     alt={jinxedChar.name}
                     className="inline-jinx-icon"
                     title={`Jinxed with ${jinxedChar.name}`}
                   />
-                ) : (
-                  <span
-                    key={jinxedChar.id}
-                    className="inline-jinx-icon-placeholder"
-                    title={`Jinxed with ${jinxedChar.name}`}
-                  >
-                    {jinxedChar.name.charAt(0)}
-                  </span>
                 );
               })}
             </span>

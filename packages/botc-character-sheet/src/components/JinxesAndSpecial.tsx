@@ -1,6 +1,6 @@
 import { Jinx, ResolvedCharacter } from "../types";
 import { FabledOrLoric } from "../utils/fabledOrLoric";
-import { getImageUrl } from "../utils/scriptUtils";
+import { getImageUrl, getGenericIconUrl } from "../utils/scriptUtils";
 
 interface JinxesSectionProps {
   jinxes: Jinx[];
@@ -148,33 +148,27 @@ const JinxItem = ({ charMap, jinx, iconUrlTemplate }: JinxItemProps) => {
       <div className="jinx-icons">
         {char1 && (
           <div className="jinx-icon-wrapper">
-            {getImageUrl(char1, iconUrlTemplate) ? (
-              <img
-                src={getImageUrl(char1, iconUrlTemplate)!}
-                alt={char1.name}
-                className="jinx-icon"
-              />
-            ) : (
-              <div className="jinx-icon-placeholder">
-                {char1.name.charAt(0)}
-              </div>
-            )}
+            <img
+              src={
+                getImageUrl(char1, iconUrlTemplate) ??
+                getGenericIconUrl(char1.team)
+              }
+              alt={char1.name}
+              className="jinx-icon"
+            />
           </div>
         )}
         <span className="jinx-divider"></span>
         {char2 && (
           <div className="jinx-icon-wrapper">
-            {getImageUrl(char2, iconUrlTemplate) ? (
-              <img
-                src={getImageUrl(char2, iconUrlTemplate)!}
-                alt={char2.name}
-                className="jinx-icon"
-              />
-            ) : (
-              <div className="jinx-icon-placeholder">
-                {char2.name.charAt(0)}
-              </div>
-            )}
+            <img
+              src={
+                getImageUrl(char2, iconUrlTemplate) ??
+                getGenericIconUrl(char2.team)
+              }
+              alt={char2.name}
+              className="jinx-icon"
+            />
           </div>
         )}
       </div>
@@ -194,11 +188,11 @@ function FabledLoricItem({
   return (
     <div className="jinx-item loric">
       <div className="loric-spacer"></div>
-      {item.image ? (
-        <img src={item.image} alt={item.name} className="jinx-icon loric" />
-      ) : (
-        <div className="jinx-icon-placeholder">{item.name.charAt(0)}</div>
-      )}
+      <img
+        src={item.image ?? getGenericIconUrl(item.team)}
+        alt={item.name}
+        className="jinx-icon loric"
+      />
       <div className="loric-text-container">
         <p className="jinx-text loric-name">{item.name}</p>
         <p className="jinx-text loric-text">{item.note}</p>

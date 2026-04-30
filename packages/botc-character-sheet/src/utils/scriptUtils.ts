@@ -103,6 +103,10 @@ export function resolveIconUrl(template: string, id: string): string | null {
   return template.replace("{id}", id);
 }
 
+export function getGenericIconUrl(team: string): string {
+  return `/images/icons/generic_${team}.webp`;
+}
+
 export const getImageUrl = (
   character: ResolvedCharacter,
   iconUrlTemplate?: string,
