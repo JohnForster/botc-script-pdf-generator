@@ -10,6 +10,7 @@ const CHANGELOG_ENTRIES: ChangelogEntry[] = [
     date: "2026-04-30",
     changes: [
       "Use official icons again (Thank you TPI!)",
+      "Add support for Ventriloquist, Knaves, and God of Ug Lorics",
       "Add Community Created Content badge to scripts",
     ],
   },
