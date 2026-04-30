@@ -68,63 +68,31 @@ export function AppearanceOptions({
           </button>
         )}
       </div>
-      <div>
-        <div className="form-control">
-          <label className="form-control-label">
-            <span className="form-control-text">Icon URL Template</span>
-            <input
-              type="text"
-              value={options.iconUrlTemplate}
-              placeholder="https://example.com/icons/{id}.png"
-              onInput={(e) =>
-                onOptionChange(
-                  "iconUrlTemplate",
-                  (e.target as HTMLInputElement).value,
-                )
-              }
-              className="text-input"
-            />
-          </label>
-          {options.iconUrlTemplate !== DEFAULT_OPTIONS.iconUrlTemplate && (
-            <button
-              type="button"
-              className="delete-button"
-              onClick={() =>
-                onOptionChange(
-                  "iconUrlTemplate",
-                  DEFAULT_OPTIONS.iconUrlTemplate,
-                )
-              }
-              title="Reset to default"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polyline points="1 4 1 10 7 10"></polyline>
-                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-              </svg>
-            </button>
-          )}
-        </div>
-        {options.iconUrlTemplate === DEFAULT_OPTIONS.iconUrlTemplate && (
+      {options.iconUrlTemplate !== DEFAULT_OPTIONS.iconUrlTemplate && (
+        <div>
+          <div className="form-control">
+            <label className="form-control-label">
+              <span className="form-control-text">Icon URL Template</span>
+              <input
+                type="text"
+                value={options.iconUrlTemplate}
+                placeholder="https://example.com/icons/{id}.png"
+                onInput={(e) =>
+                  onOptionChange(
+                    "iconUrlTemplate",
+                    (e.target as HTMLInputElement).value,
+                  )
+                }
+                className="text-input"
+              />
+            </label>
+          </div>
           <p className="print-options-hint">
-            Default icons from{" "}
-            <a href="https://github.com/tomozbot/botc-icons">tomozbot</a> &{" "}
-            <a href="https://klutzbanana.com">klutzbanana.com</a>
+            Icon URL set by script metadata. Uses <code>{"{id}"}</code> as a
+            placeholder for the character ID.
           </p>
-        )}
-        <p className="print-options-hint">
-          For custom icons, use <code>{"{id}"}</code> as a placeholder for the
-          character ID, e.g. <code>https://example.com/icons/{"{id}"}.png</code>
-        </p>
-      </div>
+        </div>
+      )}
       <Toggle
         label="Include Night Sheet"
         checked={options.showNightSheet}

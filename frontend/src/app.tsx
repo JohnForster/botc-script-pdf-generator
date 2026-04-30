@@ -24,7 +24,11 @@ import { MobileControlsToggle } from "./components/MobileControlsToggle";
 import { MobileSavedScriptsToggle } from "./components/MobileSavedScriptsToggle";
 import { SavedScriptsPanel } from "./components/SavedScriptsPanel";
 import { ViewMode } from "./components/ViewMode";
-import { randomColor, TITLE_FONT_DEFAULTS } from "./types/options";
+import {
+  randomColor,
+  TITLE_FONT_DEFAULTS,
+  DEFAULT_OPTIONS,
+} from "./types/options";
 import "./app.css";
 import { FancyDoc, ScriptOptions, TeensyDoc } from "botc-character-sheet";
 
@@ -156,6 +160,14 @@ function EditMode() {
       updateOption("logo", script.metadata.logo);
     } else {
       updateOption("logo", "");
+    }
+
+    // Icon URL template — only active when explicitly set in script metadata
+    const metaIconUrl = script.metadata?.iconUrlTemplate;
+    if (typeof metaIconUrl === "string") {
+      updateOption("iconUrlTemplate", metaIconUrl);
+    } else {
+      updateOption("iconUrlTemplate", DEFAULT_OPTIONS.iconUrlTemplate);
     }
   }, [script]);
 
