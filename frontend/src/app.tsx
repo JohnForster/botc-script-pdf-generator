@@ -1,8 +1,7 @@
-import { useState, useEffect, useCallback } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 import "botc-character-sheet/style.css";
 import { logUsage } from "./utils/logger";
 import type { Script } from "botc-script-checker";
-import type { ParsedScript } from "botc-character-sheet";
 import exampleScript from "./data/example-script.json";
 import exampleTeensyville from "./data/example-teensy.json";
 import {
@@ -21,7 +20,6 @@ import { PdfModal } from "./components/PdfModal";
 import { ImageModal } from "./components/ImageModal";
 import { Changelog } from "./components/Changelog";
 import { MobileControlsToggle } from "./components/MobileControlsToggle";
-import { MobileSavedScriptsToggle } from "./components/MobileSavedScriptsToggle";
 import { SavedScriptsPanel } from "./components/SavedScriptsPanel";
 import { ViewMode } from "./components/ViewMode";
 import {
@@ -63,15 +61,6 @@ function EditMode() {
     getInitialOptionsFromUrl,
   );
 
-  // onLoad callback: create a new library entry for every external load
-  const handleNewScriptLoaded = useCallback(
-    (json: Script, parsed: ParsedScript) => {
-      const name = parsed?.metadata?.name || "Untitled Script";
-      createEntry(json, options, name);
-    },
-    [createEntry, options],
-  );
-
   const {
     script,
     rawScript,
@@ -86,7 +75,7 @@ function EditMode() {
     handleSort,
     handleSaveScript,
     updateScriptMetadata,
-  } = useScriptLoader(handleNewScriptLoaded);
+  } = useScriptLoader();
 
   const {
     showPdfModal,
@@ -113,7 +102,7 @@ function EditMode() {
   const { isSharing, shareUrl, shareError, handleShare, clearShareState } =
     useShare();
 
-  const [savedScriptsPanelOpen, setSavedScriptsPanelOpen] = useState(false);
+  const [showLibrary, setShowLibrary] = useState(false);
 
   const {
     isOpen: mobileControlsOpen,
@@ -218,21 +207,17 @@ function EditMode() {
   };
 
   const handleLoadExample = () => {
-    const parsed = loadScript(exampleScript as Script);
-    createEntry(
-      exampleScript as Script,
-      options,
-      parsed?.metadata?.name || "Example Script",
-    );
+    loadScript(exampleScript as Script);
   };
   const handleLoadExampleTeensyville = () => {
-    const parsed = loadScript(exampleTeensyville as Script);
+    loadScript(exampleTeensyville as Script);
     updateOption("teensy", true);
-    createEntry(
-      exampleTeensyville as Script,
-      options,
-      parsed?.metadata?.name || "Example Teensyville",
-    );
+  };
+
+  const handleSaveToLibrary = () => {
+    if (!rawScript || !script) return;
+    const name = script.metadata?.name || "Untitled Script";
+    createEntry(rawScript, options, name);
   };
 
   const handleColorChange = (newColor: string | string[]) => {
@@ -335,7 +320,7 @@ function EditMode() {
     loadScript(saved.script);
     setOptions(saved.options);
     loadSavedScript(saved.id);
-    setSavedScriptsPanelOpen(false);
+    setShowLibrary(false);
   };
 
   const handleDownloadPDF = () => {
@@ -359,40 +344,48 @@ function EditMode() {
               isOpen={mobileControlsOpen}
               onToggle={toggleMobileControls}
             />
-            {savedScripts.length > 0 && (
-              <MobileSavedScriptsToggle
-                onToggle={() => setSavedScriptsPanelOpen(true)}
-              />
-            )}
           </div>
         )}
         <div className={`controls ${controlsClassName}`}>
-          <ScriptControls
-            hasScript={!!script}
-            options={options}
-            isScriptSorted={isScriptSorted}
-            error={error}
-            scriptText={scriptText}
-            onScriptChange={handleScriptChange}
-            onSave={handleSaveScript}
-            onFileUpload={handleFileUpload}
-            onLoadExample={handleLoadExample}
-            onLoadExampleTeensyville={handleLoadExampleTeensyville}
-            onColorChange={handleColorChange}
-            onColorArrayChange={handleColorArrayChange}
-            onAddColor={handleAddColor}
-            onRemoveColor={handleRemoveColor}
-            onLogoChange={handleLogoChange}
-            onOptionChange={updateOption}
-            onSort={handleSort}
-            onGeneratePDF={handleGeneratePDF}
-            onGenerateImages={handleGenerateImages}
-            onPrint={handlePrint}
-            onShare={handleShareScript}
-            isSharing={isSharing}
-            shareUrl={shareUrl}
-            shareError={shareError}
-          />
+          {showLibrary ? (
+            <SavedScriptsPanel
+              savedScripts={savedScripts}
+              activeScriptId={activeScriptId}
+              onLoad={handleLoadSavedScript}
+              onDelete={deleteScript}
+              onClose={() => setShowLibrary(false)}
+            />
+          ) : (
+            <ScriptControls
+              hasScript={!!script}
+              options={options}
+              isScriptSorted={isScriptSorted}
+              error={error}
+              scriptText={scriptText}
+              onScriptChange={handleScriptChange}
+              onSave={handleSaveScript}
+              onFileUpload={handleFileUpload}
+              onLoadExample={handleLoadExample}
+              onLoadExampleTeensyville={handleLoadExampleTeensyville}
+              onColorChange={handleColorChange}
+              onColorArrayChange={handleColorArrayChange}
+              onAddColor={handleAddColor}
+              onRemoveColor={handleRemoveColor}
+              onLogoChange={handleLogoChange}
+              onOptionChange={updateOption}
+              onSort={handleSort}
+              onGeneratePDF={handleGeneratePDF}
+              onGenerateImages={handleGenerateImages}
+              onPrint={handlePrint}
+              onShare={handleShareScript}
+              isSharing={isSharing}
+              shareUrl={shareUrl}
+              shareError={shareError}
+              savedScriptsCount={savedScripts.length}
+              onShowLibrary={() => setShowLibrary(true)}
+              onSaveToLibrary={handleSaveToLibrary}
+            />
+          )}
         </div>
 
         {script && options.teensy && (
@@ -420,17 +413,6 @@ function EditMode() {
               nightOrders={nightOrders}
             />
           </div>
-        )}
-
-        {savedScripts.length > 0 && (
-          <SavedScriptsPanel
-            savedScripts={savedScripts}
-            activeScriptId={activeScriptId}
-            onLoad={handleLoadSavedScript}
-            onDelete={deleteScript}
-            isMobileOpen={savedScriptsPanelOpen}
-            onMobileClose={() => setSavedScriptsPanelOpen(false)}
-          />
         )}
 
         {!script && !error && (

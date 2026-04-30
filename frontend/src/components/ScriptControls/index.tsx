@@ -37,6 +37,9 @@ interface ScriptControlsProps {
   shareError: string | null;
   onScriptChange: (text: string) => void;
   onSave: () => void;
+  savedScriptsCount: number;
+  onShowLibrary: () => void;
+  onSaveToLibrary: () => void;
 }
 
 export function ScriptControls({
@@ -64,6 +67,9 @@ export function ScriptControls({
   shareError,
   onScriptChange,
   onSave,
+  savedScriptsCount,
+  onShowLibrary,
+  onSaveToLibrary,
 }: ScriptControlsProps) {
   return (
     <>
@@ -96,6 +102,9 @@ export function ScriptControls({
               isSharing={isSharing}
               shareUrl={shareUrl}
               shareError={shareError}
+              savedScriptsCount={savedScriptsCount}
+              onShowLibrary={onShowLibrary}
+              onSaveToLibrary={onSaveToLibrary}
             />
 
             <CollapsibleSection title="General">

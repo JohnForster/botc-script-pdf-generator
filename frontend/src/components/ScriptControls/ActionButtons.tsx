@@ -9,6 +9,9 @@ interface ActionButtonsProps {
   isSharing: boolean;
   shareUrl: string | null;
   shareError: string | null;
+  savedScriptsCount: number;
+  onShowLibrary: () => void;
+  onSaveToLibrary: () => void;
 }
 
 export function ActionButtons({
@@ -22,6 +25,9 @@ export function ActionButtons({
   isSharing,
   shareUrl,
   shareError,
+  savedScriptsCount,
+  onShowLibrary,
+  onSaveToLibrary,
 }: ActionButtonsProps) {
   return (
     <div className="action-buttons-section">
@@ -63,14 +69,19 @@ export function ActionButtons({
       {error && <div className="error-message">{error}</div>}
 
       <div className="save-share-buttons">
+        {savedScriptsCount > 0 && (
+          <button onClick={onShowLibrary} className="library-button">
+            <LibraryIcon />
+            Library ({savedScriptsCount})
+          </button>
+        )}
+        <button onClick={onSaveToLibrary} className="save-button">
+          <SaveIcon />
+          Save
+        </button>
         <button onClick={onShare} className="share-button" disabled={isSharing}>
           <ShareIcon />
-          <span className="button-label-full">
-            {isSharing ? "Sharing..." : "Share Script"}
-          </span>
-          <span className="button-label-short">
-            {isSharing ? "..." : "Share"}
-          </span>
+          {isSharing ? "..." : "Share"}
         </button>
       </div>
 
@@ -85,6 +96,42 @@ export function ActionButtons({
 
       {shareError && <div className="error-message">{shareError}</div>}
     </div>
+  );
+}
+
+function LibraryIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+    </svg>
+  );
+}
+
+function SaveIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+      <polyline points="17 21 17 13 7 13 7 21" />
+      <polyline points="7 3 7 8 15 8" />
+    </svg>
   );
 }
 

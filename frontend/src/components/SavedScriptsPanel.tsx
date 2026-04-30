@@ -7,8 +7,7 @@ interface SavedScriptsPanelProps {
   activeScriptId: string | null;
   onLoad: (saved: SavedScript) => void;
   onDelete: (id: string) => void;
-  isMobileOpen: boolean;
-  onMobileClose: () => void;
+  onClose: () => void;
 }
 
 function getScriptColour(saved: SavedScript): string | string[] | null {
@@ -38,26 +37,19 @@ export function SavedScriptsPanel({
   activeScriptId,
   onLoad,
   onDelete,
-  isMobileOpen,
-  onMobileClose,
+  onClose,
 }: SavedScriptsPanelProps) {
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
 
   return (
-    <>
-      {isMobileOpen && (
-        <div className="saved-scripts-backdrop" onClick={onMobileClose} />
-      )}
-      <div
-        className={`saved-scripts-panel ${isMobileOpen ? "mobile-open" : ""}`}
-      >
-        <div className="saved-scripts-header">
-          <h2 className="saved-scripts-title">Saved Scripts</h2>
-          <button
-            className="saved-scripts-close"
-            onClick={onMobileClose}
-            aria-label="Close saved scripts"
-          >
+    <div className="saved-scripts-panel">
+      <div className="saved-scripts-header">
+        <h2 className="saved-scripts-title">Library</h2>
+        <button
+          className="saved-scripts-close"
+          onClick={onClose}
+          aria-label="Back to controls"
+        >
             <svg
               width="20"
               height="20"
@@ -153,7 +145,6 @@ export function SavedScriptsPanel({
             );
           })}
         </ul>
-      </div>
-    </>
+    </div>
   );
 }
