@@ -21,8 +21,9 @@
 .info-ccc-logo {
   position: absolute;
   left: 3mm;
+  margin-left: 3mm;
   top: -50%;
-  height: 8mm;
+  height: 9mm;
 }
 
 .info-author-credit {

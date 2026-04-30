@@ -373,6 +373,7 @@
   bottom: 3mm;
   left: 3mm;
   height: 8mm;
+  margin-left: 3mm;
   padding: var(--print-bleed);
 }
 
