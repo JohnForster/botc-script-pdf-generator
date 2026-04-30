@@ -18,6 +18,13 @@
   flex: 1 0 0px;
 }
 
+.info-ccc-logo {
+  position: absolute;
+  left: 3mm;
+  top: -50%;
+  height: 8mm;
+}
+
 .info-author-credit {
   font-family:
     Goudy Old Style,

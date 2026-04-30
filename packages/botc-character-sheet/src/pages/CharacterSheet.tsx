@@ -161,6 +161,11 @@ export function CharacterSheet({
           <div className="sheet-footer">
             <span className="asterisk">*</span>Not the first night
           </div>
+          <img
+            className="ccc-logo"
+            src="/images/ccc-parchment.png"
+            alt="Community Created Content"
+          />
           <div className="author-credit">
             <p>© Steven Medway bloodontheclocktower.com</p>
             <p>Script template by John Forster ravenswoodstudio.xyz</p>

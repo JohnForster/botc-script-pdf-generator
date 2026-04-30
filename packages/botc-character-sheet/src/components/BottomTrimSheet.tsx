@@ -45,6 +45,11 @@ export const BottomTrimSheet = ({
         <div className="sheet-content">{children}</div>
         <div className="spacer"></div>
         <div className="info-footer-container">
+          <img
+            className="info-ccc-logo"
+            src="/images/ccc-parchment.png"
+            alt="Community Created Content"
+          />
           <div className="info-author-credit">
             <p>© Steven Medway bloodontheclocktower.com</p>
             <p>Script template by John Forster ravenswoodstudio.xyz</p>

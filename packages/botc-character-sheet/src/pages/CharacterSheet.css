@@ -368,6 +368,14 @@
   font-size: 5mm;
 }
 
+.ccc-logo {
+  position: absolute;
+  bottom: 3mm;
+  left: 3mm;
+  height: 8mm;
+  padding: var(--print-bleed);
+}
+
 .author-credit {
   position: absolute;
   bottom: 3mm;
