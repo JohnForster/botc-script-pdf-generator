@@ -1,4 +1,8 @@
-import { ParsedScript, ResolvedCharacter, ROLES_BY_ID } from "botc-character-sheet";
+import {
+  ParsedScript,
+  ResolvedCharacter,
+  ROLES_BY_ID,
+} from "botc-character-sheet";
 import { toTitleCase } from "./stringUtils";
 import { ScriptMetadata, Script, ScriptCharacter } from "botc-script-checker";
 

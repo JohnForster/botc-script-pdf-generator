@@ -14,9 +14,10 @@ export type OfficialRole = {
   flavor?: string;
 };
 
-export const ROLES_BY_ID: Record<string, ResolvedCharacter> = Object.fromEntries(
-  (rolesJson as OfficialRole[]).map((role) => [
-    role.id,
-    role as unknown as ResolvedCharacter,
-  ]),
-);
+export const ROLES_BY_ID: Record<string, ResolvedCharacter> =
+  Object.fromEntries(
+    (rolesJson as OfficialRole[]).map((role) => [
+      role.id,
+      role as unknown as ResolvedCharacter,
+    ]),
+  );
