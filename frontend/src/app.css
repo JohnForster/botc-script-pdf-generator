@@ -159,6 +159,44 @@ a:visited {
   text-align: center;
 }
 
+.paste-button {
+  display: none;
+  flex: 1 1 0;
+  padding: 14px 0;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.paste-button:hover {
+  background: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.paste-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 1024px) {
+  .upload-section .or,
+  .upload-section .paste-hint {
+    display: none;
+  }
+
+  .paste-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 .example-section {
   display: flex;
   justify-content: center;

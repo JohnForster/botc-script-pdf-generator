@@ -7,6 +7,10 @@ interface ChangelogEntry {
 
 const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    date: "2026-07-09",
+    changes: ["Add paste button on mobile"],
+  },
+  {
     date: "2026-04-30",
     changes: [
       "Use official icons again (Thank you TPI!)",

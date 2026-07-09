@@ -90,17 +90,25 @@ export function useScriptLoading(
     }
   }, []);
 
+  // Parses clipboard text as a script; returns whether it succeeded
+  const tryLoadFromText = (text: string): boolean => {
+    try {
+      const json = JSON5.parse(text);
+      const parsed = loadScript(json);
+      onLoad?.(json, parsed);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  };
+
   // Setup paste event listener
   useEffect(() => {
     const handlePaste = (event: ClipboardEvent) => {
       const pastedText = event.clipboardData?.getData("text");
       if (!pastedText) return;
 
-      try {
-        const json = JSON5.parse(pastedText);
-        const parsed = loadScript(json);
-        onLoad?.(json, parsed);
-      } catch (err) {
+      if (!tryLoadFromText(pastedText)) {
         // Ignore paste if it's not valid JSON
         console.log("Pasted content is not valid JSON, ignoring");
       }
@@ -111,6 +119,23 @@ export function useScriptLoading(
       document.removeEventListener("paste", handlePaste);
     };
   }, []);
+
+  // Used by the mobile "Paste" button, which reads the clipboard directly
+  // since ctrl/cmd+V isn't available on touch keyboards
+  const handlePasteButtonClick = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (!text) return;
+
+      if (!tryLoadFromText(text)) {
+        setError("Clipboard content is not a valid script JSON");
+      }
+    } catch (err) {
+      setError(
+        "Unable to read clipboard. Please allow clipboard access and try again.",
+      );
+    }
+  };
 
   const handleFileUpload = (event: Event) => {
     const target = event.target as HTMLInputElement;
@@ -131,5 +156,5 @@ export function useScriptLoading(
     reader.readAsText(file);
   };
 
-  return { sharedOptions, handleFileUpload };
+  return { sharedOptions, handleFileUpload, handlePasteButtonClick };
 }

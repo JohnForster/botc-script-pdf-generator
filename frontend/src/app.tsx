@@ -72,6 +72,7 @@ function EditMode() {
     loadScript,
     handleScriptTextChange,
     handleFileUpload,
+    handlePasteButtonClick,
     handleSort,
     handleSaveScript,
     updateScriptMetadata,
@@ -365,6 +366,7 @@ function EditMode() {
               onScriptChange={handleScriptChange}
               onSave={handleSaveScript}
               onFileUpload={handleFileUpload}
+              onPasteButtonClick={handlePasteButtonClick}
               onLoadExample={handleLoadExample}
               onLoadExampleTeensyville={handleLoadExampleTeensyville}
               onColorChange={handleColorChange}

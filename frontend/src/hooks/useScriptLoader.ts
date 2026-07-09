@@ -90,6 +90,7 @@ export function useScriptLoader(
     loadScript: parsing.loadScript,
     handleScriptTextChange: parsing.handleScriptTextChange,
     handleFileUpload: loading.handleFileUpload,
+    handlePasteButtonClick: loading.handlePasteButtonClick,
     handleSort: parsing.handleSort,
     handleSaveScript: parsing.handleSaveScript,
     updateScriptMetadata: parsing.updateScriptMetadata,
