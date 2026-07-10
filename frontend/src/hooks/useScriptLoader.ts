@@ -1,3 +1,4 @@
+import JSON5 from "json5";
 import type { Script } from "botc-script-checker";
 import type { ParsedScript, ScriptOptions } from "botc-character-sheet";
 import { DEFAULT_OPTIONS } from "../types/options";
@@ -17,7 +18,7 @@ export function getInitialOptionsFromUrl(): ScriptOptions {
   let savedOptions: Partial<ScriptOptions> | null = null;
   if (saved) {
     try {
-      savedOptions = JSON.parse(saved);
+      savedOptions = JSON5.parse(saved);
     } catch {
       savedOptions = null;
     }

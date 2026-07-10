@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "preact/hooks";
+import JSON5 from "json5";
 import type { Script } from "botc-script-checker";
 import type { ScriptOptions } from "botc-character-sheet";
 
@@ -15,7 +16,7 @@ const STORAGE_KEY = "savedScripts";
 function loadFromStorage(): SavedScript[] {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
+    return stored ? JSON5.parse(stored) : [];
   } catch {
     return [];
   }

@@ -1,4 +1,5 @@
 import { collection, doc, setDoc, getDoc } from "firebase/firestore";
+import JSON5 from "json5";
 import db from "./firestore";
 import type { Script } from "botc-script-checker";
 import type { ScriptOptions } from "botc-character-sheet";
@@ -59,8 +60,8 @@ export async function loadScript(
 
   const data = docSnap.data() as StoredScript;
   return {
-    rawScript: JSON.parse(data.script),
-    options: JSON.parse(data.options),
+    rawScript: JSON5.parse(data.script),
+    options: JSON5.parse(data.options),
   };
 }
 

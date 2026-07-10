@@ -80,7 +80,7 @@ export function useScriptLoading(
       const saved = localStorage.getItem("script");
       if (saved) {
         try {
-          const json = JSON.parse(saved);
+          const json = JSON5.parse(saved);
           const parsed = loadScript(json);
           onLoad?.(json, parsed);
         } catch {
