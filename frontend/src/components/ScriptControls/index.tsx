@@ -1,4 +1,5 @@
 import { ScriptOptions } from "botc-character-sheet";
+import type { ValidationIssue } from "../../types/validation";
 import { CollapsibleSection } from "../ui";
 import { UploadSection } from "./UploadSection";
 import { AppearanceOptions } from "./AppearanceOptions";
@@ -7,6 +8,7 @@ import { CharacterSheetOptions } from "./CharacterSheetOptions";
 import { CharacterSheetBackOptions } from "./CharacterSheetBackOptions";
 import { PrintOptions } from "./PrintOptions";
 import { ActionButtons } from "./ActionButtons";
+import { ScriptIssues } from "./ScriptIssues";
 import { ScriptEditor } from "../ScriptEditor";
 
 interface ScriptControlsProps {
@@ -41,6 +43,7 @@ interface ScriptControlsProps {
   savedScriptsCount: number;
   onShowLibrary: () => void;
   onSaveToLibrary: () => void;
+  issues: ValidationIssue[];
 }
 
 export function ScriptControls({
@@ -49,6 +52,7 @@ export function ScriptControls({
   isScriptSorted,
   scriptText,
   error,
+  issues,
   onFileUpload,
   onPasteButtonClick,
   onLoadExample,
@@ -94,6 +98,7 @@ export function ScriptControls({
               If you have any feedback, please let me know{" "}
               <a href="https://forms.gle/z1yeAW7x91X4Uc4H8">here</a>.
             </p>
+
             <ActionButtons
               isScriptSorted={isScriptSorted}
               error={error}
@@ -109,6 +114,8 @@ export function ScriptControls({
               onShowLibrary={onShowLibrary}
               onSaveToLibrary={onSaveToLibrary}
             />
+
+            <ScriptIssues issues={issues} />
 
             <CollapsibleSection title="General">
               <AppearanceOptions

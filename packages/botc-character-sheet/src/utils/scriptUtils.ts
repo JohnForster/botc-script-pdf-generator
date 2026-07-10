@@ -125,6 +125,35 @@ export const getImageUrl = (
   return null;
 };
 
+/**
+ * Resolves each jinx's character ids to the actual characters in the
+ * script, dropping any jinx that doesn't resolve to two real characters
+ * (e.g. one side was excluded by validation, or references an id that
+ * isn't on the script) instead of crashing on a missing lookup.
+ */
+export function resolveJinxCharacters(
+  jinxes: Jinx[],
+  characters: ScriptCharacter[],
+): { characters: [ScriptCharacter, ScriptCharacter]; text: string }[] {
+  const resolved: {
+    characters: [ScriptCharacter, ScriptCharacter];
+    text: string;
+  }[] = [];
+
+  for (const {
+    characters: [char1id, char2id],
+    jinx,
+  } of jinxes) {
+    const char1 = characters.find((c) => c.id === char1id);
+    const char2 = characters.find((c) => c.id === char2id);
+    if (char1 && char2) {
+      resolved.push({ characters: [char1, char2], text: jinx });
+    }
+  }
+
+  return resolved;
+}
+
 export function getJinxedCharacters(
   character: ResolvedCharacter,
   jinxes: Jinx[],

@@ -32,11 +32,23 @@ export function parseScript(json: unknown): ParsedScript {
           const custom = element as ScriptCharacter;
           characters.push(resolveCustomCharacter(custom));
         } else {
-          // Possibly old format or official character object
+          // Possibly old format or official character object — preserve any inline firstNight/otherNight override.
           const id = (element as { id: string }).id;
           const resolved = resolveOfficialCharacter(id);
           if (resolved) {
-            characters.push(resolved);
+            const raw = element as {
+              firstNight?: unknown;
+              otherNight?: unknown;
+            };
+            characters.push({
+              ...resolved,
+              ...(typeof raw.firstNight === "number"
+                ? { firstNight: raw.firstNight }
+                : {}),
+              ...(typeof raw.otherNight === "number"
+                ? { otherNight: raw.otherNight }
+                : {}),
+            });
           }
         }
       }
@@ -46,7 +58,7 @@ export function parseScript(json: unknown): ParsedScript {
   // If the script metadata includes bootlegger rules but the character isn't
   // present in the script, add it.
   const bootleggerInCharacters = characters.find(
-    (c) => c.id.toLowerCase() === "bootlegger",
+    (c) => typeof c.id === "string" && c.id.toLowerCase() === "bootlegger",
   );
   if (metadata?.bootlegger?.length && !bootleggerInCharacters) {
     const bootleggerChar = resolveOfficialCharacter("bootlegger");
@@ -72,7 +84,10 @@ function resolveCustomCharacter(char: ScriptCharacter): ResolvedCharacter {
   return {
     ...char,
     team: (char.team as any) === "traveler" ? "traveller" : char.team,
-    name: toTitleCase(char.name),
+    // Malformed names (non-string) are left as-is here and excluded during
+    // sanitizeScript — toTitleCase() requires a string and must not be
+    // called speculatively on untrusted input.
+    name: typeof char.name === "string" ? toTitleCase(char.name) : char.name,
     isCustom: true,
   };
 }

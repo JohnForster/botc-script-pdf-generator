@@ -1,8 +1,4 @@
-import type {
-  Script,
-  ScriptCharacter,
-  ScriptElement,
-} from "botc-script-checker";
+import type { ScriptCharacter } from "botc-script-checker";
 import {
   NightOrderEntry,
   NightOrders,
@@ -13,28 +9,18 @@ import {
 
 type RawCharMap = Map<string, { firstNight?: number; otherNight?: number }>;
 
-const elementIsCharacter = (el: ScriptElement): el is ScriptCharacter => {
-  return (
-    typeof el === "object" && el !== null && "id" in el && el.id !== "_meta"
-  );
-};
-
-const createRawCharMap = (rawScriptData: Script): RawCharMap => {
+const createRawCharMap = (characters: ScriptCharacter[]): RawCharMap => {
   const rawCharMap = new Map<
     string,
     { firstNight?: number; otherNight?: number }
   >();
 
-  for (const element of rawScriptData) {
-    if (elementIsCharacter(element)) {
-      const char = element;
-
-      if (char.firstNight !== undefined || char.otherNight !== undefined) {
-        rawCharMap.set(char.id.toLowerCase(), {
-          firstNight: char.firstNight,
-          otherNight: char.otherNight,
-        });
-      }
+  for (const char of characters) {
+    if (char.firstNight !== undefined || char.otherNight !== undefined) {
+      rawCharMap.set(char.id.toLowerCase(), {
+        firstNight: char.firstNight,
+        otherNight: char.otherNight,
+      });
     }
   }
 
@@ -104,9 +90,8 @@ const buildNightOrder = (
 
 export const calculateNightOrders = (
   parsedScript: ParsedScript,
-  rawScriptData: Script,
 ): NightOrders => {
-  const rawCharMap = createRawCharMap(rawScriptData);
+  const rawCharMap = createRawCharMap(parsedScript.characters);
 
   const first = parsedScript.metadata?.firstNight?.length
     ? parseNightOrder(parsedScript.metadata.firstNight, parsedScript.characters)

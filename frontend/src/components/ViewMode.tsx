@@ -6,10 +6,14 @@ import type {
 } from "botc-character-sheet";
 import { FancyDoc, TeensyDoc } from "botc-character-sheet";
 import { DEFAULT_OPTIONS } from "../types/options";
+import type { ValidationIssue } from "../types/validation";
 import { loadScript as loadSharedScript } from "../utils/scriptStorage";
 import { parseScript } from "../utils/scriptParser";
+import { sanitizeScript } from "../utils/scriptValidation";
+import { mergeAndValidateOptions } from "../utils/optionsValidation";
 import { calculateNightOrders } from "../utils/nightOrders";
 import { useMobilePreviewScale } from "../hooks/useMobileControls";
+import { ScriptIssues } from "./ScriptControls/ScriptIssues";
 
 interface ViewModeProps {
   scriptId: string;
@@ -24,6 +28,7 @@ export function ViewMode({ scriptId }: ViewModeProps) {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [issues, setIssues] = useState<ValidationIssue[]>([]);
 
   useMobilePreviewScale(options.dimensions.width);
 
@@ -37,10 +42,15 @@ export function ViewMode({ scriptId }: ViewModeProps) {
           return;
         }
 
-        const parsed = parseScript(data.rawScript);
-        setScript(parsed);
-        setOptions(data.options);
-        setNightOrders(calculateNightOrders(parsed, data.rawScript));
+        const { script: sanitized, issues: scriptIssues } = sanitizeScript(
+          parseScript(data.rawScript),
+        );
+        const { options: mergedOptions, issues: optionsIssues } =
+          mergeAndValidateOptions(data.options);
+        setScript(sanitized);
+        setOptions(mergedOptions);
+        setIssues([...optionsIssues, ...scriptIssues]);
+        setNightOrders(calculateNightOrders(sanitized));
       } catch (err) {
         console.error("Failed to load shared script:", err);
         setError(
@@ -93,6 +103,8 @@ export function ViewMode({ scriptId }: ViewModeProps) {
       >
         Edit
       </a>
+
+      <ScriptIssues issues={issues} />
 
       {script && options.teensy && (
         <div className="preview-section teensy-preview">

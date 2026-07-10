@@ -1,16 +1,19 @@
 import { useState, useEffect, useRef } from "preact/hooks";
 import { parseScript } from "../utils/scriptParser";
+import { sanitizeScript } from "../utils/scriptValidation";
 import { sortScript } from "botc-script-checker";
 import type { Script } from "botc-script-checker";
 import { NightOrders, ParsedScript } from "botc-character-sheet";
 import { calculateNightOrders } from "../utils/nightOrders";
 import { downloadBlob } from "../utils/downloadFile";
+import type { ValidationIssue } from "../types/validation";
 import JSON5 from "json5";
 
 export function useScriptParsing() {
   const [script, setScript] = useState<ParsedScript | null>(null);
   const [rawScript, setRawScript] = useState<Script | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [issues, setIssues] = useState<ValidationIssue[]>([]);
   const [scriptText, setScriptText] = useState("");
   const [isScriptSorted, setIsScriptSorted] = useState(true);
   const [nightOrdersState, setNightOrdersState] = useState<NightOrders>({
@@ -30,14 +33,17 @@ export function useScriptParsing() {
 
   const loadScript = (json: Script) => {
     setRawScript(json);
-    const parsed = parseScript(json);
-    setScript(parsed);
+    const { script: sanitized, issues: newIssues } = sanitizeScript(
+      parseScript(json),
+    );
+    setScript(sanitized);
+    setIssues(newIssues);
     setScriptText(JSON.stringify(json, null, 2));
     setIsScriptSorted(checkIfSorted(json));
-    setNightOrdersState(calculateNightOrders(parsed, json));
+    setNightOrdersState(calculateNightOrders(sanitized));
     setError(null);
 
-    return parsed; // Return parsed script for color loading
+    return sanitized; // Return parsed script for color loading
   };
 
   const handleScriptTextChange = (newText: string) => {
@@ -53,14 +59,20 @@ export function useScriptParsing() {
       try {
         const json = JSON5.parse(newText);
         setRawScript(json);
-        const parsed = parseScript(json);
-        setScript(parsed);
+        const { script: sanitized, issues: newIssues } = sanitizeScript(
+          parseScript(json),
+        );
+        setScript(sanitized);
+        setIssues(newIssues);
         setIsScriptSorted(checkIfSorted(json));
-        setNightOrdersState(calculateNightOrders(parsed, json));
+        setNightOrdersState(calculateNightOrders(sanitized));
         setError(null);
       } catch (err) {
         console.error(err);
-        // Keep the error state but don't block typing
+        // Keep the error state but don't block typing. script/issues are
+        // deliberately left untouched — the last successfully parsed
+        // script is still what's displayed, so its issues are still
+        // accurate for it.
         setError(err instanceof Error ? err.message : "Invalid JSON format");
       }
     }, 300);
@@ -72,11 +84,14 @@ export function useScriptParsing() {
     try {
       const sorted = sortScript(rawScript);
       setRawScript(sorted);
-      const parsed = parseScript(sorted);
-      setScript(parsed);
+      const { script: sanitized, issues: newIssues } = sanitizeScript(
+        parseScript(sorted),
+      );
+      setScript(sanitized);
+      setIssues(newIssues);
       setScriptText(JSON.stringify(sorted, null, 2));
       setIsScriptSorted(true);
-      setNightOrdersState(calculateNightOrders(parsed, sorted));
+      setNightOrdersState(calculateNightOrders(sanitized));
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to sort script");
@@ -114,6 +129,7 @@ export function useScriptParsing() {
     rawScript,
     error,
     setError,
+    issues,
     scriptText,
     isScriptSorted,
     nightOrders: nightOrdersState,

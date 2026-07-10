@@ -3,10 +3,13 @@ import { NightSheet } from "./pages/NightSheet";
 import { SheetBack } from "./pages/SheetBack";
 import { NightOrders, ParsedScript, ScriptOptions } from "./types";
 import { getFabledOrLoric } from "./utils/fabledOrLoric";
-import { groupCharactersByTeam, findJinxes } from "./utils/scriptUtils";
+import {
+  groupCharactersByTeam,
+  findJinxes,
+  resolveJinxCharacters,
+} from "./utils/scriptUtils";
 import "./FancyDoc.css";
 import { InfoSheet } from "./pages/InfoSheet";
-import { ScriptCharacter } from "botc-script-checker";
 
 export type FancyDocProps = {
   script: ParsedScript;
@@ -32,16 +35,7 @@ export function FancyDoc({
   const jinxes = options.showJinxes
     ? findJinxes(script.characters, options.useOldJinxes)
     : [];
-  const resolvedJinxes = jinxes.map(
-    ({ characters: [char1id, char2id], jinx }) => {
-      const char1 = script.characters.find((c) => c.id === char1id);
-      const char2 = script.characters.find((c) => c.id === char2id);
-      return {
-        characters: [char1!, char2!] as [ScriptCharacter, ScriptCharacter],
-        text: jinx,
-      };
-    },
-  );
+  const resolvedJinxes = resolveJinxCharacters(jinxes, script.characters);
   const fabledAndLoric = getFabledOrLoric(
     script.characters,
     options.iconUrlTemplate,

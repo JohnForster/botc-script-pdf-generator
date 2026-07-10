@@ -1,8 +1,11 @@
-import { ScriptCharacter } from "botc-script-checker";
 import { CharacterSheet } from "./pages/CharacterSheet";
 import { ParsedScript, ScriptOptions, NightOrders } from "./types";
 import { getFabledOrLoric } from "./utils/fabledOrLoric";
-import { groupCharactersByTeam, findJinxes } from "./utils/scriptUtils";
+import {
+  groupCharactersByTeam,
+  findJinxes,
+  resolveJinxCharacters,
+} from "./utils/scriptUtils";
 import { InfoSheet } from "./pages/InfoSheet";
 import { SheetBack } from "./pages/SheetBack";
 
@@ -37,16 +40,7 @@ export const TeensyDoc = ({
   const jinxes = options.showJinxes
     ? findJinxes(script.characters, options.useOldJinxes)
     : [];
-  const resolvedJinxes = jinxes.map(
-    ({ characters: [char1id, char2id], jinx }) => {
-      const char1 = script.characters.find((c) => c.id === char1id);
-      const char2 = script.characters.find((c) => c.id === char2id);
-      return {
-        characters: [char1!, char2!] as [ScriptCharacter, ScriptCharacter],
-        text: jinx,
-      };
-    },
-  );
+  const resolvedJinxes = resolveJinxCharacters(jinxes, script.characters);
 
   const fabledAndLoric = getFabledOrLoric(
     script.characters,

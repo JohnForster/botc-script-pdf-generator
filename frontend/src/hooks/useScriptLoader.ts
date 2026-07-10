@@ -2,6 +2,8 @@ import JSON5 from "json5";
 import type { Script } from "botc-script-checker";
 import type { ParsedScript, ScriptOptions } from "botc-character-sheet";
 import { DEFAULT_OPTIONS } from "../types/options";
+import { mergeAndValidateOptions } from "../utils/optionsValidation";
+import type { ValidationIssue } from "../types/validation";
 import { useScriptParsing } from "./useScriptParsing";
 import { useScriptPersistence } from "./useScriptPersistence";
 import { useScriptLoading } from "./useScriptLoading";
@@ -12,10 +14,13 @@ export function hasUrlParam(key: string): boolean {
   return params.has(key);
 }
 
-export function getInitialOptionsFromUrl(): ScriptOptions {
+export function getInitialOptionsFromUrl(): {
+  options: ScriptOptions;
+  issues: ValidationIssue[];
+} {
   const params = new URLSearchParams(window.location.search);
   const saved = localStorage.getItem("options");
-  let savedOptions: Partial<ScriptOptions> | null = null;
+  let savedOptions: unknown = null;
   if (saved) {
     try {
       savedOptions = JSON5.parse(saved);
@@ -23,18 +28,12 @@ export function getInitialOptionsFromUrl(): ScriptOptions {
       savedOptions = null;
     }
   }
-  const options: ScriptOptions = {
-    ...DEFAULT_OPTIONS,
-    ...savedOptions,
-    dimensions: {
-      ...DEFAULT_OPTIONS.dimensions,
-      ...savedOptions?.dimensions,
-    },
-    titleStyle: {
-      ...DEFAULT_OPTIONS.titleStyle,
-      ...savedOptions?.titleStyle,
-    },
-  };
+  const savedRecord: Record<string, unknown> =
+    savedOptions && typeof savedOptions === "object"
+      ? (savedOptions as Record<string, unknown>)
+      : {};
+
+  const overrides: Record<string, unknown> = {};
 
   type OptionsKey = keyof ScriptOptions;
 
@@ -45,21 +44,22 @@ export function getInitialOptionsFromUrl(): ScriptOptions {
     const defaultValue = DEFAULT_OPTIONS[key];
 
     if (typeof defaultValue === "boolean") {
-      (options[key] as boolean) = param === "true" || param === "1";
+      overrides[key] = param === "true" || param === "1";
     } else if (typeof defaultValue === "number") {
       const num = parseFloat(param);
-      if (!isNaN(num)) (options[key] as number) = num;
+      if (!isNaN(num)) overrides[key] = num;
     } else if (key === "color") {
       // Color can be string or string[]
-      options.color = param.includes(",")
+      overrides.color = param.includes(",")
         ? param.split(",").map((c) => c.trim())
         : param;
     } else if (typeof defaultValue === "string") {
-      (options[key] as string) = param;
+      overrides[key] = param;
     }
   }
 
   // Handle dimensions as flat params (width, height, margin, bleed)
+  const dimensionOverrides: Record<string, number> = {};
   type DimensionsKey = keyof typeof DEFAULT_OPTIONS.dimensions;
   for (const key of Object.keys(
     DEFAULT_OPTIONS.dimensions,
@@ -68,12 +68,23 @@ export function getInitialOptionsFromUrl(): ScriptOptions {
     if (param !== null) {
       const num = parseFloat(param);
       if (!isNaN(num)) {
-        options.dimensions[key] = num;
+        dimensionOverrides[key] = num;
       }
     }
   }
 
-  return options;
+  const merged = {
+    ...savedRecord,
+    ...overrides,
+    dimensions: {
+      ...(savedRecord.dimensions && typeof savedRecord.dimensions === "object"
+        ? (savedRecord.dimensions as Record<string, unknown>)
+        : {}),
+      ...dimensionOverrides,
+    },
+  };
+
+  return mergeAndValidateOptions(merged);
 }
 
 export function useScriptLoader(
@@ -91,6 +102,7 @@ export function useScriptLoader(
     script: parsing.script,
     rawScript: parsing.rawScript,
     error: parsing.error,
+    scriptIssues: parsing.issues,
     scriptText: parsing.scriptText,
     isScriptSorted: parsing.isScriptSorted,
     nightOrders: parsing.nightOrders,

@@ -27,6 +27,8 @@ import {
   TITLE_FONT_DEFAULTS,
   DEFAULT_OPTIONS,
 } from "./types/options";
+import { mergeAndValidateOptions } from "./utils/optionsValidation";
+import type { ValidationIssue } from "./types/validation";
 import "./app.css";
 import { FancyDoc, ScriptOptions, TeensyDoc } from "botc-character-sheet";
 
@@ -57,14 +59,17 @@ function EditMode() {
     activeScriptId,
   } = useSavedScripts();
 
-  const [options, setOptions] = useState<ScriptOptions>(
-    getInitialOptionsFromUrl,
+  const [initialOptions] = useState(getInitialOptionsFromUrl);
+  const [options, setOptions] = useState<ScriptOptions>(initialOptions.options);
+  const [optionsIssues, setOptionsIssues] = useState<ValidationIssue[]>(
+    initialOptions.issues,
   );
 
   const {
     script,
     rawScript,
     error,
+    scriptIssues,
     scriptText,
     isScriptSorted,
     nightOrders,
@@ -77,6 +82,8 @@ function EditMode() {
     handleSaveScript,
     updateScriptMetadata,
   } = useScriptLoader();
+
+  const allIssues = [...optionsIssues, ...scriptIssues];
 
   const {
     showPdfModal,
@@ -117,7 +124,10 @@ function EditMode() {
   // Apply shared options when loaded from ?shared= parameter
   useEffect(() => {
     if (sharedOptions) {
-      setOptions(sharedOptions);
+      const { options: merged, issues } =
+        mergeAndValidateOptions(sharedOptions);
+      setOptions(merged);
+      setOptionsIssues(issues);
     }
   }, [sharedOptions]);
 
@@ -133,7 +143,10 @@ function EditMode() {
     if (!script) return;
 
     // If URL param specified color, update the script metadata with it
-    // Otherwise, load color from script metadata
+    // Otherwise, load color from script metadata. sanitizeScript() has
+    // already guaranteed metadata.colour is a valid hex value by this point
+    // — this typeof/Array check is only for TS narrowing (colour isn't a
+    // declared ScriptMetadata field, so its static type is `unknown`).
     if (hasUrlParam("color")) {
       handleColorChange(options.color);
     } else if (script.metadata?.colour) {
@@ -319,7 +332,9 @@ function EditMode() {
 
   const handleLoadSavedScript = (saved: (typeof savedScripts)[number]) => {
     loadScript(saved.script);
-    setOptions(saved.options);
+    const { options: merged, issues } = mergeAndValidateOptions(saved.options);
+    setOptions(merged);
+    setOptionsIssues(issues);
     loadSavedScript(saved.id);
     setShowLibrary(false);
   };
@@ -362,6 +377,7 @@ function EditMode() {
               options={options}
               isScriptSorted={isScriptSorted}
               error={error}
+              issues={allIssues}
               scriptText={scriptText}
               onScriptChange={handleScriptChange}
               onSave={handleSaveScript}

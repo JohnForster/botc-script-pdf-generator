@@ -10,7 +10,7 @@ export function parseRgb(hex: string): [number, number, number] {
       .map((c) => c + c)
       .join("");
   }
-  if (hex.length !== 6) {
+  if (!/^[0-9a-f]{6}$/i.test(hex)) {
     throw new Error(`Invalid HEX color: ${hex}`);
   }
   const r = parseInt(hex.slice(0, 2), 16);

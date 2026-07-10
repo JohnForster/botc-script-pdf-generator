@@ -66,8 +66,6 @@ export function ActionButtons({
         </div>
       )}
 
-      {error && <div className="error-message">{error}</div>}
-
       <div className="save-share-buttons">
         {savedScriptsCount > 0 && (
           <button onClick={onShowLibrary} className="library-button">
@@ -84,6 +82,8 @@ export function ActionButtons({
           {isSharing ? "..." : "Share"}
         </button>
       </div>
+
+      {error && <div className="error-message">{error}</div>}
 
       {shareUrl && (
         <div className="success-message">
