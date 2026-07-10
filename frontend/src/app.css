@@ -1132,8 +1132,7 @@ select.form-control-input:focus {
   display: none;
 }
 
-.mobile-controls-toggle,
-.mobile-saved-scripts-toggle {
+.mobile-controls-toggle {
   display: none;
 }
 
@@ -1196,7 +1195,7 @@ select.form-control-input:focus {
     top: 10px;
     z-index: 101;
     align-self: flex-start;
-    margin-bottom: -106px;
+    margin-bottom: -48px;
   }
 
   /* Show toggle buttons on mobile */
