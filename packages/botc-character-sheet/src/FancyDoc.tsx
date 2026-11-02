@@ -37,15 +37,6 @@ export function FancyDoc({
     : [];
   const resolvedJinxes = resolveJinxCharactersWithTranslation(jinxes, script.characters, options.language || 'en');
 
-  // Debug logging for jinx translation
-  console.log('[FancyDoc] Language:', options.language);
-  console.log('[FancyDoc] Raw jinxes:', jinxes);
-  console.log('[FancyDoc] Resolved jinxes:', resolvedJinxes);
-  console.log('[FancyDoc] Jinx text examples:');
-  resolvedJinxes.slice(0, 3).forEach((jinx, i) => {
-    console.log(`  Jinx ${i}:`, jinx.characters[0].id, '+', jinx.characters[1].id, '=', jinx.text);
-  });
-
   const fabledAndLoric = getFabledOrLoric(
     script.characters,
     options.iconUrlTemplate,
