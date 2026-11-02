@@ -1,4 +1,5 @@
 import "./PlayerCount.css";
+import { useTranslation } from "../translations/context";
 
 const PLAYER_COUNTS = {
   "5": [3, 0, 1, 1],
@@ -19,6 +20,7 @@ export type PlayerCountProps = {
 };
 
 export const PlayerCount = ({ background = true }: PlayerCountProps) => {
+  const { t } = useTranslation();
   return (
     <>
       <div
@@ -27,11 +29,11 @@ export const PlayerCount = ({ background = true }: PlayerCountProps) => {
         }`}
       >
         <div className="count-column titles">
-          <div className="row-title">Players</div>
-          <div className="row-title good-count">Townsfolk</div>
-          <div className="row-title good-count">Outsiders</div>
-          <div className="row-title evil-count">Minions</div>
-          <div className="row-title evil-count">Demons</div>
+          <div className="row-title">{t('ui', 'players') || 'Players'}</div>
+          <div className="row-title good-count">{t('ui', 'townsfolk') || 'Townsfolk'}</div>
+          <div className="row-title good-count">{t('ui', 'outsiders') || 'Outsiders'}</div>
+          <div className="row-title evil-count">{t('ui', 'minions') || 'Minions'}</div>
+          <div className="row-title evil-count">{t('ui', 'demons') || 'Demons'}</div>
         </div>
         {Object.entries(PLAYER_COUNTS).map(([playerCount, teamCounts]) => (
           <div className="count-column">

@@ -1,6 +1,7 @@
 import { NightOrders } from "../types";
 import { getImageSrc } from "../utils/nightOrder";
 import "./NightOrderPanel.css";
+import { useTranslation } from "../translations/context";
 
 type NightOrderPanelProps = {
   nightOrders: NightOrders;
@@ -8,12 +9,13 @@ type NightOrderPanelProps = {
 };
 
 export const NightOrderPanel = (props: NightOrderPanelProps) => {
+  const { t } = useTranslation();
   const firstNightOrder = props.nightOrders.first;
   const otherNightOrder = props.nightOrders.other;
   return (
     <div class="night-orders-container">
       <div class="night-order">
-        <p>First Night:</p>
+        <p>{t('ui', 'first_night') || 'First Night:'}</p>
         <div class="icon-row">
           {firstNightOrder.map((item) => (
             <img
@@ -24,7 +26,7 @@ export const NightOrderPanel = (props: NightOrderPanelProps) => {
         </div>
       </div>
       <div class="night-order">
-        <p>Other Nights:</p>
+        <p>{t('ui', 'other_nights') || 'Other Nights:'}</p>
         <div class="icon-row">
           {otherNightOrder.map((item) => (
             <img

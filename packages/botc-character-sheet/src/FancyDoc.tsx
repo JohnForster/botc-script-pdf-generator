@@ -6,7 +6,7 @@ import { getFabledOrLoric } from "./utils/fabledOrLoric";
 import {
   groupCharactersByTeam,
   findJinxes,
-  resolveJinxCharacters,
+  resolveJinxCharactersWithTranslation,
 } from "./utils/scriptUtils";
 import "./FancyDoc.css";
 import { InfoSheet } from "./pages/InfoSheet";
@@ -35,10 +35,12 @@ export function FancyDoc({
   const jinxes = options.showJinxes
     ? findJinxes(script.characters, options.useOldJinxes)
     : [];
-  const resolvedJinxes = resolveJinxCharacters(jinxes, script.characters);
+  const resolvedJinxes = resolveJinxCharactersWithTranslation(jinxes, script.characters, options.language || 'en');
+
   const fabledAndLoric = getFabledOrLoric(
     script.characters,
     options.iconUrlTemplate,
+    options.language || "en",
   );
 
   return (
@@ -103,3 +105,4 @@ export function FancyDoc({
     </div>
   );
 }
+

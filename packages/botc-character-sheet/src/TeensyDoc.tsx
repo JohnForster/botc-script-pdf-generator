@@ -4,7 +4,7 @@ import { getFabledOrLoric } from "./utils/fabledOrLoric";
 import {
   groupCharactersByTeam,
   findJinxes,
-  resolveJinxCharacters,
+  resolveJinxCharactersWithTranslation,
 } from "./utils/scriptUtils";
 import { InfoSheet } from "./pages/InfoSheet";
 import { SheetBack } from "./pages/SheetBack";
@@ -40,11 +40,12 @@ export const TeensyDoc = ({
   const jinxes = options.showJinxes
     ? findJinxes(script.characters, options.useOldJinxes)
     : [];
-  const resolvedJinxes = resolveJinxCharacters(jinxes, script.characters);
+  const resolvedJinxes = resolveJinxCharactersWithTranslation(jinxes, script.characters, options.language || 'en');
 
   const fabledAndLoric = getFabledOrLoric(
     script.characters,
     options.iconUrlTemplate,
+    options.language || "en",
   );
   return (
     <div className="sheet-wrapper teensy">

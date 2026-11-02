@@ -7,6 +7,7 @@ export type AppearanceLevel =
   | "mega-compact";
 export type OverleafType = "none" | "backingSheet" | "infoSheet";
 export type PaperType = "A4" | "Letter";
+export type LanguageCode = "en" | "de";
 
 // Re-export types from botc-character-sheet for convenience
 export type { PageDimensions, TitleStyle } from "botc-character-sheet";
@@ -105,4 +106,7 @@ export const DEFAULT_OPTIONS: ScriptOptions = {
   },
   dimensions: { width: 210, height: 297, margin: 0, bleed: 0 },
   teensy: false,
+  language: "en",
+  showEnglishNames: false,
 };
+

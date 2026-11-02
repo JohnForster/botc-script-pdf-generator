@@ -6,6 +6,8 @@ import {
   NightOrderEntry,
   ScriptOptions,
   TeensyDoc,
+  TranslationProvider,
+  type LanguageCode,
 } from "botc-character-sheet";
 import { readFileSync } from "fs";
 import { join } from "path";
@@ -118,6 +120,7 @@ export function renderCharacterSheet(
   requestOrigin?: string,
 ): string {
   const assetBase = getAssetBase(requestOrigin);
+  const language: LanguageCode = (options.language as LanguageCode) || "en";
 
   let docHTML;
   if (options.teensy) {
@@ -128,19 +131,19 @@ export function renderCharacterSheet(
     };
 
     docHTML = render(
-      h(TeensyDoc, {
+      h(TranslationProvider, { language, children: h(TeensyDoc, {
         options: { ...options, dimensions },
         script,
         nightOrders,
-      }),
+      }) })
     );
   } else {
     docHTML = render(
-      h(FancyDoc, {
+      h(TranslationProvider, { language, children: h(FancyDoc, {
         options: { ...options, numberOfCharacterSheets: 1 },
         script,
         nightOrders,
-      }),
+      }) })
     );
   }
 

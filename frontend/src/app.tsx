@@ -30,7 +30,8 @@ import {
 import { mergeAndValidateOptions } from "./utils/optionsValidation";
 import type { ValidationIssue } from "./types/validation";
 import "./app.css";
-import { FancyDoc, ScriptOptions, TeensyDoc } from "botc-character-sheet";
+import { FancyDoc, ScriptOptions, TeensyDoc, TranslationProvider } from "botc-character-sheet";
+import { TranslationDebug } from "./components/TranslationDebug";
 
 // Check if we're in view mode (URL pattern: /view/:id)
 function getViewModeId(): string | null {
@@ -351,8 +352,10 @@ function EditMode() {
     downloadInfoSheet(script?.metadata?.name);
   };
 
+  const language = (options.language as "en" | "de") || "en";
+
   return (
-    <>
+    <TranslationProvider language={language}>
       <div className="app">
         {script && (
           <div className="mobile-toggles">
@@ -480,6 +483,8 @@ function EditMode() {
         onDownloadCharacterSheet={handleDownloadCharacterSheet}
         onDownloadInfoSheet={handleDownloadInfoSheet}
       />
-    </>
+    <TranslationDebug onLanguageChange={(lang) => updateOption("language", lang)} />
+  </TranslationProvider>
   );
 }
+

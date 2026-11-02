@@ -1,6 +1,7 @@
 import { Jinx, ResolvedCharacter } from "../types";
 import { FabledOrLoric } from "../utils/fabledOrLoric";
 import { getImageUrl, getGenericIconUrl } from "../utils/scriptUtils";
+import { getCharacterNameWithEnglish } from "../translations/utils";
 
 interface JinxesSectionProps {
   jinxes: Jinx[];
@@ -8,6 +9,7 @@ interface JinxesSectionProps {
   fabledAndLoric: FabledOrLoric[];
   bootleggerRules: string[];
   iconUrlTemplate?: string;
+  showEnglishNames?: boolean;
 }
 
 export function JinxesAndSpecial({
@@ -16,6 +18,7 @@ export function JinxesAndSpecial({
   fabledAndLoric,
   bootleggerRules,
   iconUrlTemplate,
+  showEnglishNames,
 }: JinxesSectionProps) {
   // Create a map for quick character lookup
   const characterMap = new Map(
@@ -55,6 +58,7 @@ export function JinxesAndSpecial({
         key={`rc-${i}`}
         item={fl}
         bootleggerRules={bootleggerRules}
+        showEnglishNames={showEnglishNames}
       />
     ));
   } else if (hasJinxesOnly && useTwoColumns) {
@@ -86,6 +90,7 @@ export function JinxesAndSpecial({
           key={`lc-${i}`}
           item={item}
           bootleggerRules={bootleggerRules}
+          showEnglishNames={showEnglishNames}
         />
       ));
     rightColumn = fabledAndLoric
@@ -112,6 +117,7 @@ export function JinxesAndSpecial({
         key={`lc-${i}`}
         item={item}
         bootleggerRules={bootleggerRules}
+        showEnglishNames={showEnglishNames}
       />
     ));
   } else {
@@ -180,11 +186,14 @@ const JinxItem = ({ charMap, jinx, iconUrlTemplate }: JinxItemProps) => {
 function FabledLoricItem({
   item,
   bootleggerRules,
+  showEnglishNames,
 }: {
   item: FabledOrLoric;
   bootleggerRules: string[];
+  showEnglishNames?: boolean;
 }) {
-  const isBootlegger = item.name.toLowerCase() === "bootlegger";
+  const displayName = getCharacterNameWithEnglish(item.name, item.englishName, showEnglishNames || false);
+  const isBootlegger = displayName.toLowerCase() === "bootlegger";
   return (
     <div className="jinx-item loric">
       <div className="loric-spacer"></div>
@@ -194,7 +203,7 @@ function FabledLoricItem({
         className="jinx-icon loric"
       />
       <div className="loric-text-container">
-        <p className="jinx-text loric-name">{item.name}</p>
+        <p className="jinx-text loric-name">{displayName}</p>
         <p className="jinx-text loric-text">{item.note}</p>
         {isBootlegger &&
           bootleggerRules.map((rule, i) => (

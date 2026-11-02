@@ -1,4 +1,5 @@
 import type { ScriptCharacter, ScriptMetadata } from "botc-script-checker";
+import type { LanguageCode } from "./translations/types";
 
 // Character types needed by the component
 export type CharacterTeam =
@@ -12,6 +13,10 @@ export type CharacterTeam =
 export type ResolvedCharacter = ScriptCharacter & {
   edition?: string;
   isCustom?: boolean;
+  // Translation metadata
+  _translatedName?: string;
+  _translatedAbility?: string;
+  _language?: string;
 };
 
 export interface GroupedCharacters {
@@ -28,6 +33,8 @@ export interface Jinx {
   characters: [string, string];
   jinx: string;
   oldJinx?: string;
+  // Translation metadata
+  _translatedJinx?: string;
 }
 
 export type NightMarker = "dawn" | "dusk" | "minioninfo" | "demoninfo";
@@ -73,11 +80,17 @@ export interface ScriptOptions {
   titleStyle: TitleStyle;
   dimensions: PageDimensions;
   teensy: boolean;
+  // Language support
+  language?: LanguageCode;
+  // Show English names alongside translated names for multi-lingual playgroups
+  showEnglishNames?: boolean;
 }
 
 export interface ParsedScript {
   metadata: ScriptMetadata | null;
   characters: ScriptCharacter[];
+  // Translation metadata
+  _language?: string;
 }
 
 export type NetworkPayload = {
@@ -93,3 +106,4 @@ export type PageDimensions = {
   margin: number;
   bleed: number;
 };
+

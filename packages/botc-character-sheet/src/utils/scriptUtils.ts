@@ -1,6 +1,7 @@
 import { ScriptCharacter } from "botc-script-checker";
 import { ResolvedCharacter, GroupedCharacters, Jinx } from "../types";
 import { JINXES } from "../data/jinxes";
+import { getJinxKey, getTranslation } from "../translations/utils";
 
 export function groupCharactersByTeam(
   characters: ResolvedCharacter[],
@@ -177,4 +178,45 @@ export function getJinxedCharacters(
   });
 
   return allCharacters.filter((char) => jinxedCharacterIds.includes(char.id));
+}
+
+/**
+ * Resolves each jinx's character ids to the actual characters in the
+ * script and translates the jinx reasons using the provided language.
+ * Drops any jinx that doesn't resolve to two real characters.
+ */
+export function resolveJinxCharactersWithTranslation(
+  jinxes: Jinx[],
+  characters: ScriptCharacter[],
+  language: string = 'en',
+): { characters: [ScriptCharacter, ScriptCharacter]; text: string }[] {
+  const resolved: {
+    characters: [ScriptCharacter, ScriptCharacter];
+    text: string;
+  }[] = [];
+
+  for (const {
+    characters: [char1id, char2id],
+    jinx,
+  } of jinxes) {
+    const char1 = characters.find((c) => c.id === char1id);
+    const char2 = characters.find((c) => c.id === char2id);
+    if (char1 && char2) {
+      // Translate the jinx reason if not in English
+      const jinxKey = getJinxKey(char1id, char2id);
+      const translatedText = language !== 'en' 
+        ? (() => {
+            const translated = getTranslation('jinxes', jinxKey, undefined, language as any);
+            return translated || jinx;
+          })()
+        : jinx;
+      
+      resolved.push({ 
+        characters: [char1, char2], 
+        text: translatedText 
+      });
+    }
+  }
+
+  return resolved;
 }

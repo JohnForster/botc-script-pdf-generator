@@ -73,6 +73,12 @@ export function CharacterSheetOptions({
         onChange={(value) => onOptionChange("showJinxes", value)}
       />
 
+      <Toggle
+        label="Show English Names (for multi-lingual playgroups)"
+        checked={options.showEnglishNames || false}
+        onChange={(value) => onOptionChange("showEnglishNames", value)}
+      />
+
       <Select
         label="Inline Jinx Icons:"
         value={options.inlineJinxIcons}
@@ -110,3 +116,4 @@ export function CharacterSheetOptions({
     </>
   );
 }
+

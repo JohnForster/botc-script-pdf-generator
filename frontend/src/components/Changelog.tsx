@@ -7,6 +7,15 @@ interface ChangelogEntry {
 
 const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    date: "2026-10-29",
+    changes: [
+      "Added translation support for German",
+      "Translation includes: Character names, abilities, jinx reasons, game terms, Traveller recommendations, Loric/Fabled character names and abilities",
+      "A 'show English names' option to display English names in brackets alongside translated names",
+      "PDF and image generation are tested and translated. It should be easy to add more languages.",
+    ],
+  },
+  {
     date: "2026-07-09",
     changes: ["Add paste button on mobile"],
   },

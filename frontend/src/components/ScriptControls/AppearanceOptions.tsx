@@ -2,6 +2,7 @@ import { ScriptOptions } from "botc-character-sheet";
 import { Toggle } from "../ui";
 import { ColorPicker } from "./ColorPicker";
 import { DEFAULT_OPTIONS } from "../../types/options";
+import { LanguageSelector } from "./LanguageSelector";
 
 interface AppearanceOptionsProps {
   options: ScriptOptions;
@@ -34,6 +35,7 @@ export function AppearanceOptions({
         onAddColor={onAddColor}
         onRemoveColor={onRemoveColor}
       />
+      <LanguageSelector options={options} onOptionChange={onOptionChange} />
       <div className="form-control">
         <label className="form-control-label">
           <span className="form-control-text">Logo URL</span>
@@ -106,3 +108,4 @@ export function AppearanceOptions({
     </>
   );
 }
+

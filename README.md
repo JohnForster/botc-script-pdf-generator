@@ -61,6 +61,8 @@ bun install
 
 # Start development server (frontend + backend + package watch)
 bun run dev
+# If chrome/chromium is not found properly, you may point it to the correct path: 
+PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium bun run dev
 
 # Run type checking
 bun run typecheck

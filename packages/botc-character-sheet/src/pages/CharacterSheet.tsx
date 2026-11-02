@@ -11,6 +11,8 @@ import { FabledOrLoric } from "../utils/fabledOrLoric";
 import { JinxesAndSpecial } from "../components/JinxesAndSpecial";
 import { CharacterSection } from "./CharacterSection";
 import { PrintablePage } from "../components/PrintablePage";
+import { useTranslation } from "../translations/context";
+import { getJinxKey, getTranslation } from "../translations/utils";
 
 interface CharacterSheetProps {
   title: string;
@@ -31,6 +33,22 @@ export function CharacterSheet({
   bootleggerRules = [],
   options,
 }: CharacterSheetProps) {
+  const { t } = useTranslation();
+  const { language } = options;
+  
+  // Translate jinx reasons based on current language
+  const translatedJinxes = jinxes.map((jinx) => {
+    const jinxKey = getJinxKey(jinx.characters[0], jinx.characters[1]);
+    const translatedText = language && language !== 'en'
+      ? getTranslation('jinxes', jinxKey, undefined, language as any) || jinx.jinx
+      : jinx.jinx;
+    
+    return {
+      ...jinx,
+      jinx: translatedText,
+    };
+  });
+  
   const {
     color,
     logo,
@@ -48,25 +66,25 @@ export function CharacterSheet({
   const sections = [
     {
       key: "townsfolk",
-      title: "Townsfolk",
+      title: t('ui', 'townsfolk') || 'Townsfolk',
       chars: characters.townsfolk,
       color: teamColours["townsfolk"],
     },
     {
       key: "outsider",
-      title: "Outsiders",
+      title: t('ui', 'outsiders') || 'Outsiders',
       chars: characters.outsider,
       color: teamColours["outsider"],
     },
     {
       key: "minion",
-      title: "Minions",
+      title: t('ui', 'minions') || 'Minions',
       chars: characters.minion,
       color: teamColours["minion"],
     },
     {
       key: "demon",
-      title: "Demons",
+      title: t('ui', 'demons') || 'Demons',
       chars: characters.demon,
       color: teamColours["demon"],
     },
@@ -124,7 +142,7 @@ export function CharacterSheet({
                   title={section.title.toUpperCase()}
                   characters={section.chars}
                   charNameColor={section.color}
-                  jinxes={jinxes}
+                  jinxes={translatedJinxes}
                   allCharacters={[
                     ...characters.townsfolk,
                     ...characters.outsider,
@@ -133,6 +151,7 @@ export function CharacterSheet({
                   ]}
                   inlineJinxIcons={inlineJinxIcons}
                   iconUrlTemplate={iconUrlTemplate}
+                  showEnglishNames={options.showEnglishNames}
                 />
                 {i < sections.length - 1 && (
                   <img src="/images/divider.png" className="section-divider" />
@@ -144,7 +163,7 @@ export function CharacterSheet({
                 <img src="/images/divider.png" className="section-divider" />
                 <JinxesAndSpecial
                   fabledAndLoric={fabledOrLoric}
-                  jinxes={jinxes}
+                  jinxes={translatedJinxes}
                   allCharacters={[
                     ...characters.townsfolk,
                     ...characters.outsider,
@@ -153,13 +172,14 @@ export function CharacterSheet({
                   ]}
                   bootleggerRules={bootleggerRules}
                   iconUrlTemplate={iconUrlTemplate}
+                  showEnglishNames={options.showEnglishNames}
                 />
               </>
             )}
           </div>
 
           <div className="sheet-footer">
-            <span className="asterisk">*</span>Not the first night
+            <span className="asterisk">*</span>{t('ui', 'not_first_night') || 'Not the first night'}
           </div>
           <img
             className="ccc-logo"
