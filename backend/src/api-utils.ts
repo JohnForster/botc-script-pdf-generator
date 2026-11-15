@@ -40,6 +40,10 @@ async function launchBrowser() {
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--disable-web-security",
+        // Match production (@sparticuz/chromium), which must run Chromium in
+        // single-process mode, so process-model bugs show up locally too.
+        "--single-process",
+        "--no-zygote",
       ],
     });
   }
@@ -49,10 +53,26 @@ type Browser = Awaited<ReturnType<typeof launchBrowser>>;
 type BrowserPage = Awaited<ReturnType<Browser["newPage"]>>;
 
 // The browser is cached at module scope so that warm invocations of the
-// serverless function reuse it instead of launching Chromium again. Each
-// request gets its own browser context (see `withPage`), so no cookies, cache
-// or page state leaks between requests.
+// serverless function reuse it instead of launching Chromium again.
+//
+// NOTE: Chromium runs with --single-process, where creating pages in a new
+// browser context (createBrowserContext) crashes the browser, and closing the
+// last open page shuts it down. So requests use pages in the default context,
+// and the blank page Chromium starts with is never closed.
 let browserPromise: Promise<Browser> | null = null;
+let cachedBrowser: Browser | null = null;
+
+/** Errors that mean the browser itself is dead, not just this request. */
+const BROWSER_DEAD_ERROR = /Target closed|Connection closed|Session closed/i;
+
+function discardBrowser(browser: Browser) {
+  // Only clear the cache if another request hasn't already replaced it.
+  if (cachedBrowser === browser) {
+    cachedBrowser = null;
+    browserPromise = null;
+  }
+  browser.close().catch(() => {});
+}
 
 async function getBrowser(): Promise<Browser> {
   if (browserPromise) {
@@ -68,9 +88,8 @@ async function getBrowser(): Promise<Browser> {
   try {
     const browser = await launch;
     console.log(`Launched browser in ${Date.now() - startTime} ms`);
-    browser.once("disconnected", () => {
-      if (browserPromise === launch) browserPromise = null;
-    });
+    if (browserPromise === launch) cachedBrowser = browser;
+    browser.once("disconnected", () => discardBrowser(browser));
     return browser;
   } catch (error) {
     if (browserPromise === launch) browserPromise = null;
@@ -79,29 +98,32 @@ async function getBrowser(): Promise<Browser> {
 }
 
 /**
- * Runs `fn` with a fresh page in its own browser context, then closes the
- * context. If the cached browser turns out to be dead (e.g. the instance was
- * frozen between invocations), it relaunches Chromium and retries once.
+ * Runs `fn` with a fresh page, then closes the page. If the cached browser
+ * turns out to be dead (e.g. the instance was frozen between invocations), it
+ * relaunches Chromium and retries once.
  */
 export async function withPage<T>(
   fn: (page: BrowserPage) => Promise<T>,
 ): Promise<T> {
   for (let attempt = 1; ; attempt++) {
     const browser = await getBrowser();
-    let context: Awaited<ReturnType<Browser["createBrowserContext"]>> | null =
-      null;
+    let page: BrowserPage | null = null;
     try {
-      context = await browser.createBrowserContext();
-      const page = await context.newPage();
+      page = await browser.newPage();
       return await fn(page);
     } catch (error) {
-      if (attempt === 1 && !browser.connected) {
-        console.warn("Browser disconnected mid-request, relaunching:", error);
+      const message = error instanceof Error ? error.message : String(error);
+      const browserDead =
+        !browser.connected || BROWSER_DEAD_ERROR.test(message);
+      if (browserDead) discardBrowser(browser);
+      if (browserDead && attempt === 1) {
+        console.warn("Browser died mid-request, relaunching:", message);
+        page = null;
         continue;
       }
       throw error;
     } finally {
-      await context?.close().catch(() => {});
+      await page?.close().catch(() => {});
     }
   }
 }
