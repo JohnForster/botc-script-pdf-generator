@@ -8,7 +8,10 @@ interface ChangelogEntry {
 const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
     date: "2026-11-15",
-    changes: ["Greatly reduce generated PDF file sizes"],
+    changes: [
+      "Greatly reduce generated PDF file sizes",
+      "Add option to hide fabled/lorics on character sheet",
+    ],
   },
   {
     date: "2026-07-09",

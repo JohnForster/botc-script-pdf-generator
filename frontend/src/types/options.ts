@@ -91,6 +91,7 @@ export const DEFAULT_OPTIONS: ScriptOptions = {
   showTitle: true,
   showAuthor: true,
   showJinxes: true,
+  showFabledAndLoric: true,
   useOldJinxes: false,
   showSwirls: true,
   includeMargins: false,

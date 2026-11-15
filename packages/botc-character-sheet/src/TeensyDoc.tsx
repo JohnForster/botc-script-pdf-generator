@@ -42,10 +42,9 @@ export const TeensyDoc = ({
     : [];
   const resolvedJinxes = resolveJinxCharacters(jinxes, script.characters);
 
-  const fabledAndLoric = getFabledOrLoric(
-    script.characters,
-    options.iconUrlTemplate,
-  );
+  const fabledAndLoric = options.showFabledAndLoric
+    ? getFabledOrLoric(script.characters, options.iconUrlTemplate)
+    : [];
   return (
     <div className="sheet-wrapper teensy">
       {hasCustomFont && (

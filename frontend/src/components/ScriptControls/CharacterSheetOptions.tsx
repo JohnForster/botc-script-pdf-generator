@@ -68,6 +68,12 @@ export function CharacterSheetOptions({
       />
 
       <Toggle
+        label="Show Fabled/Lorics"
+        checked={options.showFabledAndLoric}
+        onChange={(value) => onOptionChange("showFabledAndLoric", value)}
+      />
+
+      <Toggle
         label="Show Jinxes"
         checked={options.showJinxes}
         onChange={(value) => onOptionChange("showJinxes", value)}

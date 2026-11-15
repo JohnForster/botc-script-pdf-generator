@@ -56,6 +56,7 @@ export interface ScriptOptions {
   showTitle: boolean;
   showAuthor: boolean;
   showJinxes: boolean;
+  showFabledAndLoric: boolean;
   useOldJinxes: boolean;
   showSwirls: boolean;
   includeMargins: boolean;
