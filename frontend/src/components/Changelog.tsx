@@ -7,6 +7,10 @@ interface ChangelogEntry {
 
 const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    date: "2026-11-15",
+    changes: ["Greatly reduce generated PDF file sizes"],
+  },
+  {
     date: "2026-07-09",
     changes: ["Add paste button on mobile"],
   },
