@@ -104,13 +104,17 @@ async function duplicatePages(
   const arrayBuffer = await blob.arrayBuffer();
   const pdfDoc = await PDFDocument.load(arrayBuffer);
 
+  // Re-insert the existing page objects rather than using copyPages(), which
+  // would duplicate every image and font on the page (several MB) for no
+  // visual difference.
   if (options.overleaf === "none") {
-    const [copiedPage] = await pdfDoc.copyPages(pdfDoc, [1]);
+    const copiedPage = pdfDoc.getPage(1);
     for (let i = 1; i < options.numberOfCharacterSheets; i++) {
       pdfDoc.insertPage(1, copiedPage);
     }
   } else {
-    const [sheet, back] = await pdfDoc.copyPages(pdfDoc, [0, 1]);
+    const sheet = pdfDoc.getPage(0);
+    const back = pdfDoc.getPage(1);
     for (let i = 1; i < options.numberOfCharacterSheets; i++) {
       pdfDoc.insertPage(2, back);
       pdfDoc.insertPage(2, sheet);

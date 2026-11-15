@@ -5,6 +5,14 @@
   "buildCommand": "bun run build",
   "outputDirectory": "frontend/dist",
   "bunVersion": "1.x",
+  "functions": {
+    "api/generate-pdf.ts": {
+      "includeFiles": "frontend/public/{fonts,images}/**"
+    },
+    "api/download-as-image.ts": {
+      "includeFiles": "frontend/public/{fonts,images}/**"
+    }
+  },
   "rewrites": [
     {
       "source": "/view/:id",

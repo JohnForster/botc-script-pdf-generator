@@ -1,6 +1,8 @@
 import { NetworkPayload, ParsedScript } from "botc-character-sheet";
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
+import { existsSync, readFileSync } from "node:fs";
+import { extname, join, normalize, sep } from "node:path";
 
 export const isServerless =
   !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME;
@@ -40,6 +42,76 @@ export async function getBrowser() {
       ],
     });
   }
+}
+
+// Fonts and images from frontend/public are bundled with the serverless
+// function (see `includeFiles` in vercel.json), so Chromium can load them from
+// disk instead of fetching them over the network from the frontend origin.
+const PUBLIC_DIR_CANDIDATES = [
+  join(process.cwd(), "frontend/public"), // Vercel (cwd is the project root)
+  join(process.cwd(), "../frontend/public"), // Local dev (cwd is backend/)
+];
+const publicDir = PUBLIC_DIR_CANDIDATES.find((dir) =>
+  existsSync(join(dir, "fonts")),
+);
+
+const BUNDLED_PREFIXES = ["/fonts/", "/images/"];
+
+const CONTENT_TYPES: Record<string, string> = {
+  ".ttf": "font/ttf",
+  ".otf": "font/otf",
+  ".woff": "font/woff",
+  ".woff2": "font/woff2",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".webp": "image/webp",
+  ".svg": "image/svg+xml",
+};
+
+/**
+ * Serves requests for `${assetBase}/fonts/*` and `${assetBase}/images/*` from
+ * the bundled copy of frontend/public. Anything not found on disk (or not under
+ * the asset base, e.g. custom character icons) falls through to the network.
+ */
+type BrowserPage = Awaited<
+  ReturnType<Awaited<ReturnType<typeof getBrowser>>["newPage"]>
+>;
+
+export async function serveBundledAssets(page: BrowserPage, assetBase: string) {
+  if (!publicDir) {
+    console.warn("Bundled assets not found; loading assets over the network");
+    return;
+  }
+  const root = publicDir;
+  let served = 0;
+  await page.setRequestInterception(true);
+  page.on("request", (request) => {
+    if (request.isInterceptResolutionHandled()) return;
+    const url = request.url();
+    if (url.startsWith(assetBase + "/")) {
+      const path = decodeURIComponent(new URL(url).pathname);
+      const filePath = normalize(join(root, path));
+      if (
+        BUNDLED_PREFIXES.some((prefix) => path.startsWith(prefix)) &&
+        filePath.startsWith(root + sep) &&
+        existsSync(filePath)
+      ) {
+        served++;
+        request.respond({
+          status: 200,
+          contentType:
+            CONTENT_TYPES[extname(filePath).toLowerCase()] ??
+            "application/octet-stream",
+          headers: { "Access-Control-Allow-Origin": "*" },
+          body: readFileSync(filePath),
+        });
+        return;
+      }
+    }
+    request.continue();
+  });
+  page.once("load", () => console.log(`Served ${served} bundled assets`));
 }
 
 export function corsHeaders(origin: string | null): HeadersInit {

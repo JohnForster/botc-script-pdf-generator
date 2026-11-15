@@ -14,7 +14,7 @@ import { join } from "path";
 const DEFAULT_ASSET_BASE = "https://fancy.ravenswoodstudio.xyz";
 
 // Determine base URL for assets based on environment
-function getAssetBase(requestOrigin?: string): string {
+export function getAssetBase(requestOrigin?: string): string {
   const isLocal = !process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME;
 
   // For local development, use localhost

@@ -6,7 +6,7 @@
     "skipLibCheck": false,
     "types": ["node"],
     "outDir": "./dist",
-    "rootDir": "./",
+    "rootDir": "../",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -24,6 +24,6 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true
   },
-  "include": ["api", "src", "api/generate-pdf.ts"],
+  "include": ["src", "../api"],
   "exclude": ["node_modules", "dist"]
 }

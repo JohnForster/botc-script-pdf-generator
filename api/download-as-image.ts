@@ -1,8 +1,9 @@
-import { renderCharacterSheet } from "../backend/src/renderer";
+import { renderCharacterSheet, getAssetBase } from "../backend/src/renderer";
 import {
   getBrowser,
   corsHeaders,
   handleApiRequest,
+  serveBundledAssets,
 } from "../backend/src/api-utils";
 
 export default {
@@ -29,6 +30,8 @@ export default {
       // Launch Puppeteer
       const browser = await getBrowser();
       const page = await browser.newPage();
+
+      await serveBundledAssets(page, getAssetBase(origin || undefined));
 
       page.on("requestfailed", (req) => {
         console.log(req.url() + " " + req.failure()?.errorText);

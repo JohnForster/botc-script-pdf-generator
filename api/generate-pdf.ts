@@ -1,9 +1,11 @@
-import { renderCharacterSheet } from "../backend/src/renderer";
+import { renderCharacterSheet, getAssetBase } from "../backend/src/renderer";
+import { optimizePdf } from "../backend/src/optimizePdf";
 import { gzipSync } from "node:zlib";
 import {
   getBrowser,
   corsHeaders,
   handleApiRequest,
+  serveBundledAssets,
 } from "../backend/src/api-utils";
 
 export default {
@@ -23,6 +25,8 @@ export default {
       const browser = await getBrowser();
 
       const page = await browser.newPage();
+
+      await serveBundledAssets(page, getAssetBase(origin || undefined));
 
       page.on("request", (req) => {
         console.log("request:", req.url());
@@ -69,9 +73,23 @@ export default {
 
       browser.close();
 
+      // Shrink the PDF (dedupe + JPEG-recompress images). Fall back to the
+      // original PDF if anything goes wrong.
+      let output: Uint8Array = pdf;
+      startTime = Date.now();
+      try {
+        const result = await optimizePdf(pdf);
+        output = result.pdf;
+        console.log(
+          `PDF optimised in ${Date.now() - startTime} ms: ${(result.originalBytes / 1048576).toFixed(2)} MB -> ${(result.optimizedBytes / 1048576).toFixed(2)} MB (${result.deduplicated} duplicate images removed, ${result.recompressed} recompressed)`,
+        );
+      } catch (error) {
+        console.error("PDF optimisation failed, sending original:", error);
+      }
+
       // Set response headers
       const pdfFilename = filename || "script.pdf";
-      const compressed = gzipSync(pdf);
+      const compressed = gzipSync(output);
 
       return new Response(compressed, {
         status: 200,
