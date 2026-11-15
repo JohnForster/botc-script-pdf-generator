@@ -3,7 +3,6 @@ import {
   ResolvedCharacter,
   ROLES_BY_ID,
 } from "botc-character-sheet";
-import { toTitleCase } from "./stringUtils";
 import { ScriptMetadata, Script, ScriptCharacter } from "botc-script-checker";
 
 export function parseScript(json: unknown): ParsedScript {
@@ -84,10 +83,6 @@ function resolveCustomCharacter(char: ScriptCharacter): ResolvedCharacter {
   return {
     ...char,
     team: (char.team as any) === "traveler" ? "traveller" : char.team,
-    // Malformed names (non-string) are left as-is here and excluded during
-    // sanitizeScript — toTitleCase() requires a string and must not be
-    // called speculatively on untrusted input.
-    name: typeof char.name === "string" ? toTitleCase(char.name) : char.name,
     isCustom: true,
   };
 }

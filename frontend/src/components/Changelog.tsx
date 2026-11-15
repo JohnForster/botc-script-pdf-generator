@@ -11,6 +11,7 @@ const CHANGELOG_ENTRIES: ChangelogEntry[] = [
     changes: [
       "Greatly reduce generated PDF file sizes",
       "Add option to hide fabled/lorics on character sheet",
+      "Custom character names now keep their original capitalisation",
     ],
   },
   {
