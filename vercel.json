@@ -7,10 +7,10 @@
   "bunVersion": "1.x",
   "functions": {
     "api/generate-pdf.ts": {
-      "includeFiles": "frontend/public/{fonts,images}/**"
+      "includeFiles": "frontend/public/**"
     },
     "api/download-as-image.ts": {
-      "includeFiles": "frontend/public/{fonts,images}/**"
+      "includeFiles": "frontend/public/**"
     }
   },
   "rewrites": [

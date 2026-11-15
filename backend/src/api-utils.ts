@@ -2,7 +2,8 @@ import { NetworkPayload, ParsedScript } from "botc-character-sheet";
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
 import { existsSync, readFileSync } from "node:fs";
-import { extname, join, normalize, sep } from "node:path";
+import { dirname, extname, join, normalize, sep } from "node:path";
+import { fileURLToPath } from "node:url";
 
 export const isServerless =
   !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME;
@@ -47,13 +48,29 @@ export async function getBrowser() {
 // Fonts and images from frontend/public are bundled with the serverless
 // function (see `includeFiles` in vercel.json), so Chromium can load them from
 // disk instead of fetching them over the network from the frontend origin.
+// Where the bundled files end up varies by platform, so check several places.
+const moduleDir = dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR_CANDIDATES = [
-  join(process.cwd(), "frontend/public"), // Vercel (cwd is the project root)
-  join(process.cwd(), "../frontend/public"), // Local dev (cwd is backend/)
+  ...new Set([
+    join(moduleDir, "../../frontend/public"), // this file is backend/src/*
+    join(moduleDir, "../frontend/public"), // if bundled into api/*
+    join(process.cwd(), "frontend/public"), // cwd is the project root
+    join(process.cwd(), "../frontend/public"), // local dev (cwd is backend/)
+    ...(process.env.LAMBDA_TASK_ROOT
+      ? [join(process.env.LAMBDA_TASK_ROOT, "frontend/public")]
+      : []),
+  ]),
 ];
 const publicDir = PUBLIC_DIR_CANDIDATES.find((dir) =>
   existsSync(join(dir, "fonts")),
 );
+if (publicDir) {
+  console.log(`Serving bundled assets from ${publicDir}`);
+} else {
+  console.warn(
+    `Bundled assets not found (cwd ${process.cwd()}). Checked:\n  ${PUBLIC_DIR_CANDIDATES.join("\n  ")}`,
+  );
+}
 
 const BUNDLED_PREFIXES = ["/fonts/", "/images/"];
 
@@ -79,24 +96,26 @@ type BrowserPage = Awaited<
 >;
 
 export async function serveBundledAssets(page: BrowserPage, assetBase: string) {
-  if (!publicDir) {
-    console.warn("Bundled assets not found; loading assets over the network");
-    return;
-  }
+  if (!publicDir) return;
   const root = publicDir;
   let served = 0;
   await page.setRequestInterception(true);
   page.on("request", (request) => {
     if (request.isInterceptResolutionHandled()) return;
     const url = request.url();
-    if (url.startsWith(assetBase + "/")) {
-      const path = decodeURIComponent(new URL(url).pathname);
+    const path = URL.canParse(url)
+      ? decodeURIComponent(new URL(url).pathname)
+      : "";
+    const isAssetPath = BUNDLED_PREFIXES.some((prefix) =>
+      path.startsWith(prefix),
+    );
+    if (isAssetPath && !url.startsWith(assetBase + "/")) {
+      console.warn(`Asset not under asset base ${assetBase}: ${url}`);
+    } else if (isAssetPath) {
       const filePath = normalize(join(root, path));
-      if (
-        BUNDLED_PREFIXES.some((prefix) => path.startsWith(prefix)) &&
-        filePath.startsWith(root + sep) &&
-        existsSync(filePath)
-      ) {
+      if (!filePath.startsWith(root + sep) || !existsSync(filePath)) {
+        console.warn(`Asset not in bundle, using network: ${url}`);
+      } else {
         served++;
         request.respond({
           status: 200,
