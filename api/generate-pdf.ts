@@ -2,7 +2,7 @@ import { renderCharacterSheet, getAssetBase } from "../backend/src/renderer";
 import { optimizePdf } from "../backend/src/optimizePdf";
 import { gzipSync } from "node:zlib";
 import {
-  getBrowser,
+  withPage,
   corsHeaders,
   handleApiRequest,
   serveBundledAssets,
@@ -21,62 +21,58 @@ export default {
         origin || undefined,
       );
 
-      // Launch Puppeteer
-      const browser = await getBrowser();
-
-      const page = await browser.newPage();
-
-      await serveBundledAssets(page, getAssetBase(origin || undefined));
-
-      page.on("request", (req) => {
-        console.log("request:", req.url());
-      });
-
-      page.on("response", (response) => {
-        console.log("response:", response.url(), response.status());
-      });
-
-      page.on("requestfailed", (req) => {
-        console.log(req.url() + " " + req.failure()?.errorText);
-      });
-
-      // Set content and wait for fonts/images to load
-      await page.setContent(html, {
-        waitUntil: ["networkidle0", "load"],
-      });
-
       const format =
         options.dimensions.height === 297 && options.dimensions.width === 210
           ? "A4"
           : "Letter";
 
-      // Generate PDF
-      let startTime = Date.now();
-      const pdf = await page.pdf({
-        format,
-        printBackground: true,
-        margin: {
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-        },
-        landscape: options.teensy ? true : false,
-        preferCSSPageSize: true,
-        waitForFonts: true,
-        timeout: 60_000,
-      });
-      let endTime = Date.now();
-      console.log(
-        `PDF generated in ${endTime - startTime} ms (${options.numberOfCharacterSheets} character sheets, ${script.characters.length} characters)`,
-      );
+      // Render with a (possibly warm, reused) Chromium instance
+      const pdf = await withPage(async (page) => {
+        await serveBundledAssets(page, getAssetBase(origin || undefined));
 
-      browser.close();
+        page.on("request", (req) => {
+          console.log("request:", req.url());
+        });
+
+        page.on("response", (response) => {
+          console.log("response:", response.url(), response.status());
+        });
+
+        page.on("requestfailed", (req) => {
+          console.log(req.url() + " " + req.failure()?.errorText);
+        });
+
+        // Set content and wait for fonts/images to load
+        await page.setContent(html, {
+          waitUntil: ["networkidle0", "load"],
+        });
+
+        // Generate PDF
+        const startTime = Date.now();
+        const pdf = await page.pdf({
+          format,
+          printBackground: true,
+          margin: {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+          },
+          landscape: options.teensy ? true : false,
+          preferCSSPageSize: true,
+          waitForFonts: true,
+          timeout: 60_000,
+        });
+        console.log(
+          `PDF generated in ${Date.now() - startTime} ms (${options.numberOfCharacterSheets} character sheets, ${script.characters.length} characters)`,
+        );
+        return pdf;
+      });
 
       // Shrink the PDF (dedupe + JPEG-recompress images). Fall back to the
       // original PDF if anything goes wrong.
       let output: Uint8Array = pdf;
-      startTime = Date.now();
+      const startTime = Date.now();
       try {
         const result = await optimizePdf(pdf);
         output = result.pdf;

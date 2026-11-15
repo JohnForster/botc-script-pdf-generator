@@ -22,7 +22,7 @@ export function isAllowedOrigin(origin: string | null): boolean {
   return false;
 }
 
-export async function getBrowser() {
+async function launchBrowser() {
   if (isServerless) {
     return puppeteer.launch({
       args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
@@ -42,6 +42,67 @@ export async function getBrowser() {
         "--disable-web-security",
       ],
     });
+  }
+}
+
+type Browser = Awaited<ReturnType<typeof launchBrowser>>;
+type BrowserPage = Awaited<ReturnType<Browser["newPage"]>>;
+
+// The browser is cached at module scope so that warm invocations of the
+// serverless function reuse it instead of launching Chromium again. Each
+// request gets its own browser context (see `withPage`), so no cookies, cache
+// or page state leaks between requests.
+let browserPromise: Promise<Browser> | null = null;
+
+async function getBrowser(): Promise<Browser> {
+  if (browserPromise) {
+    const browser = await browserPromise.catch(() => null);
+    if (browser?.connected) {
+      console.log("Reusing warm browser");
+      return browser;
+    }
+  }
+  const startTime = Date.now();
+  const launch = launchBrowser();
+  browserPromise = launch;
+  try {
+    const browser = await launch;
+    console.log(`Launched browser in ${Date.now() - startTime} ms`);
+    browser.once("disconnected", () => {
+      if (browserPromise === launch) browserPromise = null;
+    });
+    return browser;
+  } catch (error) {
+    if (browserPromise === launch) browserPromise = null;
+    throw error;
+  }
+}
+
+/**
+ * Runs `fn` with a fresh page in its own browser context, then closes the
+ * context. If the cached browser turns out to be dead (e.g. the instance was
+ * frozen between invocations), it relaunches Chromium and retries once.
+ */
+export async function withPage<T>(
+  fn: (page: BrowserPage) => Promise<T>,
+): Promise<T> {
+  for (let attempt = 1; ; attempt++) {
+    const browser = await getBrowser();
+    let context: Awaited<ReturnType<Browser["createBrowserContext"]>> | null =
+      null;
+    try {
+      context = await browser.createBrowserContext();
+      const page = await context.newPage();
+      return await fn(page);
+    } catch (error) {
+      if (attempt === 1 && !browser.connected) {
+        console.warn("Browser disconnected mid-request, relaunching:", error);
+        continue;
+      }
+      throw error;
+    } finally {
+      await context?.close().catch(() => {});
+    }
   }
 }
 
@@ -91,10 +152,6 @@ const CONTENT_TYPES: Record<string, string> = {
  * the bundled copy of frontend/public. Anything not found on disk (or not under
  * the asset base, e.g. custom character icons) falls through to the network.
  */
-type BrowserPage = Awaited<
-  ReturnType<Awaited<ReturnType<typeof getBrowser>>["newPage"]>
->;
-
 export async function serveBundledAssets(page: BrowserPage, assetBase: string) {
   if (!publicDir) return;
   const root = publicDir;
