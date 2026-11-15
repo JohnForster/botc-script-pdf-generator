@@ -11,19 +11,31 @@ export type PaperType = "A4" | "Letter";
 // Re-export types from botc-character-sheet for convenience
 export type { PageDimensions, TitleStyle } from "botc-character-sheet";
 
-export const randomColor = () => {
-  const r = Math.floor(Math.random() * 256)
-    .toString(16)
-    .padStart(2, "0");
-  const g = Math.floor(Math.random() * 256)
-    .toString(16)
-    .padStart(2, "0");
-  const b = Math.floor(Math.random() * 256)
-    .toString(16)
-    .padStart(2, "0");
+const randomBetween = (min: number, max: number) =>
+  min + Math.random() * (max - min);
 
-  const hex = `#${r}${g}${b}`;
-  return hex;
+// HSL → hex, since colour inputs and parseRgb expect hex strings.
+const hslToHex = (h: number, s: number, l: number) => {
+  const sat = s / 100;
+  const light = l / 100;
+  const a = sat * Math.min(light, 1 - light);
+  const channel = (n: number) => {
+    const k = (n + h / 30) % 12;
+    const value = light - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
+    return Math.round(value * 255)
+      .toString(16)
+      .padStart(2, "0");
+  };
+  return `#${channel(0)}${channel(8)}${channel(4)}`;
+};
+
+// Saturation and lightness are kept within 20–70% to avoid washed-out,
+// near-black, or garish colours.
+export const randomColor = () => {
+  const h = randomBetween(0, 360);
+  const s = randomBetween(20, 70);
+  const l = randomBetween(20, 70);
+  return hslToHex(h, s, l);
 };
 
 export const TITLE_FONT_DEFAULTS: Record<
